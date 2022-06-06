@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -19,22 +20,28 @@ public class Folder {
     @NotNull
     private String name;
 
-    @Column(name = "repeating", nullable = false)
-    private int repeating;
+    @Column(name = "num_of_levels", nullable = false)
+    private int numOfLevels;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, targetEntity = Card.class)
     private List<Card> cards;
 
+    @JsonIgnore
+    @ManyToOne(optional = false, targetEntity = Category.class)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
     public Folder() {
 
     }
 
-    public Folder(Long id, String name, int repeating, List<Card> cards) {
+    public Folder(Long id, String name, int numOfLevels, List<Card> cards, Category category) {
         this.id = id;
         this.name = name;
-        this.repeating = repeating;
+        this.numOfLevels = numOfLevels;
         this.cards = cards;
+        this.category = category;
     }
 
     public Long getId() {
@@ -53,12 +60,12 @@ public class Folder {
         this.name = name;
     }
 
-    public int getRepeating() {
-        return repeating;
+    public int getNumOfLevels() {
+        return numOfLevels;
     }
 
-    public void setRepeating(int repeating) {
-        this.repeating = repeating;
+    public void setNumOfLevels(int numOfLevels) {
+        this.numOfLevels = numOfLevels;
     }
 
     public List<Card> getCards() {
@@ -67,5 +74,13 @@ public class Folder {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

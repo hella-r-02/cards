@@ -5,15 +5,16 @@ import java.util.List;
 public class Folder {
     private Long id;
     private String name;
-    private Long repeating;
+    private Long numOfLevels;
     private List<Card> cards;
+    private Category category;
 
-    public Long getRepeating() {
-        return repeating;
+    public Long getNumOfLevels() {
+        return numOfLevels;
     }
 
-    public void setRepeating(Long repeating) {
-        this.repeating = repeating;
+    public void setNumOfLevels(Long numOfLevels) {
+        this.numOfLevels = numOfLevels;
     }
 
     public Long getId() {
@@ -38,5 +39,13 @@ public class Folder {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

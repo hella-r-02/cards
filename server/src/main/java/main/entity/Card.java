@@ -1,5 +1,7 @@
 package main.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -22,6 +25,7 @@ public class Card {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(optional = false, targetEntity = Folder.class)
     @JoinColumn(name = "folder_id", nullable = false)
     private Folder folder;
@@ -35,8 +39,11 @@ public class Card {
     private String answer;
 
     @Column(name = "level", nullable = false)
-    private int level;
+    private Long level;
 
+    @Column(name="next_replay")
+    @NotNull
+    private Date next_replay;
     @Lob
     @Type(type="org.hibernate.type.BinaryType")
     @Column(name="question_image")
@@ -49,6 +56,17 @@ public class Card {
 
     public Card() {
 
+    }
+
+    public Card(Long id, Folder folder, String question, String answer, Long level, Date next_replay, byte[] question_image, byte[] answer_image) {
+        this.id = id;
+        this.folder = folder;
+        this.question = question;
+        this.answer = answer;
+        this.level = level;
+        this.next_replay = next_replay;
+        this.question_image = question_image;
+        this.answer_image = answer_image;
     }
 
     public Long getId() {
@@ -83,12 +101,20 @@ public class Card {
         this.answer = answer;
     }
 
-    public int getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Long level) {
         this.level = level;
+    }
+
+    public Date getNext_replay() {
+        return next_replay;
+    }
+
+    public void setNext_replay(Date next_replay) {
+        this.next_replay = next_replay;
     }
 
     public byte[] getQuestion_image() {
@@ -104,16 +130,6 @@ public class Card {
     }
 
     public void setAnswer_image(byte[] answer_image) {
-        this.answer_image = answer_image;
-    }
-
-    public Card(Long id, Folder folder, String question, String answer, int level, byte[] question_image, byte[] answer_image) {
-        this.id = id;
-        this.folder = folder;
-        this.question = question;
-        this.answer = answer;
-        this.level = level;
-        this.question_image = question_image;
         this.answer_image = answer_image;
     }
 }

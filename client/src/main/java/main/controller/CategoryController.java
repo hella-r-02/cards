@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import main.entity.Category;
 import main.entity.Folder;
 
 @Controller
-@RequestMapping("/folder")
-public class FolderController {
-
+@RequestMapping("/category")
+public class CategoryController {
     @Autowired
     RestTemplate restTemplate;
 
     @RequestMapping()
-    public String getFolders(Model model) {
+    public String getCategories(Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        Folder[] listOfFolders = restTemplate.exchange("http://localhost:8080/folder", HttpMethod.GET, entity, Folder[].class).getBody();
-        model.addAttribute("folders", listOfFolders);
+        Category[] listOfCategories = restTemplate.exchange("http://localhost:8080/category", HttpMethod.GET, entity, Category[].class).getBody();
+        model.addAttribute("categories", listOfCategories);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(model);
-        return "folder/folders.html";
+        return "category/categories.html";
     }
 }

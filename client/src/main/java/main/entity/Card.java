@@ -1,20 +1,27 @@
 package main.entity;
 
+import java.util.Date;
+
 public class Card {
     private Long id;
     private Folder folder;
     private String question;
     private String answer;
-    private int level;
+    private Long level;
+    private Date next_replay;
     private byte[] question_image;
     private byte[] answer_image;
 
-    public Card(Long id, Folder folder, String question, String answer, int level, byte[] question_image, byte[] answer_image) {
+    public Card() {
+    }
+
+    public Card(Long id, Folder folder, String question, String answer, Long level, Date next_replay, byte[] question_image, byte[] answer_image) {
         this.id = id;
         this.folder = folder;
         this.question = question;
         this.answer = answer;
         this.level = level;
+        this.next_replay = next_replay;
         this.question_image = question_image;
         this.answer_image = answer_image;
     }
@@ -51,12 +58,20 @@ public class Card {
         this.answer = answer;
     }
 
-    public int getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Long level) {
         this.level = level;
+    }
+
+    public Date getNext_replay() {
+        return next_replay;
+    }
+
+    public void setNext_replay(Date next_replay) {
+        this.next_replay = next_replay;
     }
 
     public byte[] getQuestion_image() {

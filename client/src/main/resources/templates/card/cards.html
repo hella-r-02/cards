@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:if="${not #lists.isEmpty(cards)}">
+    <center>
+        <div class="container mt-5">
+            <div th:each="card : ${cards}" class="alert alert-into mt-2">
+                <h2 th:text="${card.question} "/>
+                <hr/>
+            </div>
+        </div>
+    </center>
+</div>
+<div th:unless="${not #lists.isEmpty(cards)}">
+    <p>Папка пуста</p>
+</div>
+</body>
+</html>

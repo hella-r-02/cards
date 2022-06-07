@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import main.entity.Category;
-import main.entity.Folder;
 
 @Controller
 @RequestMapping("/category")

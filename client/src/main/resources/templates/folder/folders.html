@@ -1,20 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
+    <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/folder/folder_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/folder/folder.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/category/declension_of_words.js}"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Папки</title>
 </head>
-<body>
-
+<body onload="declension_of_words(['карточек', 'карточка', 'карточки'],'folder__item__num__of__cards','folder__item__num__of__cards__text')">
+<header th:insert="blocks/header :: header"></header>
+<div class="container">
+    <div class="folder__title">Папки</div>
+</div>
 <div th:if="${not #lists.isEmpty(folders)}">
-    <center>
-        <div class="container mt-5">
-            <div th:each="folder : ${folders}" class="alert alert-into mt-2">
-                <h2 th:text="${folder.name} "/>
-                <hr/>
+    <div class="container">
+        <div class="folder">
+            <div th:each="folder : ${folders}">
+                <div class="folder__item">
+                    <p>
+                    <div class="folder__item__modules">
+                        <div class="folder__item__num__of__cards" th:text="${#lists.size(folder.cards)}"></div>
+                        <div class="folder__item__num__of__cards__text" id="module">карточек</div>
+                    </div>
+                    </p>
+                    <div class="folder__item__name_module">
+                        <p class="folder__item__name" th:text="${folder.name} "/>
+                    </div>
+                </div>
             </div>
         </div>
-    </center>
+    </div>
+</div>
 </div>
 <div th:unless="${not #lists.isEmpty(folders)}">
     <p>Папок нет</p>

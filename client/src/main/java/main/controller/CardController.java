@@ -24,7 +24,7 @@ public class CardController {
     RestTemplate restTemplate;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getArticleById(@PathVariable Long id, Model model) {
+    public String getCardsByFolderId(@PathVariable Long id, Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));

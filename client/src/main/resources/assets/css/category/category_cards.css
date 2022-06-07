@@ -1,0 +1,46 @@
+.category {
+    position: relative;
+}
+
+.category__item {
+    margin-top: 10px;
+    padding: 5px;
+    background: #D3D4E4;
+    border-radius: .25rem;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .08);
+    max-width: 32.5rem;
+    position: relative;
+}
+
+.category__item__modules {
+    color: #292A33;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.category__item__modules__text {
+    display: inline;
+    width: 20px;
+    bottom: 0;
+
+}
+
+.category__item__modules__text__module {
+    display: inline;
+    width: 20px;
+    bottom: 0;
+
+}
+
+.category__item__name {
+    color: #1B1D25;
+    display: inline-block;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.category__item__folder {
+    display: inline;
+    width: 20px;
+    bottom: 0;
+}

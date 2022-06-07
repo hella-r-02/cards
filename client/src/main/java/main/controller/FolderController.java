@@ -1,14 +1,18 @@
 package main.controller;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 
 import main.entity.Folder;
 
@@ -19,14 +23,14 @@ public class FolderController {
     @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping()
-    public String getFolders(Model model) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getFoldersByCategoryId(@PathVariable Long id, Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        Folder[] listOfFolders = restTemplate.exchange("http://localhost:8080/folder", HttpMethod.GET, entity, Folder[].class).getBody();
-        model.addAttribute("folders", listOfFolders);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject(model);
-        return "folder/folders.html";
+        httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        Folder[] folderList = restTemplate.exchange("http://localhost:8080/folder/" + id, HttpMethod.GET, entity, Folder[].class).getBody();
+        model.addAttribute("folders", folderList);
+        return "folder/folders";
+
     }
 }

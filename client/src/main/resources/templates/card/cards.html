@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
+    <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<header  th:insert="blocks/header :: header"></header>
 <div th:if="${not #lists.isEmpty(cards)}">
     <center>
         <div class="container mt-5">

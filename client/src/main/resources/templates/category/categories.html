@@ -1,23 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/category/category_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/category/category.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/category/declension_of_words.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/category/choose_category.js}"></script>
+    <meta charset="UTF-8">
+    <title>Категории</title>
 </head>
-<body>
-
+<body onload="declension_of_words(['модулей', 'модуль', 'модуля'],'category__item__modules__text','category__item__modules__text__module')">
+<header th:insert="blocks/header :: header"></header>
+<div class="container">
+    <div class="category__title">Категории</div>
+</div>
 <div th:if="${not #lists.isEmpty(categories)}">
-  <center>
-    <div class="container mt-5">
-      <div th:each="category : ${categories}" class="alert alert-into mt-2">
-        <h2 th:text="${category.name} "/>
-        <hr/>
-      </div>
+    <div>
+        <div class="container">
+            <div class="category">
+                <div th:each="category : ${categories}">
+                    <div class="category__item" th:onclick="choose_category([[${category.id}]])">
+                        <p>
+                        <div class="category__item__modules" id="modules">
+                            <div class="category__item__modules__text" id="num_of_folders"
+                                 th:text="${#lists.size(category.folders)}"></div>
+                            <div class="category__item__modules__text__module" id="module">модуля</div>
+                        </div>
+                        </p>
+                        <div class="category__item__name">
+                            <img class="category__item__folder" th:src="@{images/folder.svg}"/>
+                            <p class="category__item__folder" th:text="${category.name} "/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </center>
 </div>
 <div th:unless="${not #lists.isEmpty(categories)}">
-  <p>Папок нет</p>
+    <p>Категорий нет</p>
 </div>
 </body>
 </html>

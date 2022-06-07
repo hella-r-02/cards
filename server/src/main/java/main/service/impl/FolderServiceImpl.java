@@ -18,4 +18,9 @@ public class FolderServiceImpl implements FolderService {
     public List<Folder> findAllFolders() {
         return (List<Folder>) folderRepository.findAll();
     }
+
+    @Override
+    public List<Folder> findFoldersByCategoryId(Long id) {
+        return (List<Folder>) folderRepository.findByCategoryId(id);
+    }
 }

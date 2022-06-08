@@ -26,9 +26,9 @@ public class Card {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(optional = false, targetEntity = Folder.class)
-    @JoinColumn(name = "folder_id", nullable = false)
-    private Folder folder;
+    @ManyToOne(optional = false, targetEntity = Level.class)
+    @JoinColumn(name = "level_id", nullable = false)
+    private Level level;
 
     @Column(name = "question")
     @NotNull
@@ -37,9 +37,6 @@ public class Card {
     @Column(name = "answer")
     @NotNull
     private String answer;
-
-    @Column(name = "level", nullable = false)
-    private Long level;
 
     @Column(name="next_replay")
     @NotNull
@@ -58,12 +55,11 @@ public class Card {
 
     }
 
-    public Card(Long id, Folder folder, String question, String answer, Long level, Date next_replay, byte[] question_image, byte[] answer_image) {
+    public Card(Long id, Level level, String question, String answer, Date next_replay, byte[] question_image, byte[] answer_image) {
         this.id = id;
-        this.folder = folder;
+        this.level = level;
         this.question = question;
         this.answer = answer;
-        this.level = level;
         this.next_replay = next_replay;
         this.question_image = question_image;
         this.answer_image = answer_image;
@@ -77,12 +73,12 @@ public class Card {
         this.id = id;
     }
 
-    public Folder getFolder() {
-        return folder;
+    public Level getLevel() {
+        return level;
     }
 
-    public void setFolder(Folder folder) {
-        this.folder = folder;
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public String getQuestion() {
@@ -99,14 +95,6 @@ public class Card {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public Long getLevel() {
-        return level;
-    }
-
-    public void setLevel(Long level) {
-        this.level = level;
     }
 
     public Date getNext_replay() {

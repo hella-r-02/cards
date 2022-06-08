@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/folder/folder.css}"/>-->
+    <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/set_the_level.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/work_with_date.js}"></script>
+    <script>
+        function tempFunction() {
+            set_the_level('item__name');
+            declension_of_words([' карточек', ' карточка', ' карточки'], 'item__num__of__cards');
+            work_with_date('item__date','item__repeat');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Уровни</title>
+</head>
+<body onload="tempFunction()">
+<header th:insert="blocks/header :: header"></header>
+<div class="container">
+    <div class="title">Уровни карточек</div>
+</div>
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div th:each="level : ${levels}">
+            <div class="coll">
+                <div class="item">
+                    <div class="item__name__module">
+                        <div class="item__name" th:text="${level.num_of_level}"></div>
+                    </div>
+                    <div class="item__modules">
+                        <div class="item__num__of__cards" th:text="${#lists.size(level.cards)}"></div>
+                    </div>
+                    <div class="item__modules">
+                        <span class="item__date" th:text="${level.next_replay}">
+                        </span>
+                        <span class="item__repeat"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:unless="${not #lists.isEmpty(levels)}">
+    <div class="container">
+        <p>Уровней нет</p>
+    </div>
+</div>
+</body>
+</html>

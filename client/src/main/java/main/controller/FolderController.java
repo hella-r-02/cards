@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import main.entity.Folder;
 
@@ -22,15 +24,25 @@ public class FolderController {
 
     @Autowired
     RestTemplate restTemplate;
+    private String domain = "http://localhost:8080/";
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getFoldersByCategoryId(@PathVariable Long id, Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        Folder[] folderList = restTemplate.exchange("http://localhost:8080/folder/" + id, HttpMethod.GET, entity, Folder[].class).getBody();
-        model.addAttribute("folders", folderList);
-        return "folder/folders";
+        try {
+            Folder[] folderList = restTemplate.exchange(domain + "folder/" + id, HttpMethod.GET, entity, Folder[].class).getBody();
+            model.addAttribute("folders", folderList);
+            return "folder/folders";
+        }
+        catch (HttpClientErrorException exception) {
+//            model.addAttribute("error", exception.getStatusCode().getReasonPhrase());
+//            model.addAttribute("code", exception.getStatusCode().value());
+//            ModelAndView modelAndView = new ModelAndView();
+//            modelAndView.addObject(model);
+            return "error";
+        }
 
     }
 }

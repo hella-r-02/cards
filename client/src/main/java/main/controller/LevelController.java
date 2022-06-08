@@ -6,27 +6,30 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import main.entity.Category;
+import main.entity.Level;
 
 @Controller
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/level")
+public class LevelController {
     @Autowired
     RestTemplate restTemplate;
     private String domain = "http://localhost:8080/";
 
-    @RequestMapping()
-    public String getCategories(Model model) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getLevelsByFolderId(@PathVariable Long id, Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        Category[] listOfCategories = restTemplate.exchange(domain + "category", HttpMethod.GET, entity, Category[].class).getBody();
-        model.addAttribute("categories", listOfCategories);
+        Level[] listOfLevels = restTemplate.exchange(domain + "level/" + id, HttpMethod.GET, entity, Level[].class).getBody();
+        System.out.println(listOfLevels[0].getCards());
+        model.addAttribute("levels",listOfLevels);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(model);
-        return "category/categories.html";
+        return "level/levels.html";
     }
 }

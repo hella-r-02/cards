@@ -6,7 +6,7 @@ public class Folder {
     private Long id;
     private String name;
     private Long numOfLevels;
-    private List<Card> cards;
+    private List<Level> levels;
     private Category category;
 
     public Long getNumOfLevels() {
@@ -33,12 +33,12 @@ public class Folder {
         this.name = name;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Level> getLevels() {
+        return levels;
     }
 
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
     }
 
     public Category getCategory() {

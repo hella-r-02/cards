@@ -24,8 +24,8 @@ public class Folder {
     private int numOfLevels;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, targetEntity = Card.class)
-    private List<Card> cards;
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, targetEntity = Level.class)
+    private List<Level> levels;
 
     @JsonIgnore
     @ManyToOne(optional = false, targetEntity = Category.class)
@@ -36,12 +36,20 @@ public class Folder {
 
     }
 
-    public Folder(Long id, String name, int numOfLevels, List<Card> cards, Category category) {
+    public Folder(Long id, String name, int numOfLevels, List<Level> levels, Category category) {
         this.id = id;
         this.name = name;
         this.numOfLevels = numOfLevels;
-        this.cards = cards;
+        this.levels = levels;
         this.category = category;
+    }
+
+    public List<Level> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
     }
 
     public Long getId() {
@@ -66,14 +74,6 @@ public class Folder {
 
     public void setNumOfLevels(int numOfLevels) {
         this.numOfLevels = numOfLevels;
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
     }
 
     public Category getCategory() {

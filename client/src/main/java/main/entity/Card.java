@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Card {
     private Long id;
-    private Folder folder;
+//    private  folder;
     private String question;
     private String answer;
-    private Long level;
+    private Level level;
     private Date next_replay;
     private byte[] question_image;
     private byte[] answer_image;
@@ -15,9 +15,8 @@ public class Card {
     public Card() {
     }
 
-    public Card(Long id, Folder folder, String question, String answer, Long level, Date next_replay, byte[] question_image, byte[] answer_image) {
+    public Card(Long id, String question, String answer, Level level, Date next_replay, byte[] question_image, byte[] answer_image) {
         this.id = id;
-        this.folder = folder;
         this.question = question;
         this.answer = answer;
         this.level = level;
@@ -32,14 +31,6 @@ public class Card {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Folder getFolder() {
-        return folder;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
     }
 
     public String getQuestion() {
@@ -58,11 +49,11 @@ public class Card {
         this.answer = answer;
     }
 
-    public Long getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public void setLevel(Long level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 

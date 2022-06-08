@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import main.entity.Folder;
+import main.exception.FolderNotFoundException;
 import main.service.FolderService;
 
 @RestController
@@ -28,7 +30,16 @@ public class FolderController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<List<Folder>> getCardsByFolderId(@PathVariable("id") Long id) {
         List<Folder> folders = folderService.findFoldersByCategoryId(id);
-//        System.out.println(folders.get(0).getName());
         return new ResponseEntity<>(folders, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "level/{id}")
+    public ResponseEntity<Folder> getFolderById(@PathVariable("id") Long id) {
+        try {
+            Folder folder = folderService.findById(id);
+            return new ResponseEntity<>(folder, HttpStatus.OK);
+        } catch (FolderNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "folder not found");
+        }
     }
 }

@@ -20,11 +20,11 @@
             <div th:each="folder : ${folders}">
                 <div class="coll">
                     <div class="item" th:onclick="next_page('http://localhost:8081/level/',[[${folder.id}]])">
-                        <div class="item__name__module">
-                            <div class="item__name" th:text="${folder.name} "/>
+                        <div class="item-name">
+                            <div class="item-name-text" th:text="${folder.name} "/>
                         </div>
-                        <div class="item__modules">
-                            <div class="item__num__of__cards" th:text="${#lists.size(folder.levels)}"></div>
+                        <div class="item-number">
+                            <div class="item-number-text" th:text="${#lists.size(folder.levels)}"></div>
                         </div>
                     </div>
                 </div>

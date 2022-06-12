@@ -1,0 +1,163 @@
+:root {
+    --text-color: #1B1D25;
+    --text-color-transperent: #292A33;
+    --color-cards: #c9caff;
+}
+
+.general {
+    width: 80%;
+    position: relative;
+    min-height: max-content;
+    height: max-content;
+
+}
+
+.general-main {
+    width: 80%;
+    position: relative;
+    min-height: max-content;
+    height: max-content;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    display: flex;
+}
+
+.levels {
+    width: 30%;
+}
+
+.level-item {
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(225, 226, 255, 0.85);
+    border-radius: .25rem;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .08);
+    max-width: 32.5rem;
+    position: relative;
+    margin-right: 40px;
+    flex-direction: column;
+}
+
+.level-item-number-text {
+    margin-top: 10px;
+}
+
+.level-item-num-of-cards-text {
+}
+
+.level-item-number {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: var(--text-color-transperent);
+    font-size: 15px;
+}
+
+.level-item-name {
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: var(--text-color);
+}
+
+.block-cards {
+    /*perspective: 1000;*/
+    margin-top: 20px;
+    width: 55%;
+    /*max-height: 400px;*/
+    flex-direction: column;
+    min-height: max-content;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+.cards {
+    color: var(--text-color);
+    word-break: break-all;
+    padding: 1em;
+    height: 15em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--color-cards);
+    border-radius: .25rem;
+}
+
+.card-nav {
+    width: 30%;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    flex-direction: row;
+    min-height: max-content;
+    height: max-content;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 10px auto;
+    text-align: center;
+    justify-content: space-between;
+    display: block;
+
+
+}
+
+.card-nav-left {
+    display: inline-block;
+}
+
+.card-nav-text {
+    display: inline-block;
+}
+
+.card-nav-right {
+    display: inline-block;
+}
+
+.level-item-cards {
+    margin-top: 20px;
+    padding: 10px;
+    flex-direction: row;
+    display: flex;
+    color: var(--text-color);
+    background-color: var(--color-cards);
+    width: 100%;
+    min-height: max-content;
+    height: max-content;
+    border-radius: .25rem;
+    position: relative;
+}
+
+.level-item-cards-question {
+    overflow-wrap: break-word;
+    color: var(--text-color);
+    padding-right: 10px;
+    padding-bottom: 10px;
+    width: 40%;
+}
+
+.level-item-cards-answer {
+    border-left: solid rgba(27, 29, 37, 0.5);
+    word-break: break-all;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-width: thin;
+    width: 60%;
+}
+
+.title-level {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.hr {
+    margin-top: 10px;
+    background-color: #333649;
+}

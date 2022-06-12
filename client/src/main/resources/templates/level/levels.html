@@ -3,18 +3,131 @@
 <head>
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/folder/folder.css}"/>-->
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
-    <script type="text/javascript" th:src="@{/scripts/main/set_the_level.js}"></script>
-    <script type="text/javascript" th:src="@{/scripts/main/work_with_date.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_the_level.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/work_with_date.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_the_nav.js}"></script>
+
     <script>
         function tempFunction() {
-            set_the_level('item__name');
-            declension_of_words([' карточек', ' карточка', ' карточки'], 'item__num__of__cards');
-            work_with_date('item__date','item__repeat');
+            set_the_level('level-item-name-text');
+            declension_of_words([' карточек', ' карточка', ' карточки'], 'level-item-number-text');
+            work_with_date('level-item-date', 'level-item-repeat');
+            set_the_level('title-level');
+            set_the_nav('card-nav-text');
+           // set_event_listener();
+            //set_first_card();
         }
     </script>
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        function click_next_button() {-->
+<!--            var questions =/*[[${questions}]]*/-->
+<!--            var questions_img =/*[[${imgQuestion}]]*/-->
+<!--            var answers =/*[[${answers}]]*/-->
+<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
+<!--            var text = document.getElementById('text_nav');-->
+<!--            var textSplit = text.innerHTML.toString().split('/');-->
+<!--            if (textSplit[0] != textSplit[1]) {-->
+<!--                if (questions[textSplit[0]] != null) {-->
+<!--                    document.getElementById("card-front-text").innerHTML = questions[textSplit[0]];-->
+<!--                    document.getElementById("card-front-text").style.display = '';-->
+<!--                    document.getElementById("card-front-img").style.display = 'none';-->
+<!--                } else {-->
+<!--                    document.getElementById("card-front-img").src = questions_img[textSplit[0]];-->
+<!--                    document.getElementById("card-front-text").style.display = 'none';-->
+<!--                    document.getElementById("card-front-img").style.display = '';-->
+<!--                }-->
+<!--                // if(answers[textSplit[0]]!=null){-->
+<!--                //     document.getElementById("card-back-text").innerHTML = answers[textSplit[0]];-->
+<!--                //     document.getElementById("card-back-text").style.display = '';-->
+<!--                //     document.getElementById("card-back-img").style.display = 'none';-->
+<!--                // }-->
+<!--                // else{-->
+<!--                //     document.getElementById("card-back-img").src = answers_ing[textSplit[0]];-->
+<!--                //     document.getElementById("card-back-text").style.display = 'none';-->
+<!--                //     document.getElementById("card-back-img").style.display = '';-->
+<!--                // }-->
+<!--                // document.getElementById("card-back").style.display = 'none';-->
+<!--                text.innerHTML = (Number(textSplit[0]) + Number(1)) + "/" + textSplit[1];-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        function click_prev_button() {-->
+<!--            var questions =/*[[${questions}]]*/-->
+<!--            var questions_img =/*[[${imgQuestion}]]*/-->
+<!--            var answers =/*[[${answers}]]*/-->
+<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
+<!--            var text = document.getElementById('text_nav');-->
+<!--            var textSplit = text.innerHTML.toString().split('/');-->
+<!--            if (textSplit[0] != 1) {-->
+<!--                if (questions[textSplit[0] - 2] != null) {-->
+<!--                    document.getElementById("card-front-text").innerHTML = questions[textSplit[0] - 2];-->
+<!--                    document.getElementById("card-front-text").style.display = '';-->
+<!--                    document.getElementById("card-front-img").style.display = 'none';-->
+<!--                } else {-->
+<!--                    document.getElementById("card-front-img").src = questions_img[textSplit[0] - 2];-->
+<!--                    document.getElementById("card-front-text").style.display = 'none';-->
+<!--                    document.getElementById("card-front-img").style.display = '';-->
+<!--                }-->
+<!--                // if (answers[textSplit[0] - 2] != null) {-->
+<!--                //     document.getElementById("card-back-text").innerHTML = answers[textSplit[0] - 2];-->
+<!--                //     document.getElementById("card-back-text").style.display = '';-->
+<!--                //     document.getElementById("card-front-img").style.display = 'none';-->
+<!--                // }-->
+<!--                // else{-->
+<!--                //     document.getElementById("card-back-img").src = answers_ing[textSplit[0] - 2];-->
+<!--                //     document.getElementById("card-back-text").style.display = 'none';-->
+<!--                //     document.getElementById("card-back-img").style.display = '';-->
+<!--                // }-->
+<!--                text.innerHTML = (Number(textSplit[0]) - Number(1)) + "/" + textSplit[1];-->
+<!--                // document.getElementById("card-back").style.display='none';-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        function set_first_card() {-->
+<!--            var questions =/*[[${questions}]]*/-->
+<!--            var questions_img =/*[[${imgQuestion}]]*/-->
+<!--            var answers =/*[[${answers}]]*/-->
+<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
+<!--            if (questions[0] != null) {-->
+<!--                set_front_question(questions[0]);-->
+<!--                // document.getElementById("card-front-text").innerHTML = questions[0];-->
+<!--                // document.getElementById("card-front-text").style.display = '';-->
+<!--                // document.getElementById("card-front-img").style.display = 'none';-->
+<!--            } else {-->
+<!--                document.getElementById("card-front-img").src = questions_img[0];-->
+<!--                document.getElementById("card-front-text").style.display = 'none';-->
+<!--                document.getElementById("card-front-img").style.display = '';-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        function on_click_card() {-->
+<!--            // var card_front_text = document.getElementById("card-front-text");-->
+<!--            var card_back = document.getElementById("card-back");-->
+<!--            var card_front = document.getElementById("card-front");-->
+<!--            if (card_back.style.display == '') {-->
+<!--                card_back.style.display = 'none';-->
+<!--                card_front.style.display = '';-->
+
+<!--            } else {-->
+<!--                card_back.style.display = '';-->
+<!--                card_front.style.display = 'none';-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script type="text/javascript" th:inline="javascript">-->
+<!--        function set_front_question(question) {-->
+<!--            document.getElementById("card-front-text").innerHTML = question;-->
+<!--            document.getElementById("card-front-text").style.display = '';-->
+<!--            document.getElementById("card-front-img").style.display = 'none';-->
+<!--        }-->
+<!--    </script>-->
     <meta charset="UTF-8">
     <title>Уровни</title>
 </head>
@@ -24,31 +137,65 @@
     <div class="title">Уровни карточек</div>
 </div>
 <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div th:each="level : ${levels}">
-            <div class="coll">
-                <div class="item">
-                    <div class="item__name__module">
-                        <div class="item__name" th:text="${level.num_of_level}"></div>
+    <div th:if="${#lists.isEmpty(levels)}">
+        <p>Уровней нет</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(levels)}">
+        <div class="general-main">
+            <div class="levels">
+                <div class="row row-cols-1">
+                    <div th:each="level : ${levels}">
+                        <div class="level-item">
+                            <div class="level-item-name">
+                                <div class="level-item-name-text" th:text="${level.num_of_level}"></div>
+                            </div>
+                            <div class="level-item-number">
+                                <div class="level-item-number-text" th:text="${#lists.size(level.cards)}"></div>
+                            </div>
+                            <div class="level-item-number">
+                            <span class="level-item-date" th:text="${level.next_replay}">
+                            </span>
+                                <span class="level-item-repeat"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="item__modules">
-                        <div class="item__num__of__cards" th:text="${#lists.size(level.cards)}"></div>
+                </div>
+            </div>
+            <div class="block-cards" th:onclick="on_click_card()">
+                <div class="cards">
+                    <div class="flipper" id="flipper">
+                        <div class="front" id="card-front">
+                            <img id="card-front-img"/>
+                            <p id="card-front-text"></p>
+                        </div>
+                        <div class="back" id="card-back">
+                            <img id="card-back-img"/>
+                            <p id="card-back-text"></p>
+                        </div>
                     </div>
-                    <div class="item__modules">
-                        <span class="item__date" th:text="${level.next_replay}">
-                        </span>
-                        <span class="item__repeat"></span>
-                    </div>
-
+                </div>
+                <div class="card-nav">
+                    <span class="card-nav-left card-nav" th:onclick="click_prev_button()">←</span>
+                    <span class="card-nav-text card-nav" id="text_nav" th:text="${#lists.size(cards)}">текст</span>
+                    <span class="card-nav-right card-nav" th:onclick="click_next_button()">→</span>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
-<div th:unless="${not #lists.isEmpty(levels)}">
-    <div class="container">
-        <p>Уровней нет</p>
+        <div class="general">
+            <hr class="hr">
+            <div class="row row-cols-1">
+                <div th:each="level : ${levels}">
+                    <div class="title-level" th:text="${level.num_of_level}"></div>
+                    <div th:each="card: ${level.cards}">
+                        <div class="level-item-cards">
+                            <div class="level-item-cards-question" th:text="${card.question}">
+                            </div>
+                            <div class="level-item-cards-answer" th:text="${card.answer}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

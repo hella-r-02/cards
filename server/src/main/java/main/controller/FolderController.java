@@ -28,7 +28,7 @@ public class FolderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<Folder>> getCardsByFolderId(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Folder>> getFoldersByCategoryId(@PathVariable("id") Long id) {
         List<Folder> folders = folderService.findFoldersByCategoryId(id);
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }

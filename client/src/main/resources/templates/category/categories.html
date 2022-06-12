@@ -13,18 +13,19 @@
 <body onload="declension_of_words([' модулей', ' модуль', ' модуля'],'category__item__modules__text')">
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
-    <div class="category__title">Категории</div>
+    <div class="category-title">Категории</div>
 </div>
 <div th:if="${not #lists.isEmpty(categories)}">
     <div class="container">
         <div class="category">
             <div th:each="category : ${categories}">
-                <div class="category__item" th:onclick="next_page('http://localhost:8081/folder/',[[${category.id}]])">
-                    <div class="category__item__modules">
-                        <div class="category__item__modules__text" th:text="${#lists.size(category.folders)}"></div>
+                <div class="category-item" th:onclick="next_page('http://localhost:8081/folder/',[[${category.id}]])">
+                    <img class="img-setting" th:src="@{images/settings.svg}">
+                    <div class="category-item-block-number">
+                        <div class="category-item-block-number-text" th:text="${#lists.size(category.folders)}"></div>
                     </div>
-                    <div class="category__item__name">
-                        <div class="category__item__folder" th:text="${category.name} "/>
+                    <div class="category-item-name">
+                        <div class="category-item-name-text" th:text="${category.name} "/>
                     </div>
                 </div>
             </div>

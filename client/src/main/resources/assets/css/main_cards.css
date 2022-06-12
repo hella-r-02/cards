@@ -1,4 +1,4 @@
-.main_container {
+.main-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -44,14 +44,14 @@
     flex-direction: column;
 }
 
-.item__num__of__cards {
+.item-number-text {
     margin-top: 10px;
 }
 
-.item__num__of__cards__text {
+.item-num-of-cards-text {
 }
 
-.item__modules {
+.item-number {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -59,7 +59,7 @@
     font-size: 15px;
 }
 
-.item__name__module {
+.item-name {
     font-weight: 700;
     position: relative;
     display: flex;
@@ -67,15 +67,15 @@
     color: #1B1D25;
 }
 
-.item__name {
+.item-name-text {
     color: #292A33;
     font-size: 20px;
 }
 
-.item__date{
+.item-date{
     margin-top: 10px;
 }
 
-.item__repeat{
+.item-repeat{
     margin-top: 10px;
 }

@@ -4,7 +4,7 @@
     flex-direction: column;
 }
 
-.category__item {
+.category-item {
     margin-top: 20px;
     padding: 10px;
     background: #c9caff;
@@ -15,26 +15,25 @@
     flex-direction: column;
 }
 
-.category__item__modules {
+.category-item-block-number {
     position: relative;
     display: flex;
     flex-direction: row;
     color: #292A33;
-    /*padding-left: 2px;*/
     font-size: 15px;
 }
 
-.category__item__modules__text {
+.category-item-block-number-text {
     color: #292A33;
 
 }
 
-.category__item__modules__text__module {
+.category-item-modules-text-module {
     color: #292A33;
 
 }
 
-.category__item__name {
+.category-item-name {
     margin-top: 10px;
     font-weight: 700;
     position: relative;
@@ -43,7 +42,16 @@
     color: #292A33;
 }
 
-.category__item__folder {
+.category-item-name-text {
     color: #292A33;
     font-size: 20px;
+}
+
+.img-setting{
+    position:absolute;
+    top:10px;
+    right: 10px;
+    width: 100%;
+    max-width: 20px;
+    height: auto;
 }

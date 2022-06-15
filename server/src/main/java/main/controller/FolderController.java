@@ -42,4 +42,10 @@ public class FolderController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "folder not found");
         }
     }
+
+    @GetMapping(value = "/level_id/{id}")
+    public ResponseEntity<Folder> getFolderByLevelId(@PathVariable("id") Long id) {
+        Folder folder = folderService.findByLevelId(id);
+        return new ResponseEntity<>(folder, HttpStatus.OK);
+    }
 }

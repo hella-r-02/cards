@@ -21,6 +21,7 @@ import main.entity.Level;
 @Controller
 @RequestMapping("/level")
 public class LevelController {
+
     @Autowired
     RestTemplate restTemplate;
     private String domain = "http://localhost:8080/";
@@ -33,7 +34,7 @@ public class LevelController {
         Level[] listOfLevels = restTemplate.exchange(domain + "level/" + id, HttpMethod.GET, entity, Level[].class).getBody();
         Card[] listOfCards = restTemplate.exchange(domain + "card/folder/" + id, HttpMethod.GET, entity, Card[].class).getBody();
         String[] listOfQuestion = new String[listOfCards.length];
-        String[] listOfAnswer = new String[listOfLevels.length];
+        String[] listOfAnswer = new String[listOfCards.length];
         String[] imgQuestion = new String[listOfCards.length];
         String[] imgAnswer = new String[listOfCards.length];
         Base64.Encoder encoder = Base64.getEncoder();
@@ -50,13 +51,13 @@ public class LevelController {
         }
         for (int i = 0; i < listOfQuestion.length; i++) {
             listOfQuestion[i] = listOfCards[i].getQuestion();
-            listOfAnswer[i]=listOfCards[i].getAnswer();
+            listOfAnswer[i] = listOfCards[i].getAnswer();
         }
         model.addAttribute("levels", listOfLevels);
         model.addAttribute("num_of_levels", listOfLevels.length);
         model.addAttribute("cards", listOfCards);
         model.addAttribute("questions", listOfQuestion);
-        model.addAttribute("answers",listOfAnswer);
+        model.addAttribute("answers", listOfAnswer);
         model.addAttribute("imgQuestion", imgQuestion);
         model.addAttribute("imgAnswer", imgAnswer);
         ModelAndView modelAndView = new ModelAndView();

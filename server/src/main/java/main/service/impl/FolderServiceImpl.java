@@ -28,12 +28,17 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public Folder findById(Long id) {
-         Optional<Folder> folderOptional= folderRepository.findById(id);
-         if(folderOptional.isPresent()){
-             return folderOptional.get();
-         }
-         else{
-             throw new FolderNotFoundException("folder not found");
-         }
+        Optional<Folder> folderOptional = folderRepository.findById(id);
+        if (folderOptional.isPresent()) {
+            return folderOptional.get();
+        } else {
+            throw new FolderNotFoundException("folder not found");
+        }
+    }
+
+    @Override
+    public Folder findByLevelId(Long id) {
+        Optional<Folder> folder = folderRepository.findByLevelId(id);
+        return folder.orElse(null);
     }
 }

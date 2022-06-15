@@ -3,23 +3,153 @@
 <head>
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/card/card.css}"/>
+
+    <script type="text/javascript" th:src="@{/scripts/level/set_listener.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_img_card.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/card/redirect_back.js}"></script>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Повторение карточек</title>
 </head>
-<body>
-<header  th:insert="blocks/header :: header"></header>
-<div th:if="${not #lists.isEmpty(cards)}">
-    <center>
-        <div class="container mt-5">
-            <div th:each="card : ${cards}" class="alert alert-into mt-2">
-                <h2 th:text="${card.question} "/>
-                <hr/>
+<body onload="tempFunction()">
+<header th:insert="blocks/header :: header"></header>
+<div class="main">
+    <div class="block-cards">
+        <div class="card-nav">
+            <span class="card-nav-text card-nav" id="text_nav" th:text="${#lists.size(cards)}">текст</span>
+        </div>
+        <div class="cards" id="card">
+            <div class="flipper" id="flipper" th:onclick="check_is_flip()">
+                <div class="front" id="card-front">
+                    <div class="front-inner">
+                        <p class="title-cards" id="front-title">Вопрос</p>
+                        <img id="card-front-img" class="card-img"/>
+                        <span id="card-front-text" class="card-text"></span>
+                    </div>
+                </div>
+                <div class="back" id="card-back">
+                    <div class="back-inner">
+                        <p class="title-cards" id="back-title">Ответ</p>
+                        <img id="card-back-img" class="card-img"/>
+                        <span id="card-back-text" class="card-text"></span>
+                    </div>
+                </div>
             </div>
         </div>
-    </center>
-</div>
-<div th:unless="${not #lists.isEmpty(cards)}">
-    <p>Папка пуста</p>
+        <div class="buttons">
+            <button class="button-failure" id="button-failure"
+                    th:onclick="on_click_button('http://localhost:8081/card_rest/failure/')">Неверно
+            </button>
+            <button class="button-success" id="button-success"
+                    th:onclick="on_click_button('http://localhost:8081/card_rest/success/')">Верно
+            </button>
+        </div>
+    </div>
 </div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    async function on_click_button(address) {
+        var cards =/*[[${cards}]]*/
+        const text_nav = document.getElementById("text_nav");
+        const text_split = text_nav.innerHTML.toString().split('/');
+        const id = cards[Number(text_split[0]) - Number(1)].id;
+        try {
+            const response = await fetch((address + id).toString(), {
+                method: 'post',
+            });
+            if (text_split[0] != text_split[1]) {
+                next_card(text_split[0]);
+                set_navigator(Number(text_split[0]) + Number(1));
+            } else {
+                redirect_back();
+            }
+
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
+    }
+</script>
+<script>
+    function tempFunction() {
+        set_listener();
+        // add_listener_for_buttons();
+        set_navigator(1);
+        next_card(0);
+    }
+</script>
+<!--добавить обработку конца карточек-->
+<script type="text/javascript" th:inline="javascript">
+    function set_navigator(number) {
+        var cards =/*[[${cards}]]*/
+        if (cards.length == 0) {
+            redirect_back();
+        } else {
+            var text = document.getElementById("text_nav");
+                text.innerHTML = number + "/" + cards.length;
+        }
+    }
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    function next_card(index) {
+        var questions =/*[[${questions}]]*/
+        var questions_img =/*[[${imgQuestion}]]*/
+        var answers =/*[[${answers}]]*/
+        var answers_ing =/*[[${imgAnswer}]]*/
+        var text = document.getElementById('text_nav');
+        var textSplit = text.innerHTML.toString().split('/');
+        if (index <= textSplit[1]) {
+            if (questions[index] != null) {
+                const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
+                set_text_card(document.getElementById(side), questions[index], document.getElementById(hidden_part));
+            } else {
+                const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
+                set_img_card(document.getElementById(side), questions_img[index], document.getElementById(hidden_part));
+            }
+        }
+        if (answers[index] != null) {
+            const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
+            set_text_card(document.getElementById(side), answers[index], document.getElementById(hidden_part));
+        } else {
+            const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
+            set_img_card(document.getElementById(side), answers_ing[index], document.getElementById(hidden_part));
+        }
+        document.getElementById("button-success").style.display = "none";
+        document.getElementById("button-failure").style.display = "none";
+    }
+</script>
+<script>
+    function check_side(front_default, back_default, other_front_default, other_back_default) {
+        const question_text = "Вопрос";
+        const answer_text = "Ответ"
+        if (document.getElementById("flipper").classList.contains("flipCard")) {
+            document.getElementById("back-title").innerHTML = question_text;
+            document.getElementById("front-title").innerHTML = answer_text;
+            document.getElementById("card-front").style.display = 'none';
+            document.getElementById("card-back").style.display = '';
+            return [back_default, other_back_default];
+        } else {
+            document.getElementById("back-title").innerHTML = answer_text;
+            document.getElementById("front-title").innerHTML = question_text;
+            document.getElementById("card-back").style.display = 'none';
+            document.getElementById("card-front").style.display = '';
+            return [front_default, other_front_default];
+        }
+    }
+</script>
+<script>
+    function check_is_flip() {
+        if (document.getElementById("flipper").classList.contains("flipCard")) {
+            document.getElementById("card-back").style.display = 'none';
+            document.getElementById("card-front").style.display = '';
+        } else {
+            document.getElementById("card-front").style.display = 'none';
+            document.getElementById("card-back").style.display = '';
+        }
+        document.getElementById("button-success").style.display = "";
+        document.getElementById("button-failure").style.display = "";
+    }
+</script>
 </html>

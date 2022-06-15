@@ -5,129 +5,17 @@
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
+
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_the_level.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/work_with_date.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_the_nav.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/next_page_after_level.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_img_card.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/check_is_flip.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_listener.js}"></script>
 
-    <script>
-        function tempFunction() {
-            set_the_level('level-item-name-text');
-            declension_of_words([' карточек', ' карточка', ' карточки'], 'level-item-number-text');
-            work_with_date('level-item-date', 'level-item-repeat');
-            set_the_level('title-level');
-            set_the_nav('card-nav-text');
-           // set_event_listener();
-            //set_first_card();
-        }
-    </script>
-<!--    <script type="text/javascript" th:inline="javascript">-->
-<!--        function click_next_button() {-->
-<!--            var questions =/*[[${questions}]]*/-->
-<!--            var questions_img =/*[[${imgQuestion}]]*/-->
-<!--            var answers =/*[[${answers}]]*/-->
-<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
-<!--            var text = document.getElementById('text_nav');-->
-<!--            var textSplit = text.innerHTML.toString().split('/');-->
-<!--            if (textSplit[0] != textSplit[1]) {-->
-<!--                if (questions[textSplit[0]] != null) {-->
-<!--                    document.getElementById("card-front-text").innerHTML = questions[textSplit[0]];-->
-<!--                    document.getElementById("card-front-text").style.display = '';-->
-<!--                    document.getElementById("card-front-img").style.display = 'none';-->
-<!--                } else {-->
-<!--                    document.getElementById("card-front-img").src = questions_img[textSplit[0]];-->
-<!--                    document.getElementById("card-front-text").style.display = 'none';-->
-<!--                    document.getElementById("card-front-img").style.display = '';-->
-<!--                }-->
-<!--                // if(answers[textSplit[0]]!=null){-->
-<!--                //     document.getElementById("card-back-text").innerHTML = answers[textSplit[0]];-->
-<!--                //     document.getElementById("card-back-text").style.display = '';-->
-<!--                //     document.getElementById("card-back-img").style.display = 'none';-->
-<!--                // }-->
-<!--                // else{-->
-<!--                //     document.getElementById("card-back-img").src = answers_ing[textSplit[0]];-->
-<!--                //     document.getElementById("card-back-text").style.display = 'none';-->
-<!--                //     document.getElementById("card-back-img").style.display = '';-->
-<!--                // }-->
-<!--                // document.getElementById("card-back").style.display = 'none';-->
-<!--                text.innerHTML = (Number(textSplit[0]) + Number(1)) + "/" + textSplit[1];-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-<!--    <script type="text/javascript" th:inline="javascript">-->
-<!--        function click_prev_button() {-->
-<!--            var questions =/*[[${questions}]]*/-->
-<!--            var questions_img =/*[[${imgQuestion}]]*/-->
-<!--            var answers =/*[[${answers}]]*/-->
-<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
-<!--            var text = document.getElementById('text_nav');-->
-<!--            var textSplit = text.innerHTML.toString().split('/');-->
-<!--            if (textSplit[0] != 1) {-->
-<!--                if (questions[textSplit[0] - 2] != null) {-->
-<!--                    document.getElementById("card-front-text").innerHTML = questions[textSplit[0] - 2];-->
-<!--                    document.getElementById("card-front-text").style.display = '';-->
-<!--                    document.getElementById("card-front-img").style.display = 'none';-->
-<!--                } else {-->
-<!--                    document.getElementById("card-front-img").src = questions_img[textSplit[0] - 2];-->
-<!--                    document.getElementById("card-front-text").style.display = 'none';-->
-<!--                    document.getElementById("card-front-img").style.display = '';-->
-<!--                }-->
-<!--                // if (answers[textSplit[0] - 2] != null) {-->
-<!--                //     document.getElementById("card-back-text").innerHTML = answers[textSplit[0] - 2];-->
-<!--                //     document.getElementById("card-back-text").style.display = '';-->
-<!--                //     document.getElementById("card-front-img").style.display = 'none';-->
-<!--                // }-->
-<!--                // else{-->
-<!--                //     document.getElementById("card-back-img").src = answers_ing[textSplit[0] - 2];-->
-<!--                //     document.getElementById("card-back-text").style.display = 'none';-->
-<!--                //     document.getElementById("card-back-img").style.display = '';-->
-<!--                // }-->
-<!--                text.innerHTML = (Number(textSplit[0]) - Number(1)) + "/" + textSplit[1];-->
-<!--                // document.getElementById("card-back").style.display='none';-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-<!--    <script type="text/javascript" th:inline="javascript">-->
-<!--        function set_first_card() {-->
-<!--            var questions =/*[[${questions}]]*/-->
-<!--            var questions_img =/*[[${imgQuestion}]]*/-->
-<!--            var answers =/*[[${answers}]]*/-->
-<!--            var answers_ing =/*[[${imgAnswer}]]*/-->
-<!--            if (questions[0] != null) {-->
-<!--                set_front_question(questions[0]);-->
-<!--                // document.getElementById("card-front-text").innerHTML = questions[0];-->
-<!--                // document.getElementById("card-front-text").style.display = '';-->
-<!--                // document.getElementById("card-front-img").style.display = 'none';-->
-<!--            } else {-->
-<!--                document.getElementById("card-front-img").src = questions_img[0];-->
-<!--                document.getElementById("card-front-text").style.display = 'none';-->
-<!--                document.getElementById("card-front-img").style.display = '';-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-
-<!--    <script type="text/javascript" th:inline="javascript">-->
-<!--        function on_click_card() {-->
-<!--            // var card_front_text = document.getElementById("card-front-text");-->
-<!--            var card_back = document.getElementById("card-back");-->
-<!--            var card_front = document.getElementById("card-front");-->
-<!--            if (card_back.style.display == '') {-->
-<!--                card_back.style.display = 'none';-->
-<!--                card_front.style.display = '';-->
-
-<!--            } else {-->
-<!--                card_back.style.display = '';-->
-<!--                card_front.style.display = 'none';-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-<!--    <script type="text/javascript" th:inline="javascript">-->
-<!--        function set_front_question(question) {-->
-<!--            document.getElementById("card-front-text").innerHTML = question;-->
-<!--            document.getElementById("card-front-text").style.display = '';-->
-<!--            document.getElementById("card-front-img").style.display = 'none';-->
-<!--        }-->
-<!--    </script>-->
     <meta charset="UTF-8">
     <title>Уровни</title>
 </head>
@@ -145,7 +33,8 @@
             <div class="levels">
                 <div class="row row-cols-1">
                     <div th:each="level : ${levels}">
-                        <div class="level-item">
+                        <div class="level-item"
+                             th:onclick="'javascript:next_page_after_level(\'' + ${level.id} +'\');'">
                             <div class="level-item-name">
                                 <div class="level-item-name-text" th:text="${level.num_of_level}"></div>
                             </div>
@@ -161,16 +50,22 @@
                     </div>
                 </div>
             </div>
-            <div class="block-cards" th:onclick="on_click_card()">
-                <div class="cards">
-                    <div class="flipper" id="flipper">
+            <div class="block-cards">
+                <div class="cards" id="card">
+                    <div class="flipper" id="flipper" th:onclick="check_is_flip()">
                         <div class="front" id="card-front">
-                            <img id="card-front-img"/>
-                            <p id="card-front-text"></p>
+                            <div class="front-inner">
+                                <p class="title-cards" id="front-title">Вопрос</p>
+                                <img id="card-front-img" class="card-img"/>
+                                <span id="card-front-text" class="card-text"></span>
+                            </div>
                         </div>
                         <div class="back" id="card-back">
-                            <img id="card-back-img"/>
-                            <p id="card-back-text"></p>
+                            <div class="back-inner">
+                                <p class="title-cards" id="back-title">Ответ</p>
+                                <img id="card-back-img" class="card-img"/>
+                                <span id="card-back-text" class="card-text"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,9 +83,16 @@
                     <div class="title-level" th:text="${level.num_of_level}"></div>
                     <div th:each="card: ${level.cards}">
                         <div class="level-item-cards">
-                            <div class="level-item-cards-question" th:text="${card.question}">
+                            <div class="level-item-cards-question">
+                                <p class="title-cards">Вопрос</p>
+                                <img class="level-item-cards-question-img"/>
+                                <p class="level-item-cards-question-text"></p>
                             </div>
-                            <div class="level-item-cards-answer" th:text="${card.answer}"/>
+                            <div class="level-item-cards-answer">
+                                <p class="title-cards">Ответ</p>
+                                <img class="level-item-cards-answer-img"/>
+                                <p class="level-item-cards-answer-text"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -199,4 +101,136 @@
     </div>
 </div>
 </body>
+<script>
+    function tempFunction() {
+        set_the_level('level-item-name-text');
+        declension_of_words([' карточек', ' карточка', ' карточки'], 'level-item-number-text');
+        work_with_date('level-item-date', 'level-item-repeat');
+        set_the_level('title-level');
+        set_the_nav('card-nav-text');
+        set_listener();
+        set_first_card();
+        set_for_list_question_answer();
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function click_next_button() {
+        var questions =/*[[${questions}]]*/
+        var questions_img =/*[[${imgQuestion}]]*/
+        var answers =/*[[${answers}]]*/
+        var answers_ing =/*[[${imgAnswer}]]*/
+        var text = document.getElementById('text_nav');
+        var textSplit = text.innerHTML.toString().split('/');
+        if (textSplit[0] != textSplit[1]) {
+            if (questions[textSplit[0]] != null) {
+                const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
+                set_text_card(document.getElementById(side), questions[textSplit[0]], document.getElementById(hidden_part));
+            } else {
+                const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
+                set_img_card(document.getElementById(side), questions_img[textSplit[0]], document.getElementById(hidden_part));
+            }
+            if (answers[textSplit[0]] != null) {
+                const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
+                set_text_card(document.getElementById(side), answers[textSplit[0]], document.getElementById(hidden_part));
+            } else {
+                const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
+                set_img_card(document.getElementById(side), answers_ing[textSplit[0]], document.getElementById(hidden_part));
+            }
+            text.innerHTML = (Number(textSplit[0]) + Number(1)) + "/" + textSplit[1];
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function click_prev_button() {
+        var questions =/*[[${questions}]]*/
+        var questions_img =/*[[${imgQuestion}]]*/
+        var answers =/*[[${answers}]]*/
+        var answers_img =/*[[${imgAnswer}]]*/
+
+        var text = document.getElementById('text_nav');
+        var textSplit = text.innerHTML.toString().split('/');
+
+        if (textSplit[0] != 1) {
+            if (questions[textSplit[0] - 2] != null) {
+                const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
+                set_text_card(document.getElementById(side), questions[textSplit[0] - 2], document.getElementById(hidden_part));
+            } else {
+                const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
+                set_img_card(document.getElementById(side), questions_img[textSplit[0] - 2], document.getElementById(hidden_part));
+            }
+            if (answers[textSplit[0] - 2] != null) {
+                const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
+                set_text_card(document.getElementById(side), answers[textSplit[0] - 2], document.getElementById(hidden_part));
+            } else {
+                const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
+                set_img_card(document.getElementById(side), answers_img[textSplit[0] - 2], document.getElementById(hidden_part));
+            }
+            text.innerHTML = (Number(textSplit[0]) - Number(1)) + "/" + textSplit[1];
+        }
+    }
+</script>
+<script>
+    function check_side(front_default, back_default, other_front_default, other_back_default) {
+        const question_text = "Вопрос";
+        const answer_text = "Ответ"
+        if (document.getElementById("flipper").classList.contains("flipCard")) {
+            document.getElementById("back-title").innerHTML = question_text;
+            document.getElementById("front-title").innerHTML = answer_text;
+            document.getElementById("card-front").style.display = 'none';
+            document.getElementById("card-back").style.display = '';
+            return [back_default, other_back_default];
+        } else {
+            document.getElementById("back-title").innerHTML = answer_text;
+            document.getElementById("front-title").innerHTML = question_text;
+            document.getElementById("card-back").style.display = 'none';
+            document.getElementById("card-front").style.display = '';
+            return [front_default, other_front_default];
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function set_first_card() {
+        var questions =/*[[${questions}]]*/
+        var questions_img =/*[[${imgQuestion}]]*/
+        var answers =/*[[${answers}]]*/
+        var answers_img =/*[[${imgAnswer}]]*/
+
+        if (questions[0] != null) {
+            set_text_card(document.getElementById("card-front-text"), questions[0], document.getElementById("card-front-img"));
+        } else {
+            set_img_card(document.getElementById("card-front-img"), questions_img[0], document.getElementById("card-front-text"));
+        }
+        if (answers[0] != null) {
+            set_text_card(document.getElementById("card-back-text"), answers[0], document.getElementById("card-back-img"));
+        } else {
+            set_img_card(document.getElementById("card-back-img"), answers_img[0], document.getElementById("card-back-text"));
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function set_for_list_question_answer() {
+        var questions =/*[[${questions}]]*/
+        var questions_img =/*[[${imgQuestion}]]*/
+        var answers =/*[[${answers}]]*/
+        var answers_img =/*[[${imgAnswer}]]*/
+
+        var list_of_question = document.getElementsByClassName("level-item-cards-question-text");
+        var list_of_question_img = document.getElementsByClassName("level-item-cards-question-img")
+        var list_of_answer = document.getElementsByClassName("level-item-cards-answer-text");
+        var list_of_answer_img = document.getElementsByClassName("level-item-cards-answer-img");
+
+        for (i = 0; i < list_of_question.length; i++) {
+            if (questions[i] != null) {
+                set_text_card(list_of_question[i], questions[i], list_of_question_img[i]);
+            } else {
+                set_img_card(list_of_question_img[i], questions_img[i], list_of_question[i]);
+            }
+            if (answers[i] != null) {
+                set_text_card(list_of_answer[i], answers[i], list_of_answer_img[i]);
+            } else {
+                set_img_card(list_of_answer_img[i], answers_img[i], list_of_answer[i]);
+            }
+        }
+    }
+</script>
 </html>

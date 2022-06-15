@@ -2,6 +2,8 @@
     --text-color: #1B1D25;
     --text-color-transperent: #292A33;
     --color-cards: #c9caff;
+    --height-cards: 18em;
+    --width-inner-card: 80%;
 }
 
 .general {
@@ -63,34 +65,94 @@
 }
 
 .block-cards {
-    /*perspective: 1000;*/
     margin-top: 20px;
     width: 55%;
-    /*max-height: 400px;*/
     flex-direction: column;
     min-height: max-content;
     height: max-content;
     display: flex;
     flex-wrap: wrap;
+    background: transparent;
     justify-content: space-between;
 }
 
 
 .cards {
     color: var(--text-color);
-    word-break: break-all;
-    padding: 1em;
-    height: 15em;
-    overflow-x: hidden;
+    height: var(--height-cards);
     overflow-y: auto;
-    background-color: var(--color-cards);
+    /*scrollbar-gutter: stable;*/
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     border-radius: .25rem;
+}
+
+.flipCard {
+    transform: rotateY(180deg);
+}
+
+/*!* здесь находится скорость перевертывания *!*/
+.flipper {
+    padding-right: -1rem;
+    background: var(--color-cards);
+    word-break: break-all;
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: .5s linear;
+    -moz-transition: .5s linear;
+    -o-transition: .5s linear;
+    transition: .5s linear;
+    width: 100%;
+    height: var(--height-cards);
+    border-radius: .25rem;
+}
+
+/* скройте обратную сторону во время переворота */
+.front, .back {
+    padding-top: 10px;
+    backface-visibility: hidden;
+    position: absolute;
+    background: var(--color-cards);
+    height: max-content;
+    width: 100%;
+    text-align: center;
+}
+
+.card-img, .card-text {
+    max-width: none;
+    width: 100%;
+}
+
+.front-inner, .back-inner {
+    width: var(--width-inner-card);
+    margin-left: calc((100% - var(--width-inner-card)) / 2);
+}
+
+/* лицевая сторона размещена над обратной */
+.front {
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+    z-index: 2;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+/* обратная, изначально скрытая сторона */
+.back {
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 
 .card-nav {
     width: 30%;
     color: white;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 700;
     flex-direction: row;
     min-height: max-content;
@@ -100,20 +162,9 @@
     margin: 10px auto;
     text-align: center;
     justify-content: space-between;
-    display: block;
-
-
-}
-
-.card-nav-left {
     display: inline-block;
 }
-
 .card-nav-text {
-    display: inline-block;
-}
-
-.card-nav-right {
     display: inline-block;
 }
 
@@ -148,7 +199,9 @@
     border-width: thin;
     width: 60%;
 }
-
+.level-item-cards-answer-img, .level-item-cards-question-img {
+    width: 100%;
+}
 .title-level {
     margin-top: 40px;
     margin-bottom: 20px;
@@ -160,4 +213,8 @@
 .hr {
     margin-top: 10px;
     background-color: #333649;
+}
+
+.title-cards {
+    font-weight: 700;
 }

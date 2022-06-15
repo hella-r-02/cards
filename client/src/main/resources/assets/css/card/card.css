@@ -1,0 +1,151 @@
+:root {
+    --height-cards-repeating: 25em;
+    --text-color: #1B1D25;
+    --text-color-transperent: #292A33;
+    --color-cards: #c9caff;
+    --width-inner-card: 80%;
+}
+
+.main {
+    width: 100%;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    height: 100%;
+
+}
+
+.block-cards {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 45%;
+    flex-direction: column;
+    min-height: max-content;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    background: transparent;
+    justify-content: space-between;
+}
+
+
+.cards {
+    color: var(--text-color);
+    height: var(--height-cards-repeating);
+    overflow-y: auto;
+    /*scrollbar-gutter: stable;*/
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: .35rem;
+}
+
+.flipCard {
+    transform: rotateY(180deg);
+}
+::-webkit-scrollbar{
+    margin-left: 20px;
+}
+    /*/* здесь находится скорость перевертывания */
+.flipper {
+    margin-right: 20px;
+    padding-right: -1rem;
+    background: var(--color-cards);
+    word-break: break-all;
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: .5s linear;
+    -moz-transition: .5s linear;
+    -o-transition: .5s linear;
+    transition: .5s linear;
+    width: 100%;
+    height: var(--height-cards-repeating);
+    border-radius: .25rem;
+}
+
+/* скройте обратную сторону во время переворота */
+.front, .back {
+    padding-top: 10px;
+    font-size: 18px;
+    backface-visibility: hidden;
+    position: absolute;
+    background: var(--color-cards);
+    height: max-content;
+    width: 100%;
+    text-align: center;
+}
+
+.card-img, .card-text {
+    max-width: none;
+    background: var(--color-cards);
+    width: 100%;
+}
+
+.front-inner, .back-inner {
+    width: var(--width-inner-card);
+    margin-left: calc((100% - var(--width-inner-card)) / 2);
+}
+
+/* лицевая сторона размещена над обратной */
+.front {
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+    z-index: 2;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+/* обратная, изначально скрытая сторона */
+.back {
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
+.title-cards {
+    font-weight: 700;
+}
+
+.buttons {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 80%;
+    flex-direction: row;
+    min-height: max-content;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    background: transparent;
+    justify-content: space-between;
+}
+.button-success, .button-failure {
+    height: 50px;
+    width: 30%;
+    text-align: center;
+    font-weight: 700;
+    border-radius: .25rem;
+}
+.button-success {
+    background: rgba(197, 255, 240, 0.9);
+    border: none;
+}
+.button-failure {
+    background: rgba(255, 204, 213, 0.9);
+    border: none;
+}
+.card-nav {
+    font-weight: bold;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}

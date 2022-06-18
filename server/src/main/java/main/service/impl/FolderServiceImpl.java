@@ -36,4 +36,9 @@ public class FolderServiceImpl implements FolderService {
         Optional<Folder> folder = folderRepository.findByLevelId(id);
         return folder.orElse(null);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        folderRepository.deleteById(id);
+    }
 }

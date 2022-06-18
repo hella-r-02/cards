@@ -12,4 +12,6 @@ public interface FolderService {
     Folder findById(Long id);
 
     Folder findByLevelId(Long id);
+
+    void deleteById(Long id);
 }

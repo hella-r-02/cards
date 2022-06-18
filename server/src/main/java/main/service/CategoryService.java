@@ -6,4 +6,6 @@ import main.entity.Category;
 
 public interface CategoryService {
     List<Category> findAllCategories();
+
+    Category findByFolderId(Long id);
 }

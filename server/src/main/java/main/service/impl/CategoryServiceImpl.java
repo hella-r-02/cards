@@ -1,6 +1,7 @@
 package main.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAllCategories() {
         return (List<Category>) categoryRepository.findAll();
+    }
+
+    @Override
+    public Category findByFolderId(Long id) {
+        Optional<Category> categoryOptional = categoryRepository.findByFolderId(id);
+        return categoryOptional.orElse(null);
     }
 }

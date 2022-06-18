@@ -3,10 +3,12 @@
 <head>
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_the_level.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/work_with_date.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_the_nav.js}"></script>
@@ -15,6 +17,7 @@
     <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/check_is_flip.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_listener.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
 
     <meta charset="UTF-8">
     <title>Уровни</title>
@@ -22,7 +25,15 @@
 <body onload="tempFunction()">
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
-    <div class="title">Уровни карточек</div>
+    <div class="container-title">
+        <div class="title" th:text="${title}"></div>
+        <div class="container-title-icon">
+            <img class="img-title-button" th:src="@{/images/pen.svg}">
+            <img class="img-title-button popup-link" th:src="@{/images/cross.svg}"
+                 th:onclick="'javascript:remove_folder(\'' + ${folder.id} +'\',\'' + ${category.id} +'\');'"/>
+        </div>
+    </div>
+    <!--    <div class="title">Уровни карточек</div>-->
 </div>
 <div class="container">
     <div th:if="${#lists.isEmpty(levels)}">
@@ -50,7 +61,8 @@
                     </div>
                 </div>
             </div>
-            <div class="block-cards">
+            <!--            <div th:if="not ${#lists.isEmpty(cards)}">-->
+            <div class="block-cards" th:if="not ${#lists.isEmpty(cards)}">
                 <div class="cards" id="card">
                     <div class="flipper" id="flipper" th:onclick="check_is_flip()">
                         <div class="front" id="card-front">
@@ -80,22 +92,43 @@
             <hr class="hr">
             <div class="row row-cols-1">
                 <div th:each="level : ${levels}">
-                    <div class="title-level" th:text="${level.num_of_level}"></div>
-                    <div th:each="card: ${level.cards}">
-                        <div class="level-item-cards">
-                            <div class="level-item-cards-question">
-                                <p class="title-cards">Вопрос</p>
-                                <img class="level-item-cards-question-img"/>
-                                <p class="level-item-cards-question-text"></p>
-                            </div>
-                            <div class="level-item-cards-answer">
-                                <p class="title-cards">Ответ</p>
-                                <img class="level-item-cards-answer-img"/>
-                                <p class="level-item-cards-answer-text"></p>
+                    <div th:unless="${#lists.isEmpty(level.cards)}">
+                        <div class="title-level" th:text="${level.num_of_level}"></div>
+                        <div th:each="card: ${level.cards}">
+                            <div class="level-item-cards">
+                                <div class="level-item-cards-question">
+                                    <p class="title-cards">Вопрос</p>
+
+                                    <img class="level-item-cards-question-img"/>
+                                    <p class="level-item-cards-question-text"></p>
+                                </div>
+                                <div class="level-item-cards-answer">
+                                    <div class="title-buttons">
+                                        <p class="title-cards">Ответ</p>
+                                        <div class="title-buttons-container">
+                                            <img class="img-button" th:src="@{/images/pen.svg}">
+                                            <img class="img-button popup-link" th:src="@{/images/cross.svg}"
+                                                 th:onclick="'javascript:remove_card(\'' + ${card.id} +'\');'">
+                                        </div>
+                                    </div>
+                                    <img class="level-item-cards-answer-img"/>
+                                    <p class="level-item-cards-answer-text"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div id="popup" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <a class="popup-close">X</a>
+                <div class="popup-text">Вы действительно хотите удалить?</div>
+                <button class="button-popup" id="button-delete">Удалить</button>
             </div>
         </div>
     </div>
@@ -231,6 +264,38 @@
                 set_img_card(list_of_answer_img[i], answers_img[i], list_of_answer[i]);
             }
         }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    async function remove_card(card_id) {
+        popup();
+        const button = document.getElementById("button-delete");
+        button.addEventListener("click", async function () {
+            try {
+                const response = await fetch(("http://localhost:8081/card/delete/" + card_id).toString(), {
+                    method: 'post',
+                });
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+            document.location.reload()
+        });
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    async function remove_folder(folder_id, category_id) {
+        popup();
+        const button = document.getElementById("button-delete");
+        button.addEventListener("click", async function () {
+            try {
+                const response = await fetch(("http://localhost:8081/folder/delete/" + folder_id).toString(), {
+                    method: 'post',
+                });
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+            next_page("http://localhost:8081/folder/", category_id);
+        });
     }
 </script>
 </html>

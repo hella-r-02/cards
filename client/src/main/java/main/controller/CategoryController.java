@@ -29,4 +29,5 @@ public class CategoryController {
         modelAndView.addObject(model);
         return "category/categories.html";
     }
+
 }

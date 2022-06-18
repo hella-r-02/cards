@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import main.entity.Card;
@@ -78,7 +77,7 @@ public class CardController {
     public ResponseEntity<Card> successCards(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        restTemplate.postForEntity("http://localhost:8080/card/up/" + id, entity, String.class);
+        restTemplate.postForEntity(domain + "card/up/" + id, entity, String.class);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -87,7 +86,16 @@ public class CardController {
     public ResponseEntity<Card> failureCards(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        restTemplate.postForEntity("http://localhost:8080/card/down/" + id, entity, String.class);
+        restTemplate.postForEntity(domain + "card/down/" + id, entity, String.class);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/delete/{id}")
+    @ResponseBody
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        restTemplate.postForEntity(domain + "card/delete/" + id, entity, String.class);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

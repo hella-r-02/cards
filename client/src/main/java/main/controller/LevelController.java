@@ -20,7 +20,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import main.entity.Card;
+import main.entity.Category;
+import main.entity.Folder;
 import main.entity.Level;
+import main.utils.LevelUtils;
 
 @Controller
 @RequestMapping("/level")
@@ -37,10 +40,14 @@ public class LevelController {
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         Level[] listOfLevels = restTemplate.exchange(domain + "level/" + id, HttpMethod.GET, entity, Level[].class).getBody();
         Card[] listOfCards = restTemplate.exchange(domain + "card/folder/" + id, HttpMethod.GET, entity, Card[].class).getBody();
-
+        Folder folder = restTemplate.exchange(domain + "folder/level/" + id, HttpMethod.GET, entity, Folder.class).getBody();
+        Category category = restTemplate.exchange(domain + "category/folder/" + id, HttpMethod.GET, entity, Category.class).getBody();
         Level[] listOfLevelsWithCards = new Level[listOfLevels.length];
         for (int i = 0; i < listOfLevelsWithCards.length; i++) {
             listOfLevelsWithCards[i] = restTemplate.exchange(domain + "level/card/" + listOfLevels[i].getId(), HttpMethod.GET, entity, Level.class).getBody();
+            if (listOfLevels[i].getCards().size() == 0 && LevelUtils.isExpired(listOfLevels[i])) {
+                restTemplate.postForEntity(domain + "level/date/" + listOfLevels[i].getId(), entity, String.class);
+            }
         }
 
         String[] listOfQuestion = new String[listOfCards.length];
@@ -71,6 +78,9 @@ public class LevelController {
         model.addAttribute("answers", listOfAnswer);
         model.addAttribute("imgQuestion", imgQuestion);
         model.addAttribute("imgAnswer", imgAnswer);
+        model.addAttribute("title", category.getName() + '\\' + folder.getName());
+        model.addAttribute("folder", folder);
+        model.addAttribute("category", category);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(model);
         return "level/levels.html";

@@ -58,4 +58,9 @@ public class CardServiceImpl implements CardService {
     public void updateCardByDateAndLevel(Long id, Long level_id, Date date) {
         cardRepository.updateCardByDateAndLevel(id, level_id, date);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        cardRepository.deleteById(id);
+    }
 }

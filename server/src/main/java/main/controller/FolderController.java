@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,5 +42,12 @@ public class FolderController {
     public ResponseEntity<Folder> getFolderByLevelId(@PathVariable("id") Long id) {
         Folder folder = folderService.findByLevelId(id);
         return new ResponseEntity<>(folder, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/delete/{id}")
+    public ResponseEntity deleteById(@PathVariable("id") Long id) {
+        System.out.println("dldl");
+        folderService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

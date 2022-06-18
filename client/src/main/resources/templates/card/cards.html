@@ -9,6 +9,7 @@
     <script type="text/javascript" th:src="@{/scripts/level/set_img_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/card/redirect_back.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
 
     <meta charset="UTF-8">
     <title>Повторение карточек</title>
@@ -40,10 +41,10 @@
         </div>
         <div class="buttons">
             <button class="button-failure" id="button-failure"
-                    th:onclick="on_click_button('http://localhost:8081/card_rest/failure/')">Неверно
+                    th:onclick="on_click_button('http://localhost:8081/card/failure/')">Неверно
             </button>
             <button class="button-success" id="button-success"
-                    th:onclick="on_click_button('http://localhost:8081/card_rest/success/')">Верно
+                    th:onclick="on_click_button('http://localhost:8081/card/success/')">Верно
             </button>
         </div>
     </div>
@@ -52,6 +53,8 @@
 <script type="text/javascript" th:inline="javascript">
     async function on_click_button(address) {
         var cards =/*[[${cards}]]*/
+        var folder_id =/*[[${folderId}]]*/
+        var level_id =/*[[${levelId}]]*/
         const text_nav = document.getElementById("text_nav");
         const text_split = text_nav.innerHTML.toString().split('/');
         const id = cards[Number(text_split[0]) - Number(1)].id;
@@ -63,7 +66,14 @@
                 next_card(text_split[0]);
                 set_navigator(Number(text_split[0]) + Number(1));
             } else {
-                redirect_back();
+                try {
+                    const response = await fetch(("http://localhost:8081/level/update/" + level_id).toString(), {
+                        method: 'post',
+                    });
+                    next_page("http://localhost:8081/level/",folder_id);
+                } catch (err) {
+                    console.error(`Error: ${err}`);
+                }
             }
 
         } catch (err) {
@@ -74,20 +84,19 @@
 <script>
     function tempFunction() {
         set_listener();
-        // add_listener_for_buttons();
         set_navigator(1);
         next_card(0);
     }
 </script>
-<!--добавить обработку конца карточек-->
 <script type="text/javascript" th:inline="javascript">
     function set_navigator(number) {
         var cards =/*[[${cards}]]*/
+        var folder_id =/*[[${folderId}]]*/
         if (cards.length == 0) {
-            redirect_back();
+            next_page("http://localhost:8081/level/",folder_id);
         } else {
-            var text = document.getElementById("text_nav");
-                text.innerHTML = number + "/" + cards.length;
+            const text = document.getElementById("text_nav");
+            text.innerHTML = number + "/" + cards.length;
         }
     }
 </script>

@@ -32,7 +32,7 @@
         <div class="general-main">
             <div class="levels">
                 <div class="row row-cols-1">
-                    <div th:each="level : ${levels}">
+                    <div th:each="level : ${levelsWithCard}">
                         <div class="level-item"
                              th:onclick="'javascript:next_page_after_level(\'' + ${level.id} +'\');'">
                             <div class="level-item-name">
@@ -101,7 +101,7 @@
     </div>
 </div>
 </body>
-<script>
+<script type="text/javascript" th:inline="javascript">
     function tempFunction() {
         set_the_level('level-item-name-text');
         declension_of_words([' карточек', ' карточка', ' карточки'], 'level-item-number-text');

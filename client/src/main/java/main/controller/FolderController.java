@@ -30,18 +30,8 @@ public class FolderController {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        try {
-            Folder[] folderList = restTemplate.exchange(domain + "folder/" + id, HttpMethod.GET, entity, Folder[].class).getBody();
-            model.addAttribute("folders", folderList);
-            return "folder/folders";
-        }
-        catch (HttpClientErrorException exception) {
-//            model.addAttribute("error", exception.getStatusCode().getReasonPhrase());
-//            model.addAttribute("code", exception.getStatusCode().value());
-//            ModelAndView modelAndView = new ModelAndView();
-//            modelAndView.addObject(model);
-            return "error";
-        }
-
+        Folder[] folderList = restTemplate.exchange(domain + "folder/" + id, HttpMethod.GET, entity, Folder[].class).getBody();
+        model.addAttribute("folders", folderList);
+        return "folder/folders";
     }
 }

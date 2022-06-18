@@ -1,10 +1,15 @@
 package main.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import main.entity.Level;
@@ -26,4 +31,9 @@ public interface LevelRepository extends CrudRepository<Level, Long> {
             "and ((levels.num_of_level+1)=:num_of_level)", nativeQuery = true)
     Optional<Level> findPrevLevelByFolderId(Long id, Long num_of_level);
 
+    @Modifying
+    @Transactional
+    @Query(value = "update levels set next_replay=:date " +
+            "where levels.id=:id", nativeQuery = true)
+    void updateLevel(@Param("id") Long id, @Param("date") Date date);
 }

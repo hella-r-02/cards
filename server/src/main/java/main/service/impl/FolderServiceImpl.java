@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.entity.Folder;
-import main.exception.FolderNotFoundException;
 import main.repository.FolderRepository;
 import main.service.FolderService;
 
@@ -23,17 +22,13 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public List<Folder> findFoldersByCategoryId(Long id) {
-        return (List<Folder>) folderRepository.findByCategoryId(id);
+        return folderRepository.findByCategoryId(id);
     }
 
     @Override
     public Folder findById(Long id) {
         Optional<Folder> folderOptional = folderRepository.findById(id);
-        if (folderOptional.isPresent()) {
-            return folderOptional.get();
-        } else {
-            throw new FolderNotFoundException("folder not found");
-        }
+        return folderOptional.orElse(null);
     }
 
     @Override

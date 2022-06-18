@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +37,12 @@ public class LevelController {
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         Level[] listOfLevels = restTemplate.exchange(domain + "level/" + id, HttpMethod.GET, entity, Level[].class).getBody();
         Card[] listOfCards = restTemplate.exchange(domain + "card/folder/" + id, HttpMethod.GET, entity, Card[].class).getBody();
+
+        Level[] listOfLevelsWithCards = new Level[listOfLevels.length];
+        for (int i = 0; i < listOfLevelsWithCards.length; i++) {
+            listOfLevelsWithCards[i] = restTemplate.exchange(domain + "level/card/" + listOfLevels[i].getId(), HttpMethod.GET, entity, Level.class).getBody();
+        }
+
         String[] listOfQuestion = new String[listOfCards.length];
         String[] listOfAnswer = new String[listOfCards.length];
         String[] imgQuestion = new String[listOfCards.length];
@@ -54,6 +64,7 @@ public class LevelController {
             listOfAnswer[i] = listOfCards[i].getAnswer();
         }
         model.addAttribute("levels", listOfLevels);
+        model.addAttribute("levelsWithCard", listOfLevelsWithCards);
         model.addAttribute("num_of_levels", listOfLevels.length);
         model.addAttribute("cards", listOfCards);
         model.addAttribute("questions", listOfQuestion);
@@ -63,5 +74,14 @@ public class LevelController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(model);
         return "level/levels.html";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    @ResponseBody
+    public ResponseEntity<Level> updateDate(@PathVariable("id") Long id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        restTemplate.postForEntity(domain + "level/date/" + id, entity, String.class);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

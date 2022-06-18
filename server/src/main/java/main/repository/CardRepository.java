@@ -2,7 +2,6 @@ package main.repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,11 +16,6 @@ import main.entity.Card;
 @Repository
 public interface CardRepository extends CrudRepository<Card, Long> {
     List<Card> findByLevelId(Long id);
-
-    @Query(value = "select * from cards " +
-            "join levels l on l.id = cards.level_id and l.next_replay>=cards.next_replay " +
-            "where level_id in (select level_id from levels where level_id=:id)", nativeQuery = true)
-    List<Card> findBYLevelIDAndDate(Long id);
 
     @Query(value = "select * from cards " +
             "join levels l on l.id = cards.level_id " +
@@ -39,5 +33,5 @@ public interface CardRepository extends CrudRepository<Card, Long> {
     @Transactional
     @Query(value = "update cards set level_id=:level_id, next_replay=:date " +
             "where cards.id=:id", nativeQuery = true)
-    void updateCardByDateAndLevel(@Param("id") Long id, @Param("level_id") Long level_id, @Param("date")Date date);
+    void updateCardByDateAndLevel(@Param("id") Long id, @Param("level_id") Long level_id, @Param("date") Date date);
 }

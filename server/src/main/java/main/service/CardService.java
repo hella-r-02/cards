@@ -8,7 +8,7 @@ import main.entity.Card;
 public interface CardService {
     List<Card> findCardsByLevelId(Long id);
 
-    List<Card> findBYLevelIDAndDate(Long id);
+    List<Card> findByLevelIdAndDate(Long id);
 
     List<Card> findCardsByFolderId(Long id);
 

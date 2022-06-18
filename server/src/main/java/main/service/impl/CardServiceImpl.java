@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.entity.Card;
+import main.entity.Level;
 import main.repository.CardRepository;
+import main.repository.LevelRepository;
 import main.service.CardService;
+import main.utils.CardUtils;
 
 @Service
 public class CardServiceImpl implements CardService {
     @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    LevelRepository levelRepository;
 
     @Override
     public List<Card> findCardsByLevelId(Long id) {
@@ -22,8 +27,15 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> findBYLevelIDAndDate(Long id) {
-        return cardRepository.findBYLevelIDAndDate(id);
+    public List<Card> findByLevelIdAndDate(Long id) {
+        Optional<Level> levelOptional = levelRepository.findById(id);
+        if (levelOptional.isPresent()) {
+            Level level = levelOptional.get();
+            List<Card> cards = level.getCards();
+            cards.removeIf(c -> !CardUtils.isReadyToRepeat(level, c));
+            return cards;
+        }
+        return null;
     }
 
     @Override
@@ -37,7 +49,6 @@ public class CardServiceImpl implements CardService {
         return card.orElse(null);
     }
 
-    //проверка что id сущ
     @Override
     public void updateCard(Long id, Long level_id) {
         cardRepository.updateCard(id, level_id);

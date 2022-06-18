@@ -30,7 +30,7 @@ public class CardController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<List<Card>> getCardsByLevelIdAndDate(@PathVariable("id") Long id) {
-        List<Card> cards = cardService.findBYLevelIDAndDate(id);
+        List<Card> cards = cardService.findByLevelIdAndDate(id);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 

@@ -25,4 +25,14 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> categoryOptional = categoryRepository.findByFolderId(id);
         return categoryOptional.orElse(null);
     }
+
+    @Override
+    public void editCategory(Long id, String name) {
+        categoryRepository.updateCategory(id, name);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        categoryRepository.deleteById(id);
+    }
 }

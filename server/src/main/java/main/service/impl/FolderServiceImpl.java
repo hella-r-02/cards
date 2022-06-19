@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import main.entity.Folder;
 import main.repository.FolderRepository;
-import main.service.CardService;
 import main.service.FolderService;
-import main.service.LevelService;
 
 @Service
 public class FolderServiceImpl implements FolderService {

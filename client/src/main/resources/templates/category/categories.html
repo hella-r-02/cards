@@ -5,9 +5,11 @@
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/category/category_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/category/category.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
     <meta charset="UTF-8">
     <title>Категории</title>
 </head>
@@ -20,14 +22,24 @@
     <div class="container">
         <div class="category">
             <div th:each="category : ${categories}">
-                <div class="category-item" th:onclick="next_page('http://localhost:8081/folder/',[[${category.id}]])">
-                    <img class="img-setting" th:src="@{images/settings.svg}">
+                <div class="category-item">
+                    <div class="container-button">
+                        <img class="img-setting popup-link" th:src="@{/images/pen.svg}"
+                             th:data-parameter1="${category.id}"
+                             th:data-parameter2="${category.name}"
+                             th:onclick="edit_category(this.getAttribute('data-parameter1'),this.getAttribute('data-parameter2'))">
+                        <img class="img-setting popup-link" th:src="@{/images/cross.svg}"
+                             th:data-parameter1="${category.id}"
+                             th:onclick="remove_category(this.getAttribute('data-parameter1'))">
+                    </div>
                     <div class="category-item-block-number">
                         <div class="category-item-block-number-text" th:text="${#lists.size(category.folders)}"></div>
                     </div>
                     <div class="category-item-name">
                         <div class="category-item-name-text" th:text="${category.name} "/>
                     </div>
+                    <div class="category-temp"
+                         th:onclick="next_page('http://localhost:8081/folder/',[[${category.id}]])"/>
                 </div>
             </div>
         </div>
@@ -38,5 +50,63 @@
         <p>Категорий нет</p>
     </div>
 </div>
+<div class="wrapper">
+    <div id="popup" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <img class="popup-close" th:src="@{/images/cross.svg}">
+                <div class="popup-text">Вы действительно хотите удалить?</div>
+                <button class="button-popup" id="button-delete">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div id="popup_edit_category" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <img class="popup-close" th:src="@{/images/cross.svg}">
+                <form method="post" id="form_edit_folder">
+                    <div class="row row-cols-1">
+                        <input type="text" name="name" id="input_name" maxlength="50" class="input-text">
+                        <div class="button-popup-div">
+                            <button type="submit" class="input-button">Обновить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    function edit_category(category_id, name) {
+        popup('popup_edit_category');
+        var form = document.getElementById("form_edit_folder");
+        if (form) {
+            form.action = "/category/edit/" + category_id;
+            var input = document.getElementById("input_name");
+            input.placeholder = name;
+            input.value = name;
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function remove_category(category_id) {
+        popup('popup');
+        const button = document.getElementById("button-delete");
+        button.addEventListener("click", async function () {
+            try {
+                const response = await fetch(("http://localhost:8081/category/delete/" + category_id).toString(), {
+                    method: 'post',
+                });
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+            let address = 'http://localhost:8081/category';
+            window.location.href = address;
+            window.location.replace(address);
+        });
+    }
+</script>
 </html>

@@ -8,4 +8,8 @@ public interface CategoryService {
     List<Category> findAllCategories();
 
     Category findByFolderId(Long id);
+
+    void editCategory(Long id, String name);
+
+    void deleteById(Long id);
 }

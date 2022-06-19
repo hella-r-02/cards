@@ -1,3 +1,9 @@
+:root {
+    --container-padding: 10px;
+    --img_max_width: 16px;
+    --img-padding-left: 10px;
+}
+
 .category {
     position: relative;
     display: flex;
@@ -17,7 +23,7 @@
 
 .category-item-block-number {
     position: relative;
-    display: flex;
+    display: inline-block;
     flex-direction: row;
     color: #292A33;
     font-size: 15px;
@@ -47,11 +53,24 @@
     font-size: 20px;
 }
 
-.img-setting{
-    position:absolute;
-    top:10px;
-    right: 10px;
-    width: 100%;
-    max-width: 20px;
-    height: auto;
+.img-setting {
+    width: var(--img_max_width);
+    /*max-width: 20px;*/
+    height: 20px;
+    padding-left: var(--img-padding-left);
+}
+
+.category-temp {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: calc(var(--img_max_width) * 2 + var(--img-padding-left) + var(--container-padding));
+}
+
+.container-button {
+    position: absolute;
+    display: flex;
+    top: 10px;
+    right: var(--container-padding);
 }

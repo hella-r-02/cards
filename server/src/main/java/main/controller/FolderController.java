@@ -58,7 +58,7 @@ public class FolderController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Folder> editOperation(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("numOfLevels") int numOfLevels) {
+    public ResponseEntity<Folder> editFolder(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("numOfLevels") int numOfLevels) {
         folderService.updateFolder(id, name, numOfLevels);
         return new ResponseEntity<>(HttpStatus.OK);
     }

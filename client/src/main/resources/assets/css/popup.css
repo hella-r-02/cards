@@ -42,9 +42,9 @@
 }
 
 .popup-text {
-    margin-top:  10px;
+    margin-top: 10px;
     font-size: 18px;
-    color:black;
+    color: black;
 }
 
 .popup-close {
@@ -54,15 +54,44 @@
     font-size: 22px;
     color: black;
     text-decoration: none;
+    width: 10px;
 }
+
 .button-popup {
     align-items: center;
     justify-content: center;
-    background: #3a3d9e;
-    margin-top:  18px;
+    background: #5357c2;
+    margin-top: 18px;
     padding: 5px 5px;
     font-size: 20px;
     border: none;
-    color:white;
+    color: white;
     border-radius: .25rem;
+}
+
+.input-text, .input-number, .input-button {
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px 5px;
+    border-radius: .25rem;
+}
+
+.input-text, .input-number {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #5357c2;
+}
+
+.input-button {
+    font-weight: bold;
+    width: 35%;
+    max-width: 40%;
+    color: rgba(255, 255, 255, 0.95);
+    background: #5357c2;
+    border: none;
+}
+
+.button-popup-div {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

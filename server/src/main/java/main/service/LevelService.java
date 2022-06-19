@@ -1,5 +1,6 @@
 package main.service;
 
+import java.util.Date;
 import java.util.List;
 
 import main.entity.Level;
@@ -14,4 +15,14 @@ public interface LevelService {
     Level getLevelWithCardsThatReadyToRepeat(Long id);
 
     void updateLevel(Long id);
+
+    List<Level> getAllLevels();
+
+    void deleteById(Long id);
+
+    void addNewLevel(Long folderId, Date date, int numOfLevels);
+
+    Level findLevelByFolderIdAndNumOFLevel(Long folderId, int numOfLevels);
+
+    Level findById(Long id);
 }

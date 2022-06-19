@@ -5,15 +5,26 @@ import java.util.List;
 public class Folder {
     private Long id;
     private String name;
-    private Long numOfLevels;
+    private int numOfLevels;
     private List<Level> levels;
     private Category category;
 
-    public Long getNumOfLevels() {
+    public Folder() {
+    }
+
+    public Folder(Long id, String name, int numOfLevels, List<Level> levels, Category category) {
+        this.id = id;
+        this.name = name;
+        this.numOfLevels = numOfLevels;
+        this.levels = levels;
+        this.category = category;
+    }
+
+    public int getNumOfLevels() {
         return numOfLevels;
     }
 
-    public void setNumOfLevels(Long numOfLevels) {
+    public void setNumOfLevels(int numOfLevels) {
         this.numOfLevels = numOfLevels;
     }
 

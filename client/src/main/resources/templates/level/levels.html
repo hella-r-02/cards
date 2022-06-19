@@ -28,12 +28,13 @@
     <div class="container-title">
         <div class="title" th:text="${title}"></div>
         <div class="container-title-icon">
-            <img class="img-title-button" th:src="@{/images/pen.svg}">
+            <img class="img-title-button" th:src="@{/images/plus.svg}">
+            <img class="img-title-button popup-link" th:src="@{/images/pen.svg}"
+                 th:onclick="'javascript:edit_folder(\'' + ${folder.id} +'\');'">
             <img class="img-title-button popup-link" th:src="@{/images/cross.svg}"
                  th:onclick="'javascript:remove_folder(\'' + ${folder.id} +'\',\'' + ${category.id} +'\');'"/>
         </div>
     </div>
-    <!--    <div class="title">Уровни карточек</div>-->
 </div>
 <div class="container">
     <div th:if="${#lists.isEmpty(levels)}">
@@ -61,7 +62,6 @@
                     </div>
                 </div>
             </div>
-            <!--            <div th:if="not ${#lists.isEmpty(cards)}">-->
             <div class="block-cards" th:if="not ${#lists.isEmpty(cards)}">
                 <div class="cards" id="card">
                     <div class="flipper" id="flipper" th:onclick="check_is_flip()">
@@ -126,9 +126,30 @@
     <div id="popup" class="popup">
         <div class="popup-body">
             <div class="popup-content">
-                <a class="popup-close">X</a>
+                <img class="popup-close" th:src="@{/images/cross.svg}">
                 <div class="popup-text">Вы действительно хотите удалить?</div>
                 <button class="button-popup" id="button-delete">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div id="popup_edit_folder" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <img class="popup-close" th:src="@{/images/cross.svg}">
+                <form th:action="@{/folder/edit/{id}(id=${folder.getId()})}" method="post">
+                    <div class="row row-cols-1">
+                        <input type="text" th:value="${folder.name}" name="name" th:placeholder="${folder.name}"
+                               maxlength="50"
+                               class="input-text">
+                        <input type="number" th:value="${folder.numOfLevels}" name="numOfLevels"
+                               th:placeholder="${folder.numOfLevels}" class="input-number" min="1" max="10">
+                        <div class="button-popup-div">
+                            <button type="submit" class="input-button">Обновить</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -268,7 +289,7 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     async function remove_card(card_id) {
-        popup();
+        popup('popup');
         const button = document.getElementById("button-delete");
         button.addEventListener("click", async function () {
             try {
@@ -284,7 +305,7 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     async function remove_folder(folder_id, category_id) {
-        popup();
+        popup('popup');
         const button = document.getElementById("button-delete");
         button.addEventListener("click", async function () {
             try {
@@ -296,6 +317,11 @@
             }
             next_page("http://localhost:8081/folder/", category_id);
         });
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function edit_folder(folder_id) {
+        popup('popup_edit_folder');
     }
 </script>
 </html>

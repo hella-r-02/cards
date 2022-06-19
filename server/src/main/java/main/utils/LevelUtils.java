@@ -20,8 +20,7 @@ public class LevelUtils {
         if (diff <= level.getNum_of_level()) {
             calendar.add(Calendar.DATE, Math.toIntExact(level.getNum_of_level()));
         } else {
-            System.out.println(diff);
-            calendar.add(Calendar.DATE, Math.toIntExact(diff / level.getNum_of_level() + level.getNum_of_level()));
+            calendar.add(Calendar.DATE, Math.toIntExact(((diff % level.getNum_of_level()) + 1) * level.getNum_of_level()));
         }
         return calendar.getTime();
     }

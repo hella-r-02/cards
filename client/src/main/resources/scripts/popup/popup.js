@@ -1,10 +1,10 @@
-function popup() {
+function popup(id_popup) {
     const popupLinks = document.querySelectorAll('.popup-link');
     const body = document.querySelector('body'); //для блокировки боди
     const lockPadding = document.querySelectorAll(".lock-padding");
     let unlock = true;
     const timeout = 800;
-    const currentPopup = document.getElementById('popup');
+    const currentPopup = document.getElementById(id_popup);
     popupOpen(currentPopup);
     const popupCloseIcon = document.querySelectorAll('.popup-close');
     if (popupCloseIcon.length > 0) {

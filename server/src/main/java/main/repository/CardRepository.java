@@ -34,4 +34,10 @@ public interface CardRepository extends CrudRepository<Card, Long> {
     @Query(value = "update cards set level_id=:level_id, next_replay=:date " +
             "where cards.id=:id", nativeQuery = true)
     void updateCardByDateAndLevel(@Param("id") Long id, @Param("level_id") Long level_id, @Param("date") Date date);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update cards set level_id=:new_level_id " +
+            "where cards.level_id=:level_id", nativeQuery = true)
+    void updateCardsByLevel(@Param("level_id") Long level_id, @Param("new_level_id") Long new_level_id);
 }

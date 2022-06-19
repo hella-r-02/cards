@@ -36,4 +36,16 @@ public interface LevelRepository extends CrudRepository<Level, Long> {
     @Query(value = "update levels set next_replay=:date " +
             "where levels.id=:id", nativeQuery = true)
     void updateLevel(@Param("id") Long id, @Param("date") Date date);
+
+    @Query(value = "select * from levels " +
+            "join folders f on f.id = levels.folder_id " +
+            "where folder_id in (select folder_id from folders where folder_id=:id) " +
+            "and ((levels.num_of_level)=:num_of_level)", nativeQuery = true)
+    Optional<Level> findLevelByFolderIdAndNumOFLevel(Long id, int num_of_level);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into levels (folder_id, next_replay,num_of_level) " +
+            "values (:folder_id,:next_replay,:num_of_level)", nativeQuery = true)
+    void addNewLevel(@Param("folder_id") Long folder_id, @Param("next_replay") Date nextReplay, @Param("num_of_level") int numOfLevel);
 }

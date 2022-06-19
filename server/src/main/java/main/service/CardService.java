@@ -19,4 +19,6 @@ public interface CardService {
     void updateCardByDateAndLevel(Long id, Long level_id, Date date);
 
     void deleteById(Long id);
+
+    void updateCardsByLevel( Long level_id, Long new_level_id);
 }

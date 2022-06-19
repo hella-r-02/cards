@@ -9,16 +9,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.entity.Folder;
+import main.service.CardService;
 import main.service.FolderService;
+import main.service.LevelService;
 
 @RestController
 @RequestMapping("/folder")
 public class FolderController {
     @Autowired
     FolderService folderService;
+    @Autowired
+    LevelService levelService;
+    @Autowired
+    CardService cardService;
 
     @GetMapping()
     public ResponseEntity<List<Folder>> getFolders() {
@@ -46,8 +53,13 @@ public class FolderController {
 
     @PostMapping(value = "/delete/{id}")
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
-        System.out.println("dldl");
         folderService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/edit/{id}")
+    public ResponseEntity<Folder> editOperation(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("numOfLevels") int numOfLevels) {
+        folderService.updateFolder(id, name, numOfLevels);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

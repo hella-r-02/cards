@@ -14,4 +14,6 @@ public interface FolderService {
     Folder findByLevelId(Long id);
 
     void deleteById(Long id);
+
+    void updateFolder(Long id, String name, int numOfLevels);
 }

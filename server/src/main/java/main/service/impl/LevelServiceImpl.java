@@ -61,4 +61,31 @@ public class LevelServiceImpl implements LevelService {
             levelRepository.updateLevel(id, nextDate);
         }
     }
+
+    @Override
+    public List<Level> getAllLevels() {
+        return (List<Level>) levelRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        levelRepository.deleteById(id);
+    }
+
+    @Override
+    public void addNewLevel(Long folderId, Date date, int numOfLevels) {
+        levelRepository.addNewLevel(folderId, date, numOfLevels);
+    }
+
+    @Override
+    public Level findLevelByFolderIdAndNumOFLevel(Long folderId, int numOfLevels) {
+        Optional<Level> levelOptional = levelRepository.findLevelByFolderIdAndNumOFLevel(folderId, numOfLevels);
+        return levelOptional.orElse(null);
+    }
+
+    @Override
+    public Level findById(Long id) {
+        Optional<Level> levelOptional = levelRepository.findById(id);
+        return levelOptional.orElse(null);
+    }
 }

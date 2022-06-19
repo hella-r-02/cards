@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.entity.Card;
@@ -83,6 +84,13 @@ public class CardController {
     @PostMapping("/delete/{id}")
     public ResponseEntity deleteById(@PathVariable("id") Long id) {
         cardService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/update/level")
+    public ResponseEntity updateCardsBYLevel(@RequestParam("oldLevel") Long oldLevelId,
+                                             @RequestParam("newLevel") Long newLevelId) {
+        cardService.updateCardsByLevel(oldLevelId, newLevelId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

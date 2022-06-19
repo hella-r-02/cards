@@ -63,4 +63,9 @@ public class CardServiceImpl implements CardService {
     public void deleteById(Long id) {
         cardRepository.deleteById(id);
     }
+
+    @Override
+    public void updateCardsByLevel(Long level_id, Long new_level_id) {
+        cardRepository.updateCardsByLevel(level_id, new_level_id);
+    }
 }

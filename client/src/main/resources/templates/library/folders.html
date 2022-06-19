@@ -19,7 +19,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div th:each="folder : ${folders}">
                 <div class="coll">
-                    <div class="item" th:onclick="next_page('http://localhost:8081/level/',[[${folder.id}]])">
+                    <div class="item">
                         <div class="item-name">
                             <div class="item-name-text" th:text="${folder.name} "/>
                         </div>
@@ -34,7 +34,7 @@
 </div>
 <div th:unless="${not #lists.isEmpty(folders)}">
     <div class="container">
-    <p>Папок нет</p>
+        <p>Папок нет</p>
     </div>
 </div>
 </body>

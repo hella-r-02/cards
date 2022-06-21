@@ -118,4 +118,15 @@ public class FolderController {
         }
         return "redirect:/level/" + id;
     }
+
+    @PostMapping(value = "/add/{id}")
+    public String addFolder(@PathVariable("id") Long categoryId, @RequestParam("name") String name, @RequestParam("numOfLevels") int numOfLevels) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+        map.add("name", name);
+        map.add("numOfLevels", numOfLevels);
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, httpHeaders);
+        restTemplate.postForEntity(domain + "folder/add/" + categoryId, entity, String.class);
+        return "redirect:/category";
+    }
 }

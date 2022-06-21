@@ -4,8 +4,10 @@
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/category/category_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/category/category.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
@@ -24,6 +26,9 @@
             <div th:each="category : ${categories}">
                 <div class="category-item">
                     <div class="container-button">
+                        <img class="img-setting popup-link" th:src="@{/images/plus.svg}"
+                             th:data-parameter1="${category.id}"
+                             th:onclick="add_folder(this.getAttribute('data-parameter1'))"/>
                         <img class="img-setting popup-link" th:src="@{/images/pen.svg}"
                              th:data-parameter1="${category.id}"
                              th:data-parameter2="${category.name}"
@@ -65,12 +70,38 @@
     <div id="popup_edit_category" class="popup">
         <div class="popup-body">
             <div class="popup-content">
+                <a class="title-form">Изменение имени</a>
                 <img class="popup-close" th:src="@{/images/cross.svg}">
-                <form method="post" id="form_edit_folder">
+                <form method="post" id="form_edit_category">
                     <div class="row row-cols-1">
-                        <input type="text" name="name" id="input_name" maxlength="50" class="input-text">
+                        <label for="input_name" class="label">Имя</label>
+                        <input type="text" name="name" id="input_name" maxlength="50" class="input-text" required>
                         <div class="button-popup-div">
                             <button type="submit" class="input-button">Обновить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div id="popup_add_folder" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <a class="title-form">Добавление папки</a>
+                <img class="popup-close" th:src="@{/images/cross.svg}">
+                <form method="post" id="form_add_folder">
+                    <div class="row row-cols-1">
+                        <label for="input_name_folder" class="label">Имя</label>
+                        <input type="text" name="name" id="input_name_folder" maxlength="50" class="input-text"
+                               required>
+                        <label for="input_num_of_levels" class="label">Количество уровней</label>
+                        <input type="number" name="numOfLevels"
+                               class="input-number" id="input_num_of_levels"
+                               min="1" max="10" required pattern="[0-9]+">
+                        <div class="button-popup-div">
+                            <button type="submit" class="input-button">Добавить</button>
                         </div>
                     </div>
                 </form>
@@ -82,7 +113,7 @@
 <script type="text/javascript" th:inline="javascript">
     function edit_category(category_id, name) {
         popup('popup_edit_category');
-        var form = document.getElementById("form_edit_folder");
+        var form = document.getElementById("form_edit_category");
         if (form) {
             form.action = "/category/edit/" + category_id;
             var input = document.getElementById("input_name");
@@ -107,6 +138,16 @@
             window.location.href = address;
             window.location.replace(address);
         });
+    }
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    function add_folder(category_id) {
+        popup('popup_add_folder');
+        var form = document.getElementById("form_add_folder");
+        if (form) {
+            form.action = "/folder/add/" + category_id;
+        }
     }
 </script>
 </html>

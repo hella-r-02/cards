@@ -62,4 +62,16 @@ public class FolderController {
         folderService.updateFolder(id, name, numOfLevels);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/add/{id}")
+    public ResponseEntity<Folder> addFolder(@PathVariable("id") Long categoryId, @RequestParam("name") String name, @RequestParam("numOfLevels") int numOfLevels) {
+        folderService.addFolder(categoryId, name, numOfLevels);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/find/name/{name}")
+    public ResponseEntity<List<Folder>> findByName(@PathVariable("name") String name) {
+        List<Folder> folders = folderService.findByName(name);
+        return new ResponseEntity<>(folders, HttpStatus.OK);
+    }
 }

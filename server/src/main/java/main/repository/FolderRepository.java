@@ -1,5 +1,6 @@
 package main.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,4 +28,12 @@ public interface FolderRepository extends CrudRepository<Folder, Long> {
     @Query(value = "update folders set name=:name, num_of_levels=:numOfLevels " +
             "where folders.id=:id", nativeQuery = true)
     void updateFolder(@Param("id") Long id, @Param("name") String name, @Param("numOfLevels") int numOfLevels);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into folders (category_id, name, num_of_levels) " +
+            "values (:category_id,:name,:num_of_levels)", nativeQuery = true)
+    void addNewLevel(@Param("category_id") Long categoryId, @Param("name") String name, @Param("num_of_levels") int numOfLevels);
+
+    List<Folder> findByName(String name);
 }

@@ -46,6 +46,16 @@ public class FolderServiceImpl implements FolderService {
     public void updateFolder(Long id, String name, int numOfLevels) {
         folderRepository.updateFolder(id, name, numOfLevels);
     }
+
+    @Override
+    public void addFolder(Long categoryId, String name, int numOfLevels) {
+        folderRepository.addNewLevel(categoryId, name, numOfLevels);
+    }
+
+    @Override
+    public List<Folder> findByName(String name) {
+        return folderRepository.findByName(name);
+    }
 }
 
 

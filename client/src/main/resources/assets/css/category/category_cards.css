@@ -65,7 +65,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    right: calc(var(--img_max_width) * 2 + var(--img-padding-left) + var(--container-padding));
+    right: calc(var(--img_max_width) * 3 + var(--img-padding-left) * 2 + var(--container-padding));
 }
 
 .container-button {

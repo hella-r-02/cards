@@ -1,28 +1,28 @@
-function work_with_date(date, num_of_date) {
-    var listOfDate = document.getElementsByClassName(date);
-    var listOfNumberDate = document.getElementsByClassName(num_of_date);
+function work_with_date(date, num_of_date, index_year = 5) {
+    let listOfDate = document.getElementsByClassName(date);
+    let listOfNumberDate = document.getElementsByClassName(num_of_date);
     const repeat = 'повторить: '
-    var today = new Date();
-    var tomorrow = new Date(today);
+    const today = new Date();
+    let tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-    for (i = 0; i < listOfDate.length; i++) {
+    for (let i = 0; i < listOfDate.length; i++) {
         const tempStr = listOfDate[i].innerHTML.toString();
         const listSplit = tempStr.split([' ']);
-        if ((parseInt(listSplit[2]) < today.getDate() && month_to_number(listSplit[1]) == today.getMonth() && listSplit[5] == today.getFullYear())
-            || ((month_to_number(listSplit[1]) < today.getMonth()) && (listSplit[5] == today.getFullYear()))
+        if ((parseInt(listSplit[2]) < today.getDate() && month_to_number(listSplit[1]) == today.getMonth() && listSplit[index_year] == today.getFullYear())
+            || ((month_to_number(listSplit[1]) < today.getMonth()) && (listSplit[index_year] == today.getFullYear()))
             || (listSplit[5] < today.getFullYear())) {
-            set_overdue(listSplit, listOfDate, today);
+            set_overdue(listSplit, listOfDate, today, i,index_year);
 
-        } else if (month_to_number(listSplit[1]) == today.getMonth() && parseInt(listSplit[2]) == today.getDate() && listSplit[5] == today.getFullYear()) {
+        } else if (month_to_number(listSplit[1]) == today.getMonth() && parseInt(listSplit[2]) == today.getDate() && listSplit[index_year] == today.getFullYear()) {
             listOfDate[i].innerHTML = repeat;
             listOfNumberDate[i].innerHTML = '\u00A0 сегодня';
             listOfNumberDate[i].style.fontWeight = 700;
-        } else if (month_to_number(listSplit[1]) == tomorrow.getMonth() && parseInt(listSplit[2]) == tomorrow.getDate() && listSplit[5] == tomorrow.getFullYear()) {
+        } else if (month_to_number(listSplit[1]) == tomorrow.getMonth() && parseInt(listSplit[2]) == tomorrow.getDate() && listSplit[index_year] == tomorrow.getFullYear()) {
             listOfDate[i].innerHTML = repeat + ' завтра';
         } else {
             var dateHtml = repeat + parseInt(listSplit[2]) + " " + en_month_to_ru_month(listSplit[1]);
-            if (listSplit[5] != today.getFullYear()) {
-                dateHtml += " " + listSplit[5].toString();
+            if (listSplit[index_year] != today.getFullYear()) {
+                dateHtml += " " + listSplit[index_year].toString();
             }
             listOfDate[i].innerHTML = dateHtml;
         }
@@ -41,7 +41,7 @@ function en_month_to_ru_month(month) {
 }
 
 function decl(number, text_words) {
-    if (number%10==0 || number % 10 > 5 || ((number % 100 >= 10) && (number % 100 <= 19))) {
+    if (number % 10 == 0 || number % 10 > 5 || ((number % 100 >= 10) && (number % 100 <= 19))) {
         return number + text_words[0];
     } else if (number % 10 == 1) {
         return number + text_words[1];
@@ -50,10 +50,10 @@ function decl(number, text_words) {
     }
 }
 
-function set_overdue(listSplit, listOfDate, today) {
-    var tempDate = new Date(listSplit[5], month_to_number(listSplit[1]), parseInt(listSplit[2]));
-    var timeDiff = Math.abs(tempDate.getTime() - today.getTime());
-    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+function set_overdue(listSplit, listOfDate, today, i,index_year = 5) {
+    let tempDate = new Date(listSplit[index_year], month_to_number(listSplit[1]), parseInt(listSplit[2]));
+    const timeDiff = Math.abs(tempDate.getTime() - today.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     listOfDate[i].innerHTML = 'просрочено на ' + decl(diffDays, [' дней', ' день', ' дня']);
     listOfDate[i].style.color = 'red';
     listOfDate[i].style.fontWeight = 700;

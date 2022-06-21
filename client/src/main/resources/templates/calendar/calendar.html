@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/calendar/calendar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/category/category_cards.css}"/>
+
+    <script type="text/javascript" th:src="@{/scripts/level/next_page_after_level.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/add_category.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/set_the_level.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/level/work_with_date.js}"></script>
+
+    <meta charset="UTF-8">
+    <title>Календарный план</title>
+</head>
+<body onload="tempFunction()">
+<header th:insert="blocks/header :: header"></header>
+<div class="container">
+    <div class="title">Календарный план</div>
+</div>
+<div th:if="${not #lists.isEmpty(levels)}">
+    <div class="container">
+        <div class="category" id="row">
+        </div>
+    </div>
+</div>
+<div th:unless="${not #lists.isEmpty(levels)}">
+    <div class="container">
+        <p>Уровней нет</p>
+    </div>
+</div>
+<popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
+<script type="text/javascript" th:inline="javascript">
+    function tempFunction() {
+        set_calendar();
+        declension_of_words([' карточек', ' карточка', ' карточки'], 'level-item-number-text');
+        work_with_date('level-item-date', 'level-item-repeat', 3);
+        set_the_level('title-level');
+        set_the_level('level-item-name-text');
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function set_calendar() {
+        let num_of_date = 0;
+        var levels = /*[[${levels}]]*/;
+        add_title_date();
+        add_level();
+        set_data(0);
+        set_data_for_title(0);
+        for (let i = 1; i < levels.length; i++) {
+            if (levels[i].cards.length != 0) {
+                const date1 = new Date(levels[i - 1].next_replay);
+                const date2 = new Date(levels[i].next_replay);
+                if (date1 < date2) {
+                    add_title_date();
+                    set_data_for_title(i);
+                }
+                add_level();
+                set_data(i);
+            }
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function set_data(index) {
+        var levels = /*[[${levels}]]*/;
+        let folder_name = document.getElementsByClassName("level-item-folder-text");
+        folder_name[folder_name.length - 1].innerHTML = levels[index].category.name + "\\" + levels[index].folder.name;
+        let names = document.getElementsByClassName("level-item-name-text");
+        names[names.length - 1].innerHTML = levels[index].num_of_level;
+        let cards = document.getElementsByClassName("level-item-number-text");
+        cards[cards.length - 1].innerHTML = levels[index].cards.length;
+        let item = document.getElementsByClassName("level-item-calendar");
+        for (let i = 0; i < item.length; i++) {
+            if (levels[i].cards.length != 0) {
+                item[i].addEventListener("click", function () {
+                    next_page_after_level(levels[i].id);
+                });
+            }
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function set_data_for_title(index) {
+        var levels = /*[[${levels}]]*/;
+        let date_level = document.getElementsByClassName("level-item-date");
+        let date = new Date(levels[index].next_replay);
+        date_level[date_level.length - 1].innerHTML = date;
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function add_title_date() {
+        document.querySelector(".category").innerHTML += '<div class="date_repeating"> ' +
+            '<span class="level-item-date">' +
+            '</span>' +
+            '<span class="level-item-repeat"></span></div>';
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function add_level() {
+        document.querySelector(".category").innerHTML +=
+            '<div class="level-item-calendar" id="card">' +
+            '<div class="level-item-folder">' +
+            '<div class="level-item-folder-text"></div>' +
+            ' </div>' +
+            '<div class="level-item-name">' +
+            '<div class="level-item-name-text"></div>' +
+            ' </div>' +
+            ' <div class="level-item-number">' +
+            '<div class="level-item-number-text"></div>' +
+            '</div> ' +
+            '<div class="level-item-number">' +
+            '</div>' +
+            '</div';
+    }
+</script>
+<script>
+    function add_event_listener() {
+        var item = document.getElementsByClassName("level-item-calendar");
+        item[0].addEventListener("click", function () {
+            alert("a");
+        });
+        // for(let i = 0; i < item.length; i++) {
+        //     item[i].addEventListener("click", function() {
+        //     })
+        // }
+    }
+</script>
+</body>
+</html>

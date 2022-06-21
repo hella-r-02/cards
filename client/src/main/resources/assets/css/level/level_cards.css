@@ -41,10 +41,6 @@
     flex-direction: column;
 }
 
-/*.level-item-number-text {*/
-/*    margin-top: 10px;*/
-/*}*/
-
 .level-item-num-of-cards-text {
 }
 
@@ -56,7 +52,7 @@
     font-size: 15px;
 }
 
-.level-item-name {
+.level-item-name, .level-item-folder {
     font-weight: 700;
     position: relative;
     display: flex;
@@ -271,4 +267,8 @@
     width: 16px;
     padding-left: 5px;
     filter: brightness(0) invert(1);
+}
+
+.level-item-folder-text {
+    font-size: 20px;
 }

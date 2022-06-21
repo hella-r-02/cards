@@ -10,13 +10,13 @@
     overflow-y: auto;
     overflow-x: hidden;
     transition: all 0.6s ease 0s;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .popup.open {
     opacity: 1;
     visibility: visible;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .popup.open .popup-content {
@@ -29,7 +29,7 @@
     align-items: center;
     justify-content: center;
     padding: 30px 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .popup-content {
@@ -42,7 +42,7 @@
     justify-content: center;
     text-align: center;
     border-radius: .25rem;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .popup-text {

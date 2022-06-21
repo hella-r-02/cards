@@ -56,4 +56,14 @@ public class CategoryController {
         restTemplate.postForEntity(domain + "category/delete/" + id, entity, String.class);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/add")
+    public String addCategory(@RequestParam("name") String name) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+        map.add("name", name);
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, httpHeaders);
+        restTemplate.postForEntity(domain + "category/add", entity, String.class);
+        return "redirect:/category";
+    }
 }

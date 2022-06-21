@@ -11,6 +11,7 @@
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/add_category.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
     <meta charset="UTF-8">
     <title>Категории</title>
@@ -109,6 +110,7 @@
         </div>
     </div>
 </div>
+<popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
 </body>
 <script type="text/javascript" th:inline="javascript">
     function edit_category(category_id, name) {

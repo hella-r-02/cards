@@ -46,7 +46,11 @@ function popup(id_popup) {
     }
 
     function bodyLock() {
-        //const lockPaddingValue = window.innerWidth - document.querySelector('.wrapper').offsetWidth + 'px';
+    //    const lockPaddingValue = window.innerWidth - document.querySelector('.wrapper').offsetWidth + 'px';
+       //  for (let index = 0; index < lockPadding.length; index++) {
+       //      e1.style.paddingRight = lockPaddingValue;
+       //  }
+       // body.style.paddingRight = lockPaddingValue;
         body.classList.add('lock');
         unlock = false;
         setTimeout(function () {
@@ -56,11 +60,11 @@ function popup(id_popup) {
 
     function bodyUnlock() {
         setTimeout(function () {
-            for (let index = 0; index < lockPadding.length; index++) {
-                const e1 = lockPadding[index];
-                e1.style.paddingRight = '0px';
-            }
-            body.style.paddingRight = '0px';
+            // for (let index = 0; index < lockPadding.length; index++) {
+            //     const e1 = lockPadding[index];
+            //     e1.style.paddingRight = '0px';
+            // }
+            // body.style.paddingRight = '0px';
             body.classList.remove('lock');
         }, timeout);
     }

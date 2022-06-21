@@ -1,0 +1,22 @@
+<div th:fragment="popup_add_category">
+    <div class="wrapper">
+        <div id="popup_add_category" class="popup">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <a class="title-form">Добавление категории</a>
+                    <img class="popup-close" th:src="@{/images/cross.svg}">
+                    <form method="post" id="form_add_category">
+                        <div class="row row-cols-1">
+                            <label for="input_name_category" class="label">Имя</label>
+                            <input type="text" name="name" id="input_name_category" maxlength="50" class="input-text"
+                                   required>
+                            <div class="button-popup-div">
+                                <button type="submit" class="input-button">Добавить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

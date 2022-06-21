@@ -9,7 +9,7 @@ CREATE TABLE folders
     ID            SERIAL         NOT NULL PRIMARY KEY,
     NAME          varchar        NOT NULL,
     NUM_OF_LEVELS integer        not null,
-    category_id   integer unique NOT NULL,
+    category_id   integer  NOT NULL,
     FOREIGN KEY (category_id) references categories (id)
 );
 

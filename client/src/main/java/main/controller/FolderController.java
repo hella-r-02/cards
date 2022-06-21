@@ -127,6 +127,10 @@ public class FolderController {
         map.add("numOfLevels", numOfLevels);
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, httpHeaders);
         restTemplate.postForEntity(domain + "folder/add/" + categoryId, entity, String.class);
+        Folder[] folderList = restTemplate.exchange(domain + "folder/find/name/" + name, HttpMethod.GET, entity, Folder[].class).getBody();
+        if (folderList != null && folderList.length != 0) {
+            return "redirect:/level/" + folderList[folderList.length - 1].getId();
+        }
         return "redirect:/category";
     }
 }

@@ -46,4 +46,10 @@ public class CategoryController {
         categoryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/add")
+    public ResponseEntity<Category> addCategory(@RequestParam("name") String name) {
+        categoryService.addCategory(name);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

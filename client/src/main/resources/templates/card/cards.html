@@ -4,12 +4,16 @@
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/card/card.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
 
     <script type="text/javascript" th:src="@{/scripts/level/set_listener.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_img_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/card/redirect_back.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/add_category.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
 
     <meta charset="UTF-8">
     <title>Повторение карточек</title>
@@ -49,6 +53,7 @@
         </div>
     </div>
 </div>
+<popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
 </body>
 <script type="text/javascript" th:inline="javascript">
     async function on_click_button(address) {
@@ -70,7 +75,7 @@
                     const response = await fetch(("http://localhost:8081/level/update/" + level_id).toString(), {
                         method: 'post',
                     });
-                    next_page("http://localhost:8081/level/",folder_id);
+                    next_page("http://localhost:8081/level/", folder_id);
                 } catch (err) {
                     console.error(`Error: ${err}`);
                 }
@@ -93,7 +98,7 @@
         var cards =/*[[${cards}]]*/
         var folder_id =/*[[${folderId}]]*/
         if (cards.length == 0) {
-            next_page("http://localhost:8081/level/",folder_id);
+            next_page("http://localhost:8081/level/", folder_id);
         } else {
             const text = document.getElementById("text_nav");
             text.innerHTML = number + "/" + cards.length;

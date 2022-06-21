@@ -4,8 +4,14 @@
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
+
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main/add_category.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/popup/popup.js}"></script>
+
     <meta charset="UTF-8">
     <title>Папки</title>
 </head>
@@ -37,5 +43,6 @@
     <p>Папок нет</p>
     </div>
 </div>
+<popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
 </body>
 </html>

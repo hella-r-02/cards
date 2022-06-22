@@ -10,6 +10,10 @@
     <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/category/category_cards.css}"/>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
     <script type="text/javascript" th:src="@{/scripts/level/next_page_after_level.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
@@ -120,18 +124,6 @@
             '<div class="level-item-number">' +
             '</div>' +
             '</div';
-    }
-</script>
-<script>
-    function add_event_listener() {
-        var item = document.getElementsByClassName("level-item-calendar");
-        item[0].addEventListener("click", function () {
-            alert("a");
-        });
-        // for(let i = 0; i < item.length; i++) {
-        //     item[i].addEventListener("click", function() {
-        //     })
-        // }
     }
 </script>
 </body>

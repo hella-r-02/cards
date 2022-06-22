@@ -1,0 +1,18 @@
+:root {
+    --text-color: #1B1D25;
+    --text-color-transperent: #292A33;
+}
+.item-folder-category {
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: var(--text-color);
+}
+.item-folder-category-text{
+    font-size: 20px;
+}
+.item-name-text-folder{
+    font-size: 18px;
+    color: var(--text-color-transperent);
+}

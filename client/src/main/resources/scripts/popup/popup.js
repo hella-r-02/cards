@@ -3,7 +3,7 @@ function popup(id_popup) {
     const body = document.querySelector('body'); //для блокировки боди
     const lockPadding = document.querySelectorAll(".lock-padding");
     let unlock = true;
-    const timeout = 600;
+    const timeout = 400;
     const currentPopup = document.getElementById(id_popup);
     popupOpen(currentPopup);
     const popupCloseIcon = document.querySelectorAll('.popup-close');

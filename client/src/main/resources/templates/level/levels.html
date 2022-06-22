@@ -6,7 +6,12 @@
     <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/level/level_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/level/level.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
@@ -23,11 +28,12 @@
     <meta charset="UTF-8">
     <title>Уровни</title>
 </head>
-<body onload="tempFunction()" class="body">
+<body onload="tempFunction()">
+
 <header th:insert="blocks/header :: header"></header>
 <div class="container">
     <div class="container-title">
-        <div class="title" th:text="${title}"></div>
+        <div class="level-title" th:text="${title}"></div>
         <div class="container-title-icon">
             <img class="img-title-button" th:src="@{/images/plus.svg}">
             <img class="img-title-button popup-link" th:src="@{/images/pen.svg}"

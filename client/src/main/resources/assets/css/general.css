@@ -30,4 +30,5 @@ body {
     bottom: 0;
     padding: 8px;
     overflow-y: scroll;
+    font-family: 'Roboto Slab', serif;
 }

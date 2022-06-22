@@ -64,7 +64,6 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    color: #1B1D25;
 }
 
 .item-name-text {

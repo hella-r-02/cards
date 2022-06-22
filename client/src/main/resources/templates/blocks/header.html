@@ -3,23 +3,27 @@
     <div class="container">
         <a class="header-inner">
             <nav class="nav">
-                <a class="nav-link" href="http://localhost:8081/category">Главная</a>
-                <div class="dropdown">
-                    <a class="dropbtn">Библиотека ▼</a>
-                    <div id="myDropdown" class="dropdown-content">
-                        <a href="http://localhost:8081/category" class="dropdown__item">Категории</a>
-                        <a href="http://localhost:8081/folder">Папки</a>
-                    </div>
+                <div class="header-left">
+                    <a class="nav-link" href="http://localhost:8081/category">Главная</a>
                 </div>
-                <div class="dropdown">
-                    <a class="nav-link" href="#">Создать ▼</a>
-                    <div class="dropdown-content">
-                        <a class="dropdown__item popup-link"
-                           th:onclick="add_category()">Категорию</a>
-                        <a>Папку</a>
+                <div class="header-right">
+                    <div class="dropdown">
+                        <a class="dropbtn">Библиотека ▼</a>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="http://localhost:8081/category" class="dropdown__item">Категории</a>
+                            <a href="http://localhost:8081/folder">Папки</a>
+                        </div>
                     </div>
+                    <div class="dropdown">
+                        <a class="nav-link" href="#">Создать ▼</a>
+                        <div class="dropdown-content">
+                            <a class="dropdown-item popup-link"
+                               th:onclick="add_category()">Категорию</a>
+                            <a>Папку</a>
+                        </div>
+                    </div>
+                    <a class="nav-link" href="http://localhost:8081/calendar">Календарный план</a>
                 </div>
-                <a class="nav-link" href="http://localhost:8081/calendar">Календарный план</a>
             </nav>
         </a>
     </div>

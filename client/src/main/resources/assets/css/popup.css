@@ -9,14 +9,12 @@
     visibility: hidden;
     overflow-y: auto;
     overflow-x: hidden;
-    transition: all 0.6s ease 0s;
-    /*overflow: hidden;*/
+    transition: all 0.4s ease 0s;
 }
 
 .popup.open {
     opacity: 1;
     visibility: visible;
-    /*overflow: hidden;*/
 }
 
 .popup.open .popup-content {
@@ -29,7 +27,6 @@
     align-items: center;
     justify-content: center;
     padding: 30px 10px;
-    /*overflow: hidden;*/
 }
 
 .popup-content {
@@ -42,7 +39,6 @@
     justify-content: center;
     text-align: center;
     border-radius: .25rem;
-    /*overflow: hidden;*/
 }
 
 .popup-text {
@@ -58,7 +54,7 @@
     font-size: 22px;
     color: black;
     text-decoration: none;
-    width: 10px;
+    width: 15px;
 }
 
 .button-popup {

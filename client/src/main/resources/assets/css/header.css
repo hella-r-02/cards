@@ -25,6 +25,16 @@
     display: flex;
     position: relative;
 }
+.header-right{
+    top: 8px;
+    right: 20px;
+    position: absolute;
+}
+.header-left {
+    top: 8px;
+    position: absolute;
+
+}
 .dropbtn {
     background-color: transparent;
     display: inline-block;

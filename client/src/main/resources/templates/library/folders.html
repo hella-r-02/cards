@@ -4,8 +4,13 @@
     <link rel="stylesheet" th:href="@{/assets/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/main_cards.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/folder/folder_cards.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/popup.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/form/form.css}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 
     <script type="text/javascript" th:src="@{/scripts/main/declension_of_words.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main/next_page.js}"></script>
@@ -25,9 +30,12 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div th:each="folder : ${folders}">
                 <div class="coll">
-                    <div class="item">
+                    <div class="item" th:onclick="next_page('http://localhost:8081/level/',[[${folder.id}]])">
+                        <div class="item-folder-category">
+                            <div class="item-folder-category-text" th:text="${folder.category.name}"></div>
+                        </div>
                         <div class="item-name">
-                            <div class="item-name-text" th:text="${folder.name} "/>
+                            <div class="item-name-text-folder" th:text="${folder.name} "/>
                         </div>
                         <div class="item-number">
                             <div class="item-number-text" th:text="${#lists.size(folder.levels)}"></div>

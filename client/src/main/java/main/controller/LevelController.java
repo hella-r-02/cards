@@ -44,12 +44,11 @@ public class LevelController {
         Category category = restTemplate.exchange(domain + "category/folder/" + id, HttpMethod.GET, entity, Category.class).getBody();
         Level[] listOfLevelsWithCards = new Level[listOfLevels.length];
         for (int i = 0; i < listOfLevelsWithCards.length; i++) {
-            listOfLevelsWithCards[i] = restTemplate.exchange(domain + "level/card/" + listOfLevels[i].getId(), HttpMethod.GET, entity, Level.class).getBody();
             if (listOfLevels[i].getCards().size() == 0 && LevelUtils.isExpired(listOfLevels[i])) {
                 restTemplate.postForEntity(domain + "level/date/" + listOfLevels[i].getId(), entity, String.class);
             }
+            listOfLevelsWithCards[i] = restTemplate.exchange(domain + "level/card/" + listOfLevels[i].getId(), HttpMethod.GET, entity, Level.class).getBody();
         }
-
         String[] listOfQuestion = new String[listOfCards.length];
         String[] listOfAnswer = new String[listOfCards.length];
         String[] imgQuestion = new String[listOfCards.length];

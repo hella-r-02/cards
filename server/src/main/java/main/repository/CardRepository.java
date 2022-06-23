@@ -40,4 +40,41 @@ public interface CardRepository extends CrudRepository<Card, Long> {
     @Query(value = "update cards set level_id=:new_level_id " +
             "where cards.level_id=:level_id", nativeQuery = true)
     void updateCardsByLevel(@Param("level_id") Long level_id, @Param("new_level_id") Long new_level_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cards (level_id, question, answer, next_replay) " +
+            "values (:level_id,:question,:answer,:next_replay)", nativeQuery = true)
+    void addNewLevelTextQuestionTextAnswer(@Param("level_id") Long levelId,
+                                           @Param("question") String question,
+                                           @Param("answer") String answer,
+                                           @Param("next_replay") Date nextReplay);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cards (level_id, question, answer_image,next_replay) " +
+            "values (:level_id,:question,:answer,:next_replay)", nativeQuery = true)
+    void addNewLevelTextQuestionImgAnswer(@Param("level_id") Long levelId,
+                                          @Param("question") String question,
+                                          @Param("answer") byte[] answerImage,
+                                          @Param("next_replay") Date nextReplay);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cards (level_id, question_image, answer,next_replay) " +
+            "values (:level_id,:question,:answer,:next_replay)", nativeQuery = true)
+    void addNewLevelImgQuestionTextAnswer(@Param("level_id") Long levelId,
+                                          @Param("question") byte[] questionImage,
+                                          @Param("answer") String answer,
+                                          @Param("next_replay") Date nextReplay);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cards (level_id, question_image, answer_image,next_replay) " +
+            "values (:level_id,:question,:answer,:next_replay)", nativeQuery = true)
+    void addNewLevelImgQuestionImgAnswer(@Param("level_id") Long levelId,
+                                         @Param("question") byte[] questionImage,
+                                         @Param("answer") byte[] answerImage,
+                                         @Param("next_replay") Date nextReplay);
+
 }

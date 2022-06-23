@@ -35,7 +35,8 @@
     <div class="container-title">
         <div class="level-title" th:text="${title}"></div>
         <div class="container-title-icon">
-            <img class="img-title-button" th:src="@{/images/plus.svg}">
+            <img class="img-title-button  popup-link" th:src="@{/images/plus.svg}"
+                 th:onclick="'javascript:add_card(\'' + ${folder.id} +'\');'">
             <img class="img-title-button popup-link" th:src="@{/images/pen.svg}"
                  th:onclick="'javascript:edit_folder(\'' + ${folder.id} +'\');'">
             <img class="img-title-button popup-link" th:src="@{/images/cross.svg}"
@@ -162,6 +163,44 @@
         </div>
     </div>
 </div>
+<div class="wrapper">
+    <div id="popup_add_card" class="popup">
+        <div class="popup-body">
+            <div class="popup-content">
+                <img class="popup-close" th:src="@{/images/cross.svg}">
+                <form name="confirmationForm" th:action="@{/card/add/{id}(id=${folder.getId()})}" id="confirmationForm"
+                      method="post" enctype="multipart/form-data">
+                    <div class="coll-popup">
+                        <div class="popup-image text" id="question">
+                            <img class="popup-icon question" id="popup-icon-question" th:src="@{/images/camera.svg}"
+                                 onclick="change_input('popup-icon-question','question')"/>
+                            <input type="file" name="file_question" id="file-question" class="file question"
+                                   accept="image/*"
+                                   onchange="read_URL(this,'img-question')">
+                            <img class="popup-img-input" id="img-question" src="#" alt/>
+                            <textarea name="text_question" class="popup-input-text question"
+                                      id="text-question" form="confirmationForm" required></textarea>
+                        </div>
+                        <div class="popup-image text" id="answer">
+                            <img class="popup-icon answer" id="popup-icon-answer" th:src="@{/images/camera.svg}"
+                                 onclick="change_input('popup-icon-answer','answer')"/>
+                            <input type="file" name="file_answer" id="file-answer" class="file answer" accept="image/*"
+                                   onchange="read_URL(this,'img-answer','text-answer')">
+                            <img class="popup-img-input" id="img-answer" src="#" alt/>
+                            <textarea name="text_answer" class="popup-input-text answer" id="text-answer"
+                                      required></textarea>
+                        </div>
+                    </div>
+                    <!--            </div>-->
+                    <div class="button-popup-div add-card">
+                        <button class="input-button add-card" onClick="set_on_click_popup_add_card()">Сохранить
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
 </body>
 <script type="text/javascript" th:inline="javascript">
@@ -174,6 +213,7 @@
         set_listener();
         set_first_card();
         set_for_list_question_answer();
+        set_opacity_image_popup();
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
@@ -331,6 +371,118 @@
 <script type="text/javascript" th:inline="javascript">
     function edit_folder(folder_id) {
         popup('popup_edit_folder');
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function add_card(folder_id) {
+        popup('popup_add_card');
+    }
+</script>
+<script>
+    function read_URL(input, img, file_name) {
+        if (input.files && input.files[0]) {
+            if (input.files[0].type !== "image/jpeg" && input.files[0].type !== "image/jpg" && input.files[0].type !== "image/png") {
+                input.value = "";
+            } else {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    let blah = document.getElementById(img);
+                    if (blah != null) {
+                        blah.src = e.target.result;
+                    }
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+</script>
+<script>
+    function set_opacity_image_popup() {
+        let images_input = document.getElementsByClassName('file');
+        let images = document.getElementsByClassName('popup-img-input');
+        for (let i = 0; i < images_input.length; i++) {
+            images_input[i].style.display = "none";
+            images[i].style.display = "none";
+        }
+    }
+</script>
+<script>
+    function set_opacity_card_text_popup(id, display_type = "") {
+        let input_text = document.getElementById(id);
+        input_text.style.display = display_type;
+
+    }
+</script>
+<script>
+    function set_opacity_card_image_popup(id_input, id_img, display_type = "") {
+        let images_input = document.getElementById(id_input);
+        let images = document.getElementById(id_img);
+        images_input.style.display = display_type;
+        images.style.display = display_type;
+
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function change_input(icon_input, div_main_class_id) {
+        let icon = document.getElementById(icon_input);
+        let div_main_class = document.getElementById(div_main_class_id);
+
+        if (div_main_class != null && div_main_class.classList.contains('text')) {
+            //img
+            icon.src = "/images/pen.svg";
+            div_main_class.classList.remove('text');
+            div_main_class.classList.add('img');
+            if (div_main_class_id === 'question') {
+                set_opacity_card_text_popup("text-question", "none");
+                set_opacity_card_image_popup("file-question", "img-question");
+                document.getElementById("file-question").required = true;
+                document.getElementById("text-question").required = false;
+            } else {
+                set_opacity_card_text_popup("text-answer", "none");
+                set_opacity_card_image_popup("file-answer", "img-answer");
+                document.getElementById("file-answer").required = true;
+                document.getElementById("text-answer").required = false;
+            }
+
+        } else {
+            //text
+            icon.src = "/images/camera.svg";
+            div_main_class.classList.remove('img');
+            div_main_class.classList.add('text');
+            if (div_main_class_id === 'question') {
+                set_opacity_card_text_popup("text-question");
+                set_opacity_card_image_popup("file-question", "img-question", "none");
+                document.getElementById("file-question").required = false;
+                document.getElementById("text-question").required = true;
+            } else {
+                set_opacity_card_text_popup("text-answer");
+                set_opacity_card_image_popup("file-answer", "img-answer", "none");
+                document.getElementById("file-answer").required = false;
+                document.getElementById("text-answer").required = true;
+            }
+        }
+
+    }
+</script>
+<script>
+    function set_on_click_popup_add_card() {
+        let question = document.getElementById("question");
+        if (question.classList.contains("text")) {
+            let input_img = document.getElementById("file-question");
+            input_img.value = "";
+        } else {
+            let input_text = document.getElementById("text-question");
+            input_text.value = "";
+        }
+        let answer = document.getElementById("answer");
+        if (answer.classList.contains("text")) {
+            let input_img = document.getElementById("file-answer");
+            input_img.value = "";
+        } else {
+            let input_text = document.getElementById("text-answer");
+            input_text.value = "";
+        }
     }
 </script>
 </html>

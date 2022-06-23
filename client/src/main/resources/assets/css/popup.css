@@ -1,3 +1,9 @@
+:root {
+    --width-popup-icon: 20px;
+    --right-popup-icon: 5px;
+    --top-popup-icon: 5px;
+}
+
 .popup {
     position: fixed;
     width: 100%;
@@ -93,4 +99,73 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.popup-image {
+    width: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+    padding: calc(var(--width-popup-icon) + var(--top-popup-icon)) calc(var(--width-popup-icon) + var(--right-popup-icon));
+    border: 2px solid rgba(83, 87, 194, 0.5);
+    border-radius: .25rem;
+}
+
+.coll-popup {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.file {
+    width: 100%;
+    height: 50px;
+    border: 1px dashed #333;
+    position: relative;
+    cursor: pointer;
+}
+
+.file::before {
+    content: '';
+    position: absolute;
+    background: rgba(83, 87, 194, 0.36);
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.file::after {
+    content: 'Drag & Drop';
+    position: absolute;
+    color: #808080;
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup-icon {
+    position: absolute;
+    top: var(--top-popup-icon);
+    right: var(--top-popup-icon);
+    width: var(--width-popup-icon);
+}
+
+.popup-img-input {
+    width: 100%;
+    display: block;
+}
+
+.popup-input-text {
+    top: calc(var(--width-popup-icon) + var(--top-popup-icon));
+    left: calc(var(--width-popup-icon) + var(--right-popup-icon));
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #5357c2;
+    height: 42px;
+    width: 95%;
+    resize: none;
 }

@@ -2,7 +2,9 @@ package main.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import main.entity.Card;
+import main.entity.Category;
 import main.entity.Folder;
 import main.entity.Level;
 
@@ -61,7 +64,15 @@ public class FolderController {
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         Folder[] folderList = restTemplate.exchange(domain + "folder", HttpMethod.GET, entity, Folder[].class).getBody();
-        model.addAttribute("folders", folderList);
+        if (folderList != null) {
+            for (int i = 0; i < folderList.length; i++) {
+                Category category = restTemplate.exchange(domain + "category/folder/" + folderList[i].getId(), HttpMethod.GET, entity, Category.class).getBody();
+                folderList[i].setCategory(category);
+            }
+            Arrays.sort(folderList, Comparator.<Folder>comparingLong(folder1 -> folder1.getCategory().getId())
+                    .thenComparingLong(folder2 -> folder2.getCategory().getId()));
+            model.addAttribute("folders", folderList);
+        }
         return "library/folders";
     }
 
@@ -101,7 +112,7 @@ public class FolderController {
                                 map.add("oldLevel", tempLevel.getId());
                                 map.add("newLevel", lastLevel.getId());
                                 HttpEntity<MultiValueMap<String, Object>> entityCard = new HttpEntity<>(map, httpHeaders);
-                                restTemplate.postForEntity(domain + "card//update/level", entityLevelFindEachLevel, String.class);
+                                restTemplate.postForEntity(domain + "card/update/level", entityLevelFindEachLevel, String.class);
                             }
                         }
                         HttpEntity<String> entityLevel = new HttpEntity<>(httpHeaders);

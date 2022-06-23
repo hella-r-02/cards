@@ -20,5 +20,13 @@ public interface CardService {
 
     void deleteById(Long id);
 
-    void updateCardsByLevel( Long level_id, Long new_level_id);
+    void updateCardsByLevel(Long level_id, Long new_level_id);
+
+    void addNewLevelTextQuestionTextAnswer(Long levelId, String question, String answer, Date nextReplay);
+
+    void addNewLevelTextQuestionImgAnswer(Long levelId, String question, byte[] answerImage, Date nextReplay);
+
+    void addNewLevelImgQuestionTextAnswer(Long levelId, byte[] questionImage, String answer, Date nextReplay);
+
+    void addNewLevelImgQuestionImgAnswer(Long levelId, byte[] questionImage, byte[] answerImage, Date nextReplay);
 }

@@ -68,4 +68,24 @@ public class CardServiceImpl implements CardService {
     public void updateCardsByLevel(Long level_id, Long new_level_id) {
         cardRepository.updateCardsByLevel(level_id, new_level_id);
     }
+
+    @Override
+    public void addNewLevelTextQuestionTextAnswer(Long levelId, String question, String answer, Date nextReplay) {
+        cardRepository.addNewLevelTextQuestionTextAnswer(levelId, question, answer, nextReplay);
+    }
+
+    @Override
+    public void addNewLevelTextQuestionImgAnswer(Long levelId, String question, byte[] answerImage, Date nextReplay) {
+        cardRepository.addNewLevelTextQuestionImgAnswer(levelId, question, answerImage, nextReplay);
+    }
+
+    @Override
+    public void addNewLevelImgQuestionTextAnswer(Long levelId, byte[] questionImage, String answer, Date nextReplay) {
+        cardRepository.addNewLevelImgQuestionTextAnswer(levelId, questionImage, answer, nextReplay);
+    }
+
+    @Override
+    public void addNewLevelImgQuestionImgAnswer(Long levelId, byte[] questionImage, byte[] answerImage, Date nextReplay) {
+        cardRepository.addNewLevelImgQuestionImgAnswer(levelId, questionImage, answerImage, nextReplay);
+    }
 }

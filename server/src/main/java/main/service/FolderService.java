@@ -20,4 +20,6 @@ public interface FolderService {
     void addFolder(Long categoryId, String name, int numOfLevels);
 
     List<Folder> findByName(String name);
+
+    Folder FindByCardId(Long id);
 }

@@ -88,4 +88,48 @@ public class CardServiceImpl implements CardService {
     public void addNewLevelImgQuestionImgAnswer(Long levelId, byte[] questionImage, byte[] answerImage, Date nextReplay) {
         cardRepository.addNewLevelImgQuestionImgAnswer(levelId, questionImage, answerImage, nextReplay);
     }
+
+    @Override
+    public void updateCardByQuestion(Long id, String question) {
+        cardRepository.updateCardByQuestion(id, question);
+    }
+
+    @Override
+    public void updateCardByQuestionImage(Long id, byte[] questionImage) {
+        cardRepository.updateCardByQuestionImage(id, questionImage);
+    }
+
+    @Override
+    public void updateCardByAnswer(Long id, String answer) {
+        cardRepository.updateCardByAnswer(id, answer);
+    }
+
+    @Override
+    public void updateCardByAnswerImage(Long id, byte[] answerImage) {
+        cardRepository.updateCardByAnswerImage(id, answerImage);
+    }
+
+    @Override
+    public void updateCardByQuestionAndAnswer(Long id, String question, String answer) {
+        cardRepository.updateCardByQuestion(id, question);
+        cardRepository.updateCardByAnswer(id, answer);
+    }
+
+    @Override
+    public void updateCardByQuestionAndAnswerImage(Long id, String question, byte[] answerImage) {
+        cardRepository.updateCardByQuestion(id, question);
+        cardRepository.updateCardByAnswerImage(id, answerImage);
+    }
+
+    @Override
+    public void updateCardByQuestionImageAndAnswer(Long id, byte[] questionImage, String answer) {
+        cardRepository.updateCardByQuestionImage(id, questionImage);
+        cardRepository.updateCardByAnswer(id, answer);
+    }
+
+    @Override
+    public void updateCardByQuestionImageAndAnswerImage(Long id, byte[] questionImage, byte[] answerImage) {
+        cardRepository.updateCardByQuestionImage(id, questionImage);
+        cardRepository.updateCardByAnswerImage(id, answerImage);
+    }
 }

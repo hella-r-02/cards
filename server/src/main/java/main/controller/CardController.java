@@ -121,6 +121,43 @@ public class CardController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/edit/{id}")
+    @ResponseBody
+    public ResponseEntity<Card> editCard(@PathVariable("id") Long cardId,
+                                         @RequestParam("textQuestion") String textQuestion,
+                                         @RequestParam("byteQuestion") MultipartFile imgQuestion,
+                                         @RequestParam("textAnswer") String textAnswer,
+                                         @RequestParam("byteAnswer") MultipartFile imgAnswer) throws IOException {
+
+        System.out.println("dkdldl");
+        System.out.println(textQuestion + " " + imgQuestion.getBytes().length + " " + textAnswer + " " + imgAnswer.isEmpty());
+        if (!textQuestion.isEmpty()) {
+            if (!textAnswer.isEmpty()) {
+                cardService.updateCardByQuestionAndAnswer(cardId, textQuestion, textAnswer);
+            } else if (!imgAnswer.isEmpty()) {
+                cardService.updateCardByQuestionAndAnswerImage(cardId, textQuestion, imgAnswer.getBytes());
+
+            } else {
+                cardService.updateCardByQuestion(cardId, textQuestion);
+            }
+        } else if (!textAnswer.isEmpty()) {
+            if (!imgQuestion.isEmpty()) {
+                cardService.updateCardByQuestionImageAndAnswer(cardId, imgQuestion.getBytes(), textAnswer);
+            } else {
+                cardService.updateCardByAnswer(cardId, textAnswer);
+            }
+        } else if (!imgQuestion.isEmpty()) {
+            if (!imgAnswer.isEmpty()) {
+                cardService.updateCardByQuestionImageAndAnswerImage(cardId, imgQuestion.getBytes(), imgAnswer.getBytes());
+            } else {
+                cardService.updateCardByQuestionImage(cardId, imgQuestion.getBytes());
+            }
+        } else {
+            cardService.updateCardByAnswerImage(cardId, imgAnswer.getBytes());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
 

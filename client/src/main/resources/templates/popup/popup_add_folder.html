@@ -1,0 +1,26 @@
+<div th:fragment="popup_add_folder">
+    <div class="wrapper">
+        <div id="popup_add_folder" class="popup">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <a class="title-form">Добавление папки</a>
+                    <img class="popup-close" th:src="@{/images/cross.svg}">
+                    <form method="post" id="form_add_folder">
+                        <div class="row row-cols-1">
+                            <label for="input_name_folder" class="label">Имя</label>
+                            <input type="text" name="name" id="input_name_folder" maxlength="50" class="input-text"
+                                   required>
+                            <label for="input_num_of_levels" class="label">Количество уровней</label>
+                            <input type="number" name="numOfLevels"
+                                   class="input-number" id="input_num_of_levels"
+                                   min="1" max="10" required pattern="[0-9]+">
+                            <div class="button-popup-div">
+                                <button type="submit" class="input-button">Добавить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

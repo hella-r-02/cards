@@ -53,7 +53,7 @@ public class LevelController {
         return new ResponseEntity<>(levels, HttpStatus.OK);
     }
 
-    @PostMapping(value = "add/folder/{id}")
+    @PostMapping(value = "/add/folder/{id}")
     public void addLevelsByFolderId(@PathVariable("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date date,
                                     @RequestParam("currentNumOfLevels") int currentNumOfLevels) {
         levelService.addNewLevel(id, date, currentNumOfLevels);

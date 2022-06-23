@@ -138,8 +138,18 @@ public class FolderController {
         map.add("numOfLevels", numOfLevels);
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, httpHeaders);
         restTemplate.postForEntity(domain + "folder/add/" + categoryId, entity, String.class);
+
         Folder[] folderList = restTemplate.exchange(domain + "folder/find/name/" + name, HttpMethod.GET, entity, Folder[].class).getBody();
         if (folderList != null && folderList.length != 0) {
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            map.add("date", dateFormat.format(date));
+            for (int i = 0; i < numOfLevels; i++) {
+                map.remove("currentNumOfLevels");
+                map.add("currentNumOfLevels", i+1);
+                HttpEntity<MultiValueMap<String, Object>> entityAddLevel = new HttpEntity<>(map, httpHeaders);
+                restTemplate.postForEntity(domain + "level/add/folder/" + folderList[folderList.length - 1].getId(), entityAddLevel, String.class);
+            }
             return "redirect:/level/" + folderList[folderList.length - 1].getId();
         }
         return "redirect:/category";

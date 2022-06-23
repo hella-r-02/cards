@@ -1,0 +1,24 @@
+<div th:fragment="popup_edit_folder">
+    <div class="wrapper">
+        <div id="popup_edit_folder" class="popup">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <img class="popup-close" th:src="@{/images/cross.svg}">
+                    <form th:action="@{/folder/edit/{id}(id=${folder.getId()})}" method="post">
+                        <div class="row row-cols-1">
+                            <input type="text" th:value="${folder.name}" name="name" th:placeholder="${folder.name}"
+                                   maxlength="50"
+                                   class="input-text" required>
+                            <input type="number" th:value="${folder.numOfLevels}" name="numOfLevels"
+                                   th:placeholder="${folder.numOfLevels}" class="input-number"
+                                   min="1" max="10" required pattern="[0-9]+">
+                            <div class="button-popup-div">
+                                <button type="submit" class="input-button">Обновить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

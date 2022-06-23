@@ -29,4 +29,20 @@ public interface CardService {
     void addNewLevelImgQuestionTextAnswer(Long levelId, byte[] questionImage, String answer, Date nextReplay);
 
     void addNewLevelImgQuestionImgAnswer(Long levelId, byte[] questionImage, byte[] answerImage, Date nextReplay);
+
+    void updateCardByQuestion(Long id, String question);
+
+    void updateCardByQuestionImage(Long id, byte[] questionImage);
+
+    void updateCardByAnswer(Long id, String answer);
+
+    void updateCardByAnswerImage(Long id, byte[] answerImage);
+
+    void updateCardByQuestionAndAnswer(Long id, String question, String answer);
+
+    void updateCardByQuestionAndAnswerImage(Long id, String question, byte[] answerImage);
+
+    void updateCardByQuestionImageAndAnswer(Long id, byte[] questionImage, String answer);
+
+    void updateCardByQuestionImageAndAnswerImage(Long id, byte[] questionImage, byte[] answerImage);
 }

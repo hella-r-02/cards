@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import main.entity.Card;
 import main.entity.Folder;
+import main.utils.CardUtils;
 
 @Controller
 @RequestMapping("/card")
@@ -93,6 +94,7 @@ public class CardController {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("textQuestion", textQuestion);
         map.add("textAnswer", textAnswer);
+
         File fileQuestion = new File(tempFolder + multipartFileQuestion.getName() + ".png");
         multipartFileQuestion.transferTo(fileQuestion);
         FileSystemResource fileSystemResourceQuestion = new FileSystemResource(fileQuestion);
@@ -109,5 +111,30 @@ public class CardController {
         fileQuestion.deleteOnExit();
         return "redirect:/level/" + folderId;
 
+    }
+
+    @PostMapping(value = "/edit/{id}")
+    public String editCard(@PathVariable("id") Long cardId,
+                           @RequestParam("file_question") MultipartFile multipartFileQuestion,
+                           @RequestParam("text_question") String textQuestion,
+                           @RequestParam("file_answer") MultipartFile multipartFileAnswer,
+                           @RequestParam("text_answer") String textAnswer) throws IOException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        Folder folder = restTemplate.exchange(domain + "folder/find/card/" + cardId, HttpMethod.GET, entity, Folder.class).getBody();
+
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+
+        FileSystemResource fileSystemResourceQuestion = CardUtils.createTempFileSystemResource(multipartFileQuestion);
+        map.add("byteQuestion", fileSystemResourceQuestion);
+        FileSystemResource fileSystemResourceAnswer = CardUtils.createTempFileSystemResource(multipartFileAnswer);
+        map.add("byteAnswer", fileSystemResourceAnswer);
+        map.add("textQuestion", textQuestion);
+        map.add("textAnswer", textAnswer);
+
+        HttpEntity<MultiValueMap<String, Object>> entityPost = new HttpEntity<>(map, httpHeaders);
+        restTemplate.postForEntity(domain + "card/edit/" + cardId, entityPost, String.class);
+        return "redirect:/level/" + folder.getId();
     }
 }

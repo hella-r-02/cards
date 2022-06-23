@@ -1,0 +1,47 @@
+<div th:fragment="popup_level_card">
+    <div class="wrapper">
+        <div id="popup_card" class="popup">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <img class="popup-close" th:src="@{/images/cross.svg}">
+                    <form name="confirmationForm" id="confirmationForm"
+                          method="post" enctype="multipart/form-data">
+                        <div class="coll-popup">
+                            <div class="popup-card-title">Вопрос</div>
+                            <div class="popup-card-title">Ответ</div>
+                        </div>
+                        <div class="coll-popup">
+                            <div class="popup-image text" id="question">
+                                <img class="popup-icon question" id="popup-icon-question" th:src="@{/images/camera.svg}"
+                                     onclick="change_input('popup-icon-question','question')"/>
+                                <input type="file" name="file_question" id="file-question" class="file question"
+                                       accept="image/*"
+                                       onchange="read_URL(this,'img-question')">
+                                <img class="popup-img-input" id="img-question" src="#" alt/>
+                                <textarea name="text_question" class="popup-input-text question"
+                                          id="text-question" form="confirmationForm" required></textarea>
+                            </div>
+                            <div class="popup-image text" id="answer">
+                                <img class="popup-icon answer" id="popup-icon-answer" th:src="@{/images/camera.svg}"
+                                     onclick="change_input('popup-icon-answer','answer')"/>
+                                <input type="file" name="file_answer" id="file-answer" class="file answer"
+                                       accept="image/*"
+                                       onchange="read_URL(this,'img-answer','text-answer')">
+                                <img class="popup-img-input" id="img-answer" src="#" alt/>
+                                <textarea name="text_answer" class="popup-input-text answer" id="text-answer"
+                                          required></textarea>
+                            </div>
+                        </div>
+                        <div class="button-popup-div add-card">
+                            <button class="input-button add-card btn btn-primary"
+                                    type="submit" name="submit" onClick="set_on_click_popup_card()"
+                                    id="button_popup_card">
+                                Сохранить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

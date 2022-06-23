@@ -77,4 +77,28 @@ public interface CardRepository extends CrudRepository<Card, Long> {
                                          @Param("answer") byte[] answerImage,
                                          @Param("next_replay") Date nextReplay);
 
+    @Modifying
+    @Transactional
+    @Query(value = "update cards set question=:question, question_image=null " +
+            "where cards.id=:id", nativeQuery = true)
+    void updateCardByQuestion(@Param("id") Long id, @Param("question") String question);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update cards set question=null, question_image=:question_image " +
+            "where cards.id=:id", nativeQuery = true)
+    void updateCardByQuestionImage(@Param("id") Long id, @Param("question_image") byte[] questionImage);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update cards set answer=:answer, answer_image=null " +
+            "where cards.id=:id", nativeQuery = true)
+    void updateCardByAnswer(@Param("id") Long id, @Param("answer") String answer);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update cards set answer=null, answer_image=:answer_image " +
+            "where cards.id=:id", nativeQuery = true)
+    void updateCardByAnswerImage(@Param("id") Long id, @Param("answer_image") byte[] answerImage);
+
 }

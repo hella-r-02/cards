@@ -133,79 +133,12 @@
         </div>
     </div>
 </div>
-<div class="wrapper">
-    <div id="popup" class="popup">
-        <div class="popup-body">
-            <div class="popup-content">
-                <img class="popup-close" th:src="@{/images/cross.svg}">
-                <div class="popup-text">Вы действительно хотите удалить?</div>
-                <button class="button-popup" id="button-delete">Удалить</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="wrapper">
-    <div id="popup_edit_folder" class="popup">
-        <div class="popup-body">
-            <div class="popup-content">
-                <img class="popup-close" th:src="@{/images/cross.svg}">
-                <form th:action="@{/folder/edit/{id}(id=${folder.getId()})}" method="post">
-                    <div class="row row-cols-1">
-                        <input type="text" th:value="${folder.name}" name="name" th:placeholder="${folder.name}"
-                               maxlength="50"
-                               class="input-text" required>
-                        <input type="number" th:value="${folder.numOfLevels}" name="numOfLevels"
-                               th:placeholder="${folder.numOfLevels}" class="input-number"
-                               min="1" max="10" required pattern="[0-9]+">
-                        <div class="button-popup-div">
-                            <button type="submit" class="input-button">Обновить</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="wrapper">
-    <div id="popup_add_card" class="popup">
-        <div class="popup-body">
-            <div class="popup-content">
-                <img class="popup-close" th:src="@{/images/cross.svg}">
-                <!--                th:action="@{/card/add/{id}(id=${folder.getId()})}"-->
-                <form name="confirmationForm" id="confirmationForm"
-                      method="post" enctype="multipart/form-data">
-                    <div class="coll-popup">
-                        <div class="popup-image text" id="question">
-                            <img class="popup-icon question" id="popup-icon-question" th:src="@{/images/camera.svg}"
-                                 onclick="change_input('popup-icon-question','question')"/>
-                            <input type="file" name="file_question" id="file-question" class="file question"
-                                   accept="image/*"
-                                   onchange="read_URL(this,'img-question')">
-                            <img class="popup-img-input" id="img-question" src="#" alt/>
-                            <textarea name="text_question" class="popup-input-text question"
-                                      id="text-question" form="confirmationForm" required></textarea>
-                        </div>
-                        <div class="popup-image text" id="answer">
-                            <img class="popup-icon answer" id="popup-icon-answer" th:src="@{/images/camera.svg}"
-                                 onclick="change_input('popup-icon-answer','answer')"/>
-                            <input type="file" name="file_answer" id="file-answer" class="file answer" accept="image/*"
-                                   onchange="read_URL(this,'img-answer','text-answer')">
-                            <img class="popup-img-input" id="img-answer" src="#" alt/>
-                            <textarea name="text_answer" class="popup-input-text answer" id="text-answer"
-                                      required></textarea>
-                        </div>
-                    </div>
-                    <div class="button-popup-div add-card">
-                        <button class="input-button add-card" onClick="set_on_click_popup_add_card()" type="submit">
-                            Сохранить
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<popup th:insert="blocks/popup_add_category :: popup_add_category"></popup>
+
+<popup th:insert="popup/popup_remove :: popup_remove"></popup>
+<popup th:insert="popup/popup_edit_folder :: popup_edit_folder"></popup>
+<popup th:insert="popup/popup_level_card :: popup_level_card"></popup>
+<popup th:insert="popup/popup_add_category :: popup_add_category"></popup>
+
 </body>
 <script type="text/javascript" th:inline="javascript">
     function tempFunction() {
@@ -330,7 +263,7 @@
                 if (cards[i].answer != null) {
                     set_text_card(list_of_answer[indexList], cards[i].answer, list_of_answer_img[indexList]);
                 } else {
-                    set_img_card(list_of_answer_img[indexList], typeImage + cards[j * i + i].answer_image, list_of_answer[indexList]);
+                    set_img_card(list_of_answer_img[indexList], typeImage + cards[i].answer_image, list_of_answer[indexList]);
                 }
                 indexList++;
             }
@@ -376,14 +309,28 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     function add_card(folder_id) {
-        popup('popup_add_card');
+        popup('popup_card');
+        document.getElementById("button_popup_card").innerText = "Сохранить";
         let form = document.getElementById("confirmationForm");
         form.action = "/card/add/" + folder_id;
+
+        var text_question = document.getElementById("text-question");
+        var text_answer = document.getElementById("text-answer");
         document.getElementById("file-question").required = false;
-        document.getElementById("text-question").required = true;
+        text_question.required = true;
         document.getElementById("file-answer").required = false;
-        document.getElementById("text-answer").required = true;
+        text_answer.required = true;
+        text_question.innerHTML = "";
+        text_answer.innerHTML = "";
+
+        document.getElementById("img-question").src = "";
+        document.getElementById("img-answer").src = "";
         set_mode(document.getElementById("confirmationForm"), "add", "edit");
+
+        set_opacity_card_text_popup("text-question");
+        set_opacity_card_image_popup("file-question", "img-question", "none");
+        set_opacity_card_text_popup("text-answer");
+        set_opacity_card_image_popup("file-answer", "img-answer", "none");
     }
 </script>
 <script>
@@ -432,7 +379,7 @@
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
-    function change_input(icon_input, div_main_class_id, edit = "") {
+    function change_input(icon_input, div_main_class_id) {
         let icon = document.getElementById(icon_input);
         let div_main_class = document.getElementById(div_main_class_id);
 
@@ -443,12 +390,12 @@
             div_main_class.classList.add('img');
             if (div_main_class_id === 'question') {
                 set_opacity_card_text_popup("text-question", "none");
-                set_opacity_card_image_popup("file-question", "img-question" + edit);
+                set_opacity_card_image_popup("file-question", "img-question");
                 document.getElementById("file-question").required = true;
                 document.getElementById("text-question").required = false;
             } else {
                 set_opacity_card_text_popup("text-answer", "none");
-                set_opacity_card_image_popup("file-answer", "img-answer" + edit);
+                set_opacity_card_image_popup("file-answer", "img-answer");
                 document.getElementById("file-answer").required = true;
                 document.getElementById("text-answer").required = false;
             }
@@ -474,7 +421,7 @@
     }
 </script>
 <script>
-    function set_on_click_popup_add_card() {
+    function set_on_click_popup_card() {
         let question = document.getElementById("question");
         if (question.classList.contains("text")) {
             let input_img = document.getElementById("file-question");
@@ -490,6 +437,93 @@
         } else {
             let input_text = document.getElementById("text-answer");
             input_text.value = "";
+        }
+        let form = document.getElementById("confirmationForm");
+        let input_img_question = document.getElementById("file-question");
+        let img_question = document.getElementById("img-question");
+        let input_img_answer = document.getElementById("file-answer");
+        let img_answer = document.getElementById("img-answer");
+        if (form.classList.contains("edit")) {
+            if (input_img_question.src === "" && img_question.src !== "") {
+                input_img_question.required = false;
+            }
+            if (input_img_answer.src === "" && img_answer.src !== "") {
+                input_img_answer.required = false;
+            }
+        }
+
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    function edit_card(card_id, level_id) {
+        popup('popup_card');
+        document.getElementById("button_popup_card").innerText = "Изменить";
+        let form = document.getElementById("confirmationForm");
+        set_mode(form, "edit", "add");
+        form.action = "/card/edit/" + card_id;
+        var card;
+        var levels =/*[[${levels}]]*/
+        var typeImage = "data:image/png;base64,";
+        let div_main_class_question = document.getElementById("question");
+        let div_main_class_answer = document.getElementById("answer");
+
+        for (let i = 0; i < levels.length; i++) {
+            if (levels[i].id == level_id) {
+                for (let j = 0; j < levels[i].cards.length; j++) {
+                    if (levels[i].cards[j].id == card_id) {
+                        card = levels[i].cards[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (card != null) {
+            if (card.question != null) {
+                document.getElementById("text-question").innerHTML = card.question;
+                set_opacity_card_text_popup("text-question");
+                set_opacity_card_image_popup("file-question", "img-question", "none");
+                set_mode(div_main_class_question, "text", "img");
+                // div_main_class_question.classList.remove("img");
+                // div_main_class_question.classList.add("text");
+
+                document.getElementById("file-question").required = false;
+                document.getElementById("text-question").required = true;
+            } else {
+                card.question_image = typeImage + card.question_image;
+                document.getElementById("img-question").src = card.question_image;
+                set_opacity_card_text_popup("text-question", "none");
+                set_opacity_card_image_popup("file-question", "img-question");
+                set_mode(div_main_class_question, "img", "text");
+                // div_main_class_question.classList.add("img");
+                // div_main_class_question.classList.remove("text");
+
+                document.getElementById("file-question").required = true;
+                document.getElementById("text-question").required = false;
+            }
+            if (card.answer != null) {
+                document.getElementById("text-answer").innerHTML = card.answer;
+                set_opacity_card_text_popup("text-answer");
+                set_opacity_card_image_popup("file-answer", "img-answer", "none");
+                set_mode(div_main_class_answer, "text", "img");
+                // div_main_class_answer.classList.add("text");
+                // div_main_class_answer.classList.remove("img");
+
+                document.getElementById("file-answer").required = false;
+                document.getElementById("text-answer").required = true;
+            } else {
+                card.answer_image = typeImage + card.answer_image;
+                document.getElementById("img-answer").src = card.answer_image;
+                set_opacity_card_text_popup("text-answer", "none");
+                set_opacity_card_image_popup("file-answer", "img-answer");
+                set_mode(div_main_class_answer, "img", "text");
+                // div_main_class_answer.classList.add("img");
+                // div_main_class_answer.classList.remove("text");
+
+                document.getElementById("file-answer").required = true;
+                document.getElementById("text-answer").required = false;
+            }
         }
     }
 </script>

@@ -74,4 +74,10 @@ public class FolderController {
         List<Folder> folders = folderService.findByName(name);
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }
+
+    @GetMapping("/find/card/{id}")
+    public ResponseEntity<Folder> findByCardId(@PathVariable("id") Long id) {
+        Folder folder= folderService.FindByCardId(id);
+        return new ResponseEntity<>(folder, HttpStatus.OK);
+    }
 }

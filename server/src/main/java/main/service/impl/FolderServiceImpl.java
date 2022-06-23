@@ -56,6 +56,11 @@ public class FolderServiceImpl implements FolderService {
     public List<Folder> findByName(String name) {
         return folderRepository.findByName(name);
     }
+
+    @Override
+    public Folder FindByCardId(Long id) {
+        return folderRepository.findByCardId(id).orElse(null);
+    }
 }
 
 

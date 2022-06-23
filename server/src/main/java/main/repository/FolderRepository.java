@@ -36,4 +36,9 @@ public interface FolderRepository extends CrudRepository<Folder, Long> {
     void addNewLevel(@Param("category_id") Long categoryId, @Param("name") String name, @Param("num_of_levels") int numOfLevels);
 
     List<Folder> findByName(String name);
+
+    @Query(value = "select * from folders " +
+            "join levels l on l.folder_id = folders.id " +
+            "join cards c on c.level_id=l.id and c.id=:id ", nativeQuery = true)
+    Optional<Folder> findByCardId(@Param("id") Long id);
 }

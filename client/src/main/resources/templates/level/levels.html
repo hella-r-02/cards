@@ -114,7 +114,10 @@
                                     <div class="title-buttons">
                                         <p class="title-cards">Ответ</p>
                                         <div class="title-buttons-container">
-                                            <img class="img-button" th:src="@{/images/pen.svg}">
+                                            <img class="img-button" th:src="@{/images/pen.svg}"
+                                                 th:data-parameter1="${card.id}"
+                                                 th:data-parameter2="${level.id}"
+                                                 th:onclick="edit_card(this.getAttribute('data-parameter1'),this.getAttribute('data-parameter2'))">
                                             <img class="img-button popup-link" th:src="@{/images/cross.svg}"
                                                  th:onclick="'javascript:remove_card(\'' + ${card.id} +'\');'">
                                         </div>
@@ -168,7 +171,8 @@
         <div class="popup-body">
             <div class="popup-content">
                 <img class="popup-close" th:src="@{/images/cross.svg}">
-                <form name="confirmationForm" th:action="@{/card/add/{id}(id=${folder.getId()})}" id="confirmationForm"
+                <!--                th:action="@{/card/add/{id}(id=${folder.getId()})}"-->
+                <form name="confirmationForm" id="confirmationForm"
                       method="post" enctype="multipart/form-data">
                     <div class="coll-popup">
                         <div class="popup-image text" id="question">
@@ -191,9 +195,9 @@
                                       required></textarea>
                         </div>
                     </div>
-                    <!--            </div>-->
                     <div class="button-popup-div add-card">
-                        <button class="input-button add-card" onClick="set_on_click_popup_add_card()">Сохранить
+                        <button class="input-button add-card" onClick="set_on_click_popup_add_card()" type="submit">
+                            Сохранить
                         </button>
                     </div>
                 </form>
@@ -218,26 +222,25 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     function click_next_button() {
-        var questions =/*[[${questions}]]*/
-        var questions_img =/*[[${imgQuestion}]]*/
-        var answers =/*[[${answers}]]*/
-        var answers_ing =/*[[${imgAnswer}]]*/
+        var cards =/*[[${cards}]]*/
+        var typeImage = "data:image/png;base64,";
         var text = document.getElementById('text_nav');
         var textSplit = text.innerHTML.toString().split('/');
+
         if (textSplit[0] != textSplit[1]) {
-            if (questions[textSplit[0]] != null) {
+            if (cards[textSplit[0]].question != null) {
                 const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
-                set_text_card(document.getElementById(side), questions[textSplit[0]], document.getElementById(hidden_part));
+                set_text_card(document.getElementById(side), cards[textSplit[0]].question, document.getElementById(hidden_part));
             } else {
                 const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
-                set_img_card(document.getElementById(side), questions_img[textSplit[0]], document.getElementById(hidden_part));
+                set_img_card(document.getElementById(side), typeImage + cards[textSplit[0]].question_image, document.getElementById(hidden_part));
             }
-            if (answers[textSplit[0]] != null) {
+            if (cards[textSplit[0]].answer != null) {
                 const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
-                set_text_card(document.getElementById(side), answers[textSplit[0]], document.getElementById(hidden_part));
+                set_text_card(document.getElementById(side), cards[textSplit[0]].answer, document.getElementById(hidden_part));
             } else {
                 const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
-                set_img_card(document.getElementById(side), answers_ing[textSplit[0]], document.getElementById(hidden_part));
+                set_img_card(document.getElementById(side), typeImage + cards[textSplit[0]].answer_image, document.getElementById(hidden_part));
             }
             text.innerHTML = (Number(textSplit[0]) + Number(1)) + "/" + textSplit[1];
         }
@@ -245,28 +248,26 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     function click_prev_button() {
-        var questions =/*[[${questions}]]*/
-        var questions_img =/*[[${imgQuestion}]]*/
-        var answers =/*[[${answers}]]*/
-        var answers_img =/*[[${imgAnswer}]]*/
+        var cards =/*[[${cards}]]*/
+        var typeImage = "data:image/png;base64,";
 
         var text = document.getElementById('text_nav');
         var textSplit = text.innerHTML.toString().split('/');
 
         if (textSplit[0] != 1) {
-            if (questions[textSplit[0] - 2] != null) {
+            if (cards[textSplit[0] - 2].question != null) {
                 const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
-                set_text_card(document.getElementById(side), questions[textSplit[0] - 2], document.getElementById(hidden_part));
+                set_text_card(document.getElementById(side), cards[textSplit[0] - 2].question, document.getElementById(hidden_part));
             } else {
                 const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
-                set_img_card(document.getElementById(side), questions_img[textSplit[0] - 2], document.getElementById(hidden_part));
+                set_img_card(document.getElementById(side), typeImage + cards[textSplit[0] - 2].question_image, document.getElementById(hidden_part));
             }
-            if (answers[textSplit[0] - 2] != null) {
+            if (cards[textSplit[0] - 2].answer != null) {
                 const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
-                set_text_card(document.getElementById(side), answers[textSplit[0] - 2], document.getElementById(hidden_part));
+                set_text_card(document.getElementById(side), cards[textSplit[0] - 2].answer, document.getElementById(hidden_part));
             } else {
                 const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
-                set_img_card(document.getElementById(side), answers_img[textSplit[0] - 2], document.getElementById(hidden_part));
+                set_img_card(document.getElementById(side), typeImage + cards[textSplit[0] - 2].answer_image, document.getElementById(hidden_part));
             }
             text.innerHTML = (Number(textSplit[0]) - Number(1)) + "/" + textSplit[1];
         }
@@ -293,45 +294,45 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     function set_first_card() {
-        var questions =/*[[${questions}]]*/
-        var questions_img =/*[[${imgQuestion}]]*/
-        var answers =/*[[${answers}]]*/
-        var answers_img =/*[[${imgAnswer}]]*/
+        var cards =/*[[${cards}]]*/
+        var typeImage = "data:image/png;base64,";
 
-        if (questions[0] != null) {
-            set_text_card(document.getElementById("card-front-text"), questions[0], document.getElementById("card-front-img"));
+        if (cards[0].question != 0) {
+            set_text_card(document.getElementById("card-front-text"), cards[0].question, document.getElementById("card-front-img"));
         } else {
-            set_img_card(document.getElementById("card-front-img"), questions_img[0], document.getElementById("card-front-text"));
+            set_img_card(document.getElementById("card-front-img"), typeImage + cards[0].question_image, document.getElementById("card-front-text"));
         }
-        if (answers[0] != null) {
-            set_text_card(document.getElementById("card-back-text"), answers[0], document.getElementById("card-back-img"));
+        if (cards[0].answer != 0) {
+            set_text_card(document.getElementById("card-back-text"), cards[0].answer, document.getElementById("card-back-img"));
         } else {
-            set_img_card(document.getElementById("card-back-img"), answers_img[0], document.getElementById("card-back-text"));
+            set_img_card(document.getElementById("card-back-img"), typeImage + cards[0].answer_image, document.getElementById("card-back-text"));
         }
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
     function set_for_list_question_answer() {
-        var questions =/*[[${questions}]]*/
-        var questions_img =/*[[${imgQuestion}]]*/
-        var answers =/*[[${answers}]]*/
-        var answers_img =/*[[${imgAnswer}]]*/
+        var levels =/*[[${levels}]]*/
+        var typeImage = "data:image/png;base64,";
 
         var list_of_question = document.getElementsByClassName("level-item-cards-question-text");
         var list_of_question_img = document.getElementsByClassName("level-item-cards-question-img")
         var list_of_answer = document.getElementsByClassName("level-item-cards-answer-text");
         var list_of_answer_img = document.getElementsByClassName("level-item-cards-answer-img");
-
-        for (i = 0; i < list_of_question.length; i++) {
-            if (questions[i] != null) {
-                set_text_card(list_of_question[i], questions[i], list_of_question_img[i]);
-            } else {
-                set_img_card(list_of_question_img[i], questions_img[i], list_of_question[i]);
-            }
-            if (answers[i] != null) {
-                set_text_card(list_of_answer[i], answers[i], list_of_answer_img[i]);
-            } else {
-                set_img_card(list_of_answer_img[i], answers_img[i], list_of_answer[i]);
+        let indexList = 0;
+        for (let j = 0; j < levels.length; j++) {
+            var cards = levels[j].cards;
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].question != null) {
+                    set_text_card(list_of_question[indexList], cards[i].question, list_of_question_img[indexList]);
+                } else {
+                    set_img_card(list_of_question_img[indexList], typeImage + cards[i].question_image, list_of_question[indexList]);
+                }
+                if (cards[i].answer != null) {
+                    set_text_card(list_of_answer[indexList], cards[i].answer, list_of_answer_img[indexList]);
+                } else {
+                    set_img_card(list_of_answer_img[indexList], typeImage + cards[j * i + i].answer_image, list_of_answer[indexList]);
+                }
+                indexList++;
             }
         }
     }
@@ -376,6 +377,13 @@
 <script type="text/javascript" th:inline="javascript">
     function add_card(folder_id) {
         popup('popup_add_card');
+        let form = document.getElementById("confirmationForm");
+        form.action = "/card/add/" + folder_id;
+        document.getElementById("file-question").required = false;
+        document.getElementById("text-question").required = true;
+        document.getElementById("file-answer").required = false;
+        document.getElementById("text-answer").required = true;
+        set_mode(document.getElementById("confirmationForm"), "add", "edit");
     }
 </script>
 <script>
@@ -424,7 +432,7 @@
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
-    function change_input(icon_input, div_main_class_id) {
+    function change_input(icon_input, div_main_class_id, edit = "") {
         let icon = document.getElementById(icon_input);
         let div_main_class = document.getElementById(div_main_class_id);
 
@@ -435,12 +443,12 @@
             div_main_class.classList.add('img');
             if (div_main_class_id === 'question') {
                 set_opacity_card_text_popup("text-question", "none");
-                set_opacity_card_image_popup("file-question", "img-question");
+                set_opacity_card_image_popup("file-question", "img-question" + edit);
                 document.getElementById("file-question").required = true;
                 document.getElementById("text-question").required = false;
             } else {
                 set_opacity_card_text_popup("text-answer", "none");
-                set_opacity_card_image_popup("file-answer", "img-answer");
+                set_opacity_card_image_popup("file-answer", "img-answer" + edit);
                 document.getElementById("file-answer").required = true;
                 document.getElementById("text-answer").required = false;
             }
@@ -483,6 +491,12 @@
             let input_text = document.getElementById("text-answer");
             input_text.value = "";
         }
+    }
+</script>
+<script>
+    function set_mode(element, mode, remove_mode) {
+        element.classList.remove(remove_mode);
+        element.classList.add(mode);
     }
 </script>
 </html>

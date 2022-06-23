@@ -1,7 +1,6 @@
 package main.controller;
 
 import java.io.IOException;
-import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -49,34 +48,11 @@ public class LevelController {
             }
             listOfLevelsWithCards[i] = restTemplate.exchange(domain + "level/card/" + listOfLevels[i].getId(), HttpMethod.GET, entity, Level.class).getBody();
         }
-        String[] listOfQuestion = new String[listOfCards.length];
-        String[] listOfAnswer = new String[listOfCards.length];
-        String[] imgQuestion = new String[listOfCards.length];
-        String[] imgAnswer = new String[listOfCards.length];
-        Base64.Encoder encoder = Base64.getEncoder();
-        for (int i = 0; i < listOfCards.length; i++) {
-            if (listOfCards[i].getQuestion_image() != null) {
-                imgQuestion[i] = typeOfImg + encoder.encodeToString(listOfCards[i].getQuestion_image());
-            } else {
-            }
-            if (listOfCards[i].getAnswer_image() != null) {
-                imgAnswer[i] = typeOfImg + encoder.encodeToString(listOfCards[i].getAnswer_image());
-            } else {
-                imgAnswer[i] = null;
-            }
-        }
-        for (int i = 0; i < listOfQuestion.length; i++) {
-            listOfQuestion[i] = listOfCards[i].getQuestion();
-            listOfAnswer[i] = listOfCards[i].getAnswer();
-        }
+
         model.addAttribute("levels", listOfLevels);
         model.addAttribute("levelsWithCard", listOfLevelsWithCards);
         model.addAttribute("num_of_levels", listOfLevels.length);
         model.addAttribute("cards", listOfCards);
-        model.addAttribute("questions", listOfQuestion);
-        model.addAttribute("answers", listOfAnswer);
-        model.addAttribute("imgQuestion", imgQuestion);
-        model.addAttribute("imgAnswer", imgAnswer);
         model.addAttribute("title", category.getName() + '\\' + folder.getName());
         model.addAttribute("folder", folder);
         model.addAttribute("category", category);

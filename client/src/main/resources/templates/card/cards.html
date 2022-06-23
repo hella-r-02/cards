@@ -112,27 +112,25 @@
 
 <script type="text/javascript" th:inline="javascript">
     function next_card(index) {
-        var questions =/*[[${questions}]]*/
-        var questions_img =/*[[${imgQuestion}]]*/
-        var answers =/*[[${answers}]]*/
-        var answers_ing =/*[[${imgAnswer}]]*/
+        var cards =/*[[${cards}]]*/
+        var typeImage = "data:image/png;base64,";
         var text = document.getElementById('text_nav');
         var textSplit = text.innerHTML.toString().split('/');
         if (index <= textSplit[1]) {
-            if (questions[index] != null) {
+            if (cards[index].question != null) {
                 const [side, hidden_part] = check_side("card-front-text", "card-back-text", "card-front-img", "card-back-img");
-                set_text_card(document.getElementById(side), questions[index], document.getElementById(hidden_part));
+                set_text_card(document.getElementById(side), cards[index].question, document.getElementById(hidden_part));
             } else {
                 const [side, hidden_part] = check_side("card-front-img", "card-back-img", "card-front-text", "card-back-text");
-                set_img_card(document.getElementById(side), questions_img[index], document.getElementById(hidden_part));
+                set_img_card(document.getElementById(side), typeImage + cards[index].question_image, document.getElementById(hidden_part));
             }
         }
-        if (answers[index] != null) {
+        if (cards[index].answer != null) {
             const [side, hidden_part] = check_side("card-back-text", "card-front-text", "card-back-img", "card-front-img");
-            set_text_card(document.getElementById(side), answers[index], document.getElementById(hidden_part));
+            set_text_card(document.getElementById(side), cards[index].answer, document.getElementById(hidden_part));
         } else {
             const [side, hidden_part] = check_side("card-back-img", "card-front-img", "card-back-text", "card-front-text");
-            set_img_card(document.getElementById(side), answers_ing[index], document.getElementById(hidden_part));
+            set_img_card(document.getElementById(side), typeImage + cards[index].answer_image, document.getElementById(hidden_part));
         }
         document.getElementById("button-success").style.display = "none";
         document.getElementById("button-failure").style.display = "none";

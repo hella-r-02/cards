@@ -108,18 +108,14 @@ public class CardController {
         Level level = levelService.findLevelByFolderIdAndNumOFLevel(folderId, 1);
         if (!textQuestion.isEmpty()) {
             if (!textAnswer.isEmpty()) {
-                System.out.println("text + text");
                 cardService.addNewLevelTextQuestionTextAnswer(level.getId(), textQuestion, textAnswer, level.getNext_replay());
             } else {
-                System.out.println("text + img ");
                 cardService.addNewLevelTextQuestionImgAnswer(level.getId(), textQuestion, imgAnswer.getBytes(), level.getNext_replay());
             }
         } else {
             if (!textAnswer.isEmpty()) {
-                System.out.println("img + text");
                 cardService.addNewLevelImgQuestionTextAnswer(level.getId(), imgQuestion.getBytes(), textAnswer, level.getNext_replay());
             } else {
-                System.out.println("img + img");
                 cardService.addNewLevelImgQuestionImgAnswer(level.getId(), imgQuestion.getBytes(), imgAnswer.getBytes(), level.getNext_replay());
             }
         }

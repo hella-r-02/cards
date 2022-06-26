@@ -176,6 +176,6 @@
     width: 95%;
     resize: none;
 }
-/*input[type='file']{*/
-/*    color:transparent;*/
-/*}*/
+input[type='file']{
+    color:transparent;
+}

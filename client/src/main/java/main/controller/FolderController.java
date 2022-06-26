@@ -3,6 +3,7 @@ package main.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -142,11 +143,14 @@ public class FolderController {
         Folder[] folderList = restTemplate.exchange(domain + "folder/find/name/" + name, HttpMethod.GET, entity, Folder[].class).getBody();
         if (folderList != null && folderList.length != 0) {
             Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, 1);
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            map.add("date", dateFormat.format(date));
+            map.add("date", dateFormat.format(calendar.getTime()));
             for (int i = 0; i < numOfLevels; i++) {
                 map.remove("currentNumOfLevels");
-                map.add("currentNumOfLevels", i+1);
+                map.add("currentNumOfLevels", i + 1);
                 HttpEntity<MultiValueMap<String, Object>> entityAddLevel = new HttpEntity<>(map, httpHeaders);
                 restTemplate.postForEntity(domain + "level/add/folder/" + folderList[folderList.length - 1].getId(), entityAddLevel, String.class);
             }

@@ -32,3 +32,8 @@ body {
     overflow-y: scroll;
     font-family: 'Roboto Slab', serif;
 }
+
+.text-inner-card {
+    white-space: pre-wrap;
+    overflow: auto;
+}

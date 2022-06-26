@@ -91,7 +91,7 @@
 .flipper {
     padding-right: -1rem;
     background: var(--color-cards);
-    word-break: break-all;
+    /*word-break: break-all;*/
     position: relative;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
@@ -128,8 +128,6 @@
 
 /* лицевая сторона размещена над обратной */
 .front {
-    /*overflow-x: hidden;*/
-    /*overflow-y: auto;*/
     z-index: 2;
     -webkit-transform: rotateY(0deg);
     -moz-transform: rotateY(0deg);
@@ -189,7 +187,7 @@
 
 .level-item-cards-answer {
     border-left: solid rgba(27, 29, 37, 0.5);
-    word-break: break-all;
+    /*word-break: break-all;*/
     margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;

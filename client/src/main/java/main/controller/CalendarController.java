@@ -29,7 +29,7 @@ public class CalendarController {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        LevelDto[] levels = restTemplate.exchange(domain + "level", HttpMethod.GET, entity, LevelDto[].class).getBody();
+        LevelDto[] levels = restTemplate.exchange(domain + "level/levels", HttpMethod.GET, entity, LevelDto[].class).getBody();
         for (LevelDto level : levels) {
             Folder folder = restTemplate.exchange(domain + "folder/level_id/" + level.getId(), HttpMethod.GET, entity, Folder.class).getBody();
             if (folder != null) {

@@ -54,7 +54,6 @@
     margin-right: 20px;
     padding-right: -1rem;
     background: var(--color-cards);
-    word-break: break-all;
     position: relative;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
@@ -108,7 +107,7 @@
     -moz-transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
-    display: none;
+    /*display: none;*/
 }
 
 .title-cards {

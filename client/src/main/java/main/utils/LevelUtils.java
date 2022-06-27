@@ -12,6 +12,6 @@ public class LevelUtils {
         LocalDate localLevelDate = level.getNext_replay().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        return localLevelDate.until(currentDate, ChronoUnit.DAYS) > 0;
+        return localLevelDate.until(currentDate, ChronoUnit.DAYS) >= 0;
     }
 }

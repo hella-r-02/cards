@@ -88,4 +88,11 @@ public class LevelServiceImpl implements LevelService {
         Optional<Level> levelOptional = levelRepository.findById(id);
         return levelOptional.orElse(null);
     }
+
+    @Override
+    public List<Level> getAllLevelsWithCards() {
+        List<Level> levelList = (List<Level>) levelRepository.findAll();
+        levelList.removeIf(level -> level.getCards().isEmpty());
+        return levelList;
+    }
 }

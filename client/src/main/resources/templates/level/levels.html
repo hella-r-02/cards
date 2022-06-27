@@ -18,7 +18,6 @@
     <script type="text/javascript" th:src="@{/scripts/level/set_the_level.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/work_with_date.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_the_nav.js}"></script>
-    <script type="text/javascript" th:src="@{/scripts/level/next_page_after_level.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_img_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/set_text_card.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/level/check_is_flip.js}"></script>
@@ -54,7 +53,7 @@
                 <div class="row row-cols-1">
                     <div th:each="level : ${levelsWithCard}">
                         <div class="level-item"
-                             th:onclick="'javascript:next_page_after_level(\'' + ${level.id} +'\');'">
+                             th:onclick="next_page('http://localhost:8081/card/',[[${level.id}]])">
                             <div class="level-item-name">
                                 <div class="level-item-name-text" th:text="${level.num_of_level}"></div>
                             </div>

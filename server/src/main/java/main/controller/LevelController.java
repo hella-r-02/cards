@@ -53,6 +53,14 @@ public class LevelController {
         return new ResponseEntity<>(levels, HttpStatus.OK);
     }
 
+    @GetMapping("/levels")
+    public ResponseEntity<List<Level>> getIsNotEmptyLevels() {
+        List<Level> levels = levelService.getAllLevelsWithCards();
+        Collections.sort(levels, Comparator.<Level>comparingLong(level1 -> level1.getNext_replay().getTime())
+                .thenComparingLong(level2 -> level2.getNext_replay().getTime()));
+        return new ResponseEntity<>(levels, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/add/folder/{id}")
     public void addLevelsByFolderId(@PathVariable("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date date,
                                     @RequestParam("currentNumOfLevels") int currentNumOfLevels) {

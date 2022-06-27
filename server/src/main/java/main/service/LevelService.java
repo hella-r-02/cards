@@ -25,4 +25,6 @@ public interface LevelService {
     Level findLevelByFolderIdAndNumOFLevel(Long folderId, int numOfLevels);
 
     Level findById(Long id);
+
+    List<Level> getAllLevelsWithCards();
 }

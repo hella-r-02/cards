@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -25,7 +26,7 @@ public class Card {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(optional = false, targetEntity = Level.class)
     @JoinColumn(name = "level_id", nullable = false)
     private Level level;
@@ -38,17 +39,18 @@ public class Card {
     @NotNull
     private String answer;
 
-    @Column(name="next_replay")
+    @Column(name = "next_replay")
     @NotNull
     private Date next_replay;
+
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
-    @Column(name="question_image")
+    @Type(type = "org.hibernate.type.BinaryType")
+    @Column(name = "question_image")
     private byte[] question_image;
 
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
-    @Column(name="answer_image")
+    @Type(type = "org.hibernate.type.BinaryType")
+    @Column(name = "answer_image")
     private byte[] answer_image;
 
     public Card() {

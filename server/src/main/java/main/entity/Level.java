@@ -14,27 +14,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name ="levels")
+@Table(name = "levels")
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name="next_replay")
+    @Column(name = "next_replay")
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date next_replay;
 
-    @Column(name="num_of_level")
+    @Column(name = "num_of_level")
     @NotNull
     private Long num_of_level;
 
-    @JsonIgnore
+    @JsonManagedReference
     @ManyToOne(optional = false, targetEntity = Folder.class)
     @JoinColumn(name = "folder_id", nullable = false)
     private Folder folder;

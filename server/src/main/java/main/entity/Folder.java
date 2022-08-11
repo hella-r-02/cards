@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -27,7 +27,7 @@ public class Folder {
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, targetEntity = Level.class)
     private List<Level> levels;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(optional = false, targetEntity = Category.class)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;

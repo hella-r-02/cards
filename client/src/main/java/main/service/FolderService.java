@@ -7,4 +7,6 @@ public interface FolderService {
     Folder getFolderById(Long id);
 
     Folder getFolderByLevelId(Long id);
+
+    Folder findByCardId(Long id);
 }

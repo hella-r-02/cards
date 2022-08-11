@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,11 +32,13 @@ import main.utils.CardUtils;
 @Controller
 @RequestMapping("/card")
 public class CardController {
-    @Autowired
-    RestTemplate restTemplate;
-    private String domain = "http://localhost:8080/";
-    private String typeOfImg = "data:image/png;base64,";
-    private String tempFolder = "/Users/alenaryzova/Documents/cards/cards/client/src/main/resources/temp/";
+    private final RestTemplate restTemplate;
+    private final String domain = "http://localhost:8080/";
+    private final String tempFolder = "/Users/alenaryzova/Documents/cards/cards/client/src/main/resources/temp/";
+
+    public CardController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getCardsByLevelId(@PathVariable Long id, Model model) {
@@ -76,7 +77,7 @@ public class CardController {
 
     @PostMapping(value = "/delete/{id}")
     @ResponseBody
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<Card> deleteById(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         restTemplate.postForEntity(domain + "card/delete/" + id, entity, String.class);

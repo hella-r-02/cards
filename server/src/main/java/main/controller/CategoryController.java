@@ -2,7 +2,6 @@ package main.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +18,11 @@ import main.service.CategoryService;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
+    private final CategoryService categoryService;
 
-    @Autowired
-    CategoryService categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<Category>> getCategories() {
@@ -42,7 +43,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/delete/{id}")
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Category> deleteById(@PathVariable("id") Long id) {
         categoryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

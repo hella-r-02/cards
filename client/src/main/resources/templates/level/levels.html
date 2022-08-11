@@ -35,11 +35,11 @@
         <div class="level-title" th:text="${title}"></div>
         <div class="container-title-icon">
             <img class="img-title-button  popup-link" th:src="@{/images/plus.svg}"
-                 th:onclick="'javascript:add_card(\'' + ${folder.id} +'\');'">
+                 th:onclick="'javascript:add_card(\'' + ${folder.id} +'\');'"/>
             <img class="img-title-button popup-link" th:src="@{/images/pen.svg}"
-                 th:onclick="'javascript:edit_folder(\'' + ${folder.id} +'\');'">
+                 th:onclick="'javascript:edit_folder(\'' + ${folder.id} +'\');'"/>
             <img class="img-title-button popup-link" th:src="@{/images/cross.svg}"
-                 th:onclick="'javascript:remove_folder(\'' + ${folder.id} +'\',\'' + ${category.id} +'\');'"/>
+                 th:onclick="'javascript:remove_folder(\'' + ${folder.id} +'\',\'' + ${category.id} +'\');'" alt=""/>
         </div>
     </div>
 </div>

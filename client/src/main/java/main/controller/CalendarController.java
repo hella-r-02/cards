@@ -2,7 +2,6 @@ package main.controller;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,9 +19,12 @@ import main.entity.Folder;
 @Controller
 @RequestMapping("/calendar")
 public class CalendarController {
-    @Autowired
-    RestTemplate restTemplate;
-    private String domain = "http://localhost:8080/";
+    private final RestTemplate restTemplate;
+    private final String domain = "http://localhost:8080/";
+
+    public CalendarController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @GetMapping()
     public String getLevels(Model model) {

@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import main.entity.Card;
 import main.entity.Category;
 import main.entity.Folder;
 import main.entity.Level;
@@ -36,9 +34,12 @@ import main.entity.Level;
 @Controller
 @RequestMapping("/folder")
 public class FolderController {
-    @Autowired
-    RestTemplate restTemplate;
-    private String domain = "http://localhost:8080/";
+    private final RestTemplate restTemplate;
+    private final String domain = "http://localhost:8080/";
+
+    public FolderController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getFoldersByCategoryId(@PathVariable Long id, Model model) {
@@ -52,7 +53,7 @@ public class FolderController {
 
     @PostMapping(value = "/delete/{id}")
     @ResponseBody
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<Folder> deleteById(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         restTemplate.postForEntity(domain + "folder/delete/" + id, entity, String.class);
@@ -92,6 +93,7 @@ public class FolderController {
                         Date date = new Date();
                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         map.add("date", dateFormat.format(date));
+                        map.remove("currentNumOfLevels");
                         map.add("currentNumOfLevels", currentNumOfLevels);
                         HttpEntity<MultiValueMap<String, Object>> entityAddLevel = new HttpEntity<>(map, httpHeaders);
                         restTemplate.postForEntity(domain + "level/add/folder/" + id, entityAddLevel, String.class);
@@ -109,10 +111,8 @@ public class FolderController {
                         Long tempLevelId = tempLevel.getId();
                         if (tempLevel.getCards() != null) {
                             for (int j = 0; j < tempLevel.getCards().size(); j++) {
-                                Card tempCard = tempLevel.getCards().get(j);
                                 map.add("oldLevel", tempLevel.getId());
                                 map.add("newLevel", lastLevel.getId());
-                                HttpEntity<MultiValueMap<String, Object>> entityCard = new HttpEntity<>(map, httpHeaders);
                                 restTemplate.postForEntity(domain + "card/update/level", entityLevelFindEachLevel, String.class);
                             }
                         }

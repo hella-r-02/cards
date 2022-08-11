@@ -1,6 +1,5 @@
 package main.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,9 +22,12 @@ import main.entity.Category;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-    @Autowired
-    RestTemplate restTemplate;
-    private String domain = "http://localhost:8080/";
+    private final RestTemplate restTemplate;
+    private final String domain = "http://localhost:8080/";
+
+    public CategoryController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @RequestMapping()
     public String getCategories(Model model) {
@@ -35,7 +37,7 @@ public class CategoryController {
         model.addAttribute("categories", listOfCategories);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(model);
-        return "category/categories.html";
+        return "category/categories";
     }
 
     @PostMapping("edit/{id}")
@@ -50,7 +52,7 @@ public class CategoryController {
 
     @PostMapping(value = "/delete/{id}")
     @ResponseBody
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<Category> deleteById(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         restTemplate.postForEntity(domain + "category/delete/" + id, entity, String.class);

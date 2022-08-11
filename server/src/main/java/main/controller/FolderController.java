@@ -2,7 +2,6 @@ package main.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,19 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.entity.Folder;
-import main.service.CardService;
 import main.service.FolderService;
-import main.service.LevelService;
 
 @RestController
 @RequestMapping("/folder")
 public class FolderController {
-    @Autowired
-    FolderService folderService;
-    @Autowired
-    LevelService levelService;
-    @Autowired
-    CardService cardService;
+    private final FolderService folderService;
+
+    public FolderController(FolderService folderService) {
+        this.folderService = folderService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<Folder>> getFolders() {
@@ -52,7 +48,7 @@ public class FolderController {
     }
 
     @PostMapping(value = "/delete/{id}")
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Folder> deleteById(@PathVariable("id") Long id) {
         folderService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -77,7 +73,7 @@ public class FolderController {
 
     @GetMapping("/find/card/{id}")
     public ResponseEntity<Folder> findByCardId(@PathVariable("id") Long id) {
-        Folder folder= folderService.FindByCardId(id);
+        Folder folder = folderService.FindByCardId(id);
         return new ResponseEntity<>(folder, HttpStatus.OK);
     }
 }

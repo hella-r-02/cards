@@ -42,10 +42,14 @@
     -ms-overflow-style: none;
     border-radius: .35rem;
 }
+.cards::-webkit-scrollbar{
+    display: none;
+}
 
 .flipCard {
     transform: rotateY(180deg);
 }
+
 ::-webkit-scrollbar{
     margin-left: 20px;
 }

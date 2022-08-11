@@ -1,11 +1,9 @@
 package main.controller;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +21,17 @@ import main.service.LevelService;
 @RequestMapping("/level")
 public class LevelController {
 
-    @Autowired
-    LevelService levelService;
+    private final LevelService levelService;
+
+    public LevelController(LevelService levelService) {
+        this.levelService = levelService;
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<List<Level>> getLevelsByFolderId(@PathVariable("id") Long id) {
         List<Level> levels = levelService.findLevelsByFolderId(id);
-        Collections.sort(levels, Comparator.<Level>comparingLong(level1 -> level1.getNum_of_level())
-                .thenComparingLong(level2 -> level2.getNum_of_level()));
+        levels.sort(Comparator.comparingLong(Level::getNum_of_level)
+                .thenComparingLong(Level::getNum_of_level));
         return new ResponseEntity<>(levels, HttpStatus.OK);
     }
 
@@ -48,7 +49,7 @@ public class LevelController {
     @GetMapping()
     public ResponseEntity<List<Level>> getAllLevels() {
         List<Level> levels = levelService.getAllLevels();
-        Collections.sort(levels, Comparator.<Level>comparingLong(level1 -> level1.getNext_replay().getTime())
+        levels.sort(Comparator.<Level>comparingLong(level1 -> level1.getNext_replay().getTime())
                 .thenComparingLong(level2 -> level2.getNext_replay().getTime()));
         return new ResponseEntity<>(levels, HttpStatus.OK);
     }
@@ -56,7 +57,7 @@ public class LevelController {
     @GetMapping("/levels")
     public ResponseEntity<List<Level>> getIsNotEmptyLevels() {
         List<Level> levels = levelService.getAllLevelsWithCards();
-        Collections.sort(levels, Comparator.<Level>comparingLong(level1 -> level1.getNext_replay().getTime())
+        levels.sort(Comparator.<Level>comparingLong(level1 -> level1.getNext_replay().getTime())
                 .thenComparingLong(level2 -> level2.getNext_replay().getTime()));
         return new ResponseEntity<>(levels, HttpStatus.OK);
     }
@@ -75,7 +76,7 @@ public class LevelController {
     }
 
     @PostMapping(value = "delete/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<Level> deleteById(@PathVariable Long id) {
         levelService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

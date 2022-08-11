@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,15 +25,19 @@ import main.utils.CardUtils;
 @RestController
 @RequestMapping("/card")
 public class CardController {
-    @Autowired
-    CardService cardService;
+    private final CardService cardService;
 
-    @Autowired
-    LevelService levelService;
+    private final LevelService levelService;
+
+    public CardController(CardService cardService, LevelService levelService) {
+        this.cardService = cardService;
+        this.levelService = levelService;
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<List<Card>> getCardsByLevelIdAndDate(@PathVariable("id") Long id) {
         List<Card> cards = cardService.findByLevelIdAndDate(id);
+        System.out.println(cards);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
@@ -85,14 +88,14 @@ public class CardController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Card> deleteById(@PathVariable("id") Long id) {
         cardService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/update/level")
-    public ResponseEntity updateCardsBYLevel(@RequestParam("oldLevel") Long oldLevelId,
-                                             @RequestParam("newLevel") Long newLevelId) {
+    public ResponseEntity<Card> updateCardsBYLevel(@RequestParam("oldLevel") Long oldLevelId,
+                                                   @RequestParam("newLevel") Long newLevelId) {
         cardService.updateCardsByLevel(oldLevelId, newLevelId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

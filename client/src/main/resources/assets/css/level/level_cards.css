@@ -83,6 +83,10 @@
     border-radius: .25rem;
 }
 
+.cards::-webkit-scrollbar {
+    display: none;
+}
+
 .flipCard {
     transform: rotateY(180deg);
 }
@@ -264,6 +268,8 @@
 .img-title-button {
     width: 16px;
     padding-left: 5px;
+    -webkit-opacity: 1;
+    opacity: 1;
     filter: brightness(0) invert(1);
 }
 

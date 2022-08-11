@@ -1,41 +1,37 @@
 package main.controller;
 
-import java.util.Collections;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 
 import main.dto.LevelDto;
 import main.entity.Category;
 import main.entity.Folder;
+import main.service.CategoryService;
+import main.service.FolderService;
+import main.service.LevelService;
 
 @Controller
 @RequestMapping("/calendar")
 public class CalendarController {
-    private final RestTemplate restTemplate;
-    private final String domain = "http://localhost:8080/";
+    private final LevelService levelService;
+    private final FolderService folderService;
+    private final CategoryService categoryService;
 
-    public CalendarController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public CalendarController(LevelService levelService, FolderService folderService, CategoryService categoryService) {
+        this.levelService = levelService;
+        this.folderService = folderService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping()
     public String getLevels(Model model) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-        httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        LevelDto[] levels = restTemplate.exchange(domain + "level/levels", HttpMethod.GET, entity, LevelDto[].class).getBody();
+        LevelDto[] levels = levelService.getIsNotEmptyLevels();
         for (LevelDto level : levels) {
-            Folder folder = restTemplate.exchange(domain + "folder/level_id/" + level.getId(), HttpMethod.GET, entity, Folder.class).getBody();
+            Folder folder = folderService.getFolderByLevelId(level.getId());
             if (folder != null) {
-                Category category = restTemplate.exchange(domain + "category/folder/" + folder.getId(), HttpMethod.GET, entity, Category.class).getBody();
+                Category category = categoryService.getCategoryByFolderId(folder.getId());
                 level.setCategory(category);
                 level.setFolder(folder);
             }

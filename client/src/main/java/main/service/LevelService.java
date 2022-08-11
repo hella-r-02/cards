@@ -1,5 +1,6 @@
 package main.service;
 
+import main.dto.LevelDto;
 import main.entity.Level;
 
 public interface LevelService {
@@ -9,4 +10,6 @@ public interface LevelService {
     Level getLevelWithCardsThatReadyToRepeat(Long id);
 
     void updateDate(Long id);
+
+    LevelDto[] getIsNotEmptyLevels();
 }

@@ -11,7 +11,7 @@ function work_with_date(date, num_of_date, index_year = 5) {
         if ((parseInt(listSplit[2]) < today.getDate() && month_to_number(listSplit[1]) == today.getMonth() && listSplit[index_year] == today.getFullYear())
             || ((month_to_number(listSplit[1]) < today.getMonth()) && (listSplit[index_year] == today.getFullYear()))
             || (listSplit[5] < today.getFullYear())) {
-            set_overdue(listSplit, listOfDate, today, i,index_year);
+            set_overdue(listSplit, listOfDate, today, i, index_year);
 
         } else if (month_to_number(listSplit[1]) == today.getMonth() && parseInt(listSplit[2]) == today.getDate() && listSplit[index_year] == today.getFullYear()) {
             listOfDate[i].innerHTML = repeat;
@@ -41,7 +41,7 @@ function en_month_to_ru_month(month) {
 }
 
 function decl(number, text_words) {
-    if (number % 10 == 0 || number % 10 > 5 || ((number % 100 >= 10) && (number % 100 <= 19))) {
+    if (number % 10 == 0 || number % 10 >= 5 || ((number % 100 >= 10) && (number % 100 <= 19))) {
         return number + text_words[0];
     } else if (number % 10 == 1) {
         return number + text_words[1];
@@ -50,7 +50,7 @@ function decl(number, text_words) {
     }
 }
 
-function set_overdue(listSplit, listOfDate, today, i,index_year = 5) {
+function set_overdue(listSplit, listOfDate, today, i, index_year = 5) {
     let tempDate = new Date(listSplit[index_year], month_to_number(listSplit[1]), parseInt(listSplit[2]));
     const timeDiff = Math.abs(tempDate.getTime() - today.getTime());
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));

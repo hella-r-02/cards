@@ -1,12 +1,16 @@
 package main.service.impl;
 
+import java.util.Collections;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import main.config.MainConfig;
+import main.dto.LevelDto;
 import main.entity.Level;
 import main.service.LevelService;
 
@@ -37,5 +41,13 @@ public class LevelServiceImpl implements LevelService {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         restTemplate.postForEntity(MainConfig.DOMAIN + "level/date/" + id, entity, String.class);
+    }
+
+    @Override
+    public LevelDto[] getIsNotEmptyLevels() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        return restTemplate.exchange(MainConfig.DOMAIN + "level/levels", HttpMethod.GET, entity, LevelDto[].class).getBody();
     }
 }

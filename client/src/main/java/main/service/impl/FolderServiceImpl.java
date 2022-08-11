@@ -1,5 +1,6 @@
 package main.service.impl;
 
+import org.jboss.jandex.Main;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,5 +24,12 @@ public class FolderServiceImpl implements FolderService {
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
         return restTemplate.exchange(MainConfig.DOMAIN + "folder/level/" + id, HttpMethod.GET, entity, Folder.class).getBody();
+    }
+
+    @Override
+    public Folder getFolderByLevelId(Long id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        return restTemplate.exchange(MainConfig.DOMAIN + "folder/level_id/" + id, HttpMethod.GET, entity, Folder.class).getBody();
     }
 }

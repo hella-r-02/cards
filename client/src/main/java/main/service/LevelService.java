@@ -12,4 +12,10 @@ public interface LevelService {
     void updateDate(Long id);
 
     LevelDto[] getIsNotEmptyLevels();
+
+    void addLevelsByFolderId(Long id, String date, int currentNumOfLevels);
+
+    Level findLevelByFolderIdAndNumOFLevel(Long folderId, int numOfLevels);
+
+    void deleteLevel(Long id);
 }

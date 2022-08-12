@@ -36,7 +36,7 @@ public class Level {
     @NotNull
     private Long num_of_level;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(optional = false, targetEntity = Folder.class)
     @JoinColumn(name = "folder_id", nullable = false)
     private Folder folder;

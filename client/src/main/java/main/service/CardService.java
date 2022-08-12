@@ -1,5 +1,6 @@
 package main.service;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import main.entity.Card;
@@ -26,4 +27,6 @@ public interface CardService {
                   String textQuestion,
                   MultipartFile multipartFileAnswer,
                   String textAnswer);
+
+    void updateLevel(Long oldLevelId, Long newLevelId);
 }

@@ -109,4 +109,15 @@ public class CardServiceImpl implements CardService {
             System.out.println(exception.getMessage());
         }
     }
+
+    @Override
+    public void updateLevel(Long oldLevelId, Long newLevelId) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+        map.add("oldLevel", oldLevelId);
+        map.add("newLevel", newLevelId);
+        HttpEntity<MultiValueMap<String, Object>> entityPost = new HttpEntity<>(map, httpHeaders);
+        restTemplate.postForEntity(MainConfig.DOMAIN + "card/update/level", entityPost, String.class);
+    }
 }
